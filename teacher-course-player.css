@@ -1,0 +1,420 @@
+.teacher-course-body .sidebar-logo {
+    align-items: flex-start;
+}
+
+.teacher-course-body .logo-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.teacher-course-body .role-pill {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    padding: 4px 8px;
+    border-radius: 999px;
+    background: rgba(255, 209, 102, 0.16);
+    border: 1px solid rgba(255, 209, 102, 0.28);
+    color: #fff2c5;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.course-editor-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.teacher-course-subtitle {
+    margin-top: 10px;
+    color: rgba(255, 255, 255, 0.74);
+    font-size: 14px;
+    line-height: 1.6;
+    max-width: 56ch;
+}
+
+.page-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.page-action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    padding: 0 16px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.page-action-btn:hover {
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.page-action-btn-accent {
+    background: rgba(255, 209, 102, 0.18);
+    border-color: rgba(255, 209, 102, 0.3);
+    color: #fff2c5;
+}
+
+.teacher-editor-layout {
+    align-items: start;
+}
+
+.editor-panel-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 18px;
+    margin-bottom: 20px;
+}
+
+.editor-panel-copy {
+    display: grid;
+    gap: 10px;
+}
+
+.editor-panel-copy h2 {
+    font-size: 22px;
+    line-height: 1.08;
+    letter-spacing: -0.8px;
+}
+
+.editor-panel-copy p {
+    color: rgba(255, 255, 255, 0.74);
+    font-size: 13px;
+    line-height: 1.65;
+}
+
+.editor-kicker,
+.sidebar-kicker {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.editor-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    color: rgba(255, 255, 255, 0.86);
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.teacher-course-form,
+.course-sidebar-form {
+    display: grid;
+    gap: 14px;
+}
+
+.field-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.field-group {
+    display: grid;
+    gap: 8px;
+}
+
+.field-group span {
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.76);
+}
+
+.field-group input,
+.field-group textarea,
+.field-group select {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
+    outline: none;
+    font: inherit;
+}
+
+.field-group textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.field-group select {
+    appearance: none;
+}
+
+.field-group input::placeholder,
+.field-group textarea::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.field-group input:focus,
+.field-group textarea:focus,
+.field-group select:focus {
+    border-color: rgba(255, 255, 255, 0.26);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.field-hint {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+.checkbox-row {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    width: fit-content;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.checkbox-row input {
+    width: 16px;
+    height: 16px;
+}
+
+#teacherAssignmentFields {
+    display: grid;
+    gap: 14px;
+}
+
+.form-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.status-line {
+    margin-right: auto;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.status-line[data-state="error"] {
+    color: #ffd4d4;
+}
+
+.primary-btn,
+.ghost-btn,
+.danger-btn,
+.sidebar-action-btn,
+.section-tool-btn {
+    border: none;
+    font: inherit;
+    cursor: pointer;
+}
+
+.primary-btn,
+.ghost-btn,
+.danger-btn {
+    min-height: 40px;
+    padding: 0 16px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.primary-btn {
+    background: rgba(255, 209, 102, 0.18);
+    border: 1px solid rgba(255, 209, 102, 0.3);
+    color: #fff2c5;
+}
+
+.primary-btn:hover {
+    background: rgba(255, 209, 102, 0.24);
+}
+
+.ghost-btn {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    color: rgba(255, 255, 255, 0.86);
+}
+
+.ghost-btn:hover {
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.danger-btn {
+    background: rgba(255, 120, 120, 0.08);
+    border: 1px solid rgba(255, 120, 120, 0.22);
+    color: #ffd3d3;
+}
+
+.danger-btn:hover {
+    background: rgba(255, 120, 120, 0.14);
+}
+
+.teacher-course-sidebar {
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.sidebar-head-copy {
+    display: grid;
+    gap: 8px;
+}
+
+.sidebar-head-copy h2 {
+    font-size: 20px;
+    letter-spacing: -0.6px;
+}
+
+.sidebar-head-copy p {
+    color: rgba(255, 255, 255, 0.68);
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.sidebar-action-btn {
+    min-height: 38px;
+    padding: 0 14px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.sidebar-action-btn:hover,
+.section-tool-btn:hover {
+    background: rgba(255, 255, 255, 0.16);
+}
+
+.course-sidebar-form {
+    padding: 18px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.section-header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    width: 100%;
+}
+
+.section-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.section-tool-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 30px;
+    padding: 0 10px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.section-tool-btn.delete {
+    color: #ffd2d2;
+    border-color: rgba(255, 120, 120, 0.2);
+    background: rgba(255, 120, 120, 0.08);
+}
+
+.section-tool-btn.toggle {
+    min-width: 32px;
+    padding: 0;
+}
+
+.content-item-button {
+    width: 100%;
+}
+
+.content-item-button .item-details {
+    flex: 1;
+}
+
+.content-item-button .item-details h4 {
+    margin-bottom: 2px;
+}
+
+.content-item-button .item-meta-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.teacher-course-sidebar .content-empty {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+@media (max-width: 1180px) {
+    .course-editor-header {
+        flex-direction: column;
+    }
+
+    .page-actions {
+        justify-content: flex-start;
+    }
+}
+
+@media (max-width: 768px) {
+    .field-row {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar-head,
+    .editor-panel-head {
+        flex-direction: column;
+    }
+
+    .form-actions {
+        justify-content: stretch;
+    }
+
+    .status-line {
+        width: 100%;
+        margin-right: 0;
+    }
+}

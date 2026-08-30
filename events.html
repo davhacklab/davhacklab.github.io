@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Events - HackLab</title>
+    <link rel="icon" type="image/png" href="images/logo.png" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="events.css" />
+  </head>
+
+  <body>
+    <div class="dashboard-wrapper">
+      <aside class="sidebar">
+        <div class="sidebar-top">
+          <div class="sidebar-logo">
+            <img src="images/logo.png" alt="HackLab Logo" class="logo-img" />
+            <span class="logo-text">HackLab</span>
+          </div>
+          <p class="sidebar-label">Dashboard</p>
+          <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item">
+              <img src="images/overview.png" alt="" class="nav-icon" />
+              <span>Overview</span>
+            </a>
+            <a href="resources.html" class="nav-item">
+              <img src="images/resources-nav.png" alt="" class="nav-icon" />
+              <span>Resources</span>
+            </a>
+            <a href="events.html" class="nav-item active">
+              <img src="images/events-nav.png" alt="" class="nav-icon" />
+              <span>Events</span>
+            </a>
+            <a href="community.html" class="nav-item">
+              <img src="images/community-nav.png" alt="" class="nav-icon" />
+              <span>Community</span>
+            </a>
+            <a href="projects.html" class="nav-item">
+              <img src="images/projects-nav.png" alt="" class="nav-icon" />
+              <span>Projects</span>
+            </a>
+            <a href="article.html" class="nav-item">
+              <img src="images/article-nav.png" alt="" class="nav-icon" />
+              <span>Articles</span>
+            </a>
+          </nav>
+        </div>
+        <div class="sidebar-bottom">
+          <a href="community.html#askforge" class="sidebar-doubt">
+            <span class="sidebar-doubt-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M7 8.75C7 7.7835 7.7835 7 8.75 7H15.25C16.2165 7 17 7.7835 17 8.75V12.25C17 13.2165 16.2165 14 15.25 14H12.2L9.5 16.3V14H8.75C7.7835 14 7 13.2165 7 12.25V8.75Z"
+                  stroke="currentColor"
+                  stroke-width="1.7"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </span>
+            <span>Having A Doubt ?</span>
+          </a>
+          <button class="logout-btn" id="logoutBtn">
+            <span class="logout-btn-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M5 12H16.5"
+                  stroke="currentColor"
+                  stroke-width="1.9"
+                  stroke-linecap="round"
+                />
+                <path
+                  d="M12.5 8L16.5 12L12.5 16"
+                  stroke="currentColor"
+                  stroke-width="1.9"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </span>
+            <span>Log Out</span>
+          </button>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <section class="events-hero glass-panel">
+          <div class="hero-copy">
+            <p class="eyebrow">Live Calendar</p>
+            <h1>
+              See what is coming up and jump into the right session at the right
+              time.
+            </h1>
+            <p class="hero-text">
+              Events should feel energizing, not hidden. This layout keeps
+              upcoming sessions, live blocks, and weekly visibility all in one
+              polished space.
+            </p>
+            <div class="hero-pills">
+              <span class="hero-pill hero-pill-accent"
+                >Live sessions prioritized</span
+              >
+              <span class="hero-pill">Quick overview for the whole week</span>
+            </div>
+          </div>
+          <div class="hero-stats">
+            <div class="hero-stat">
+              <span class="hero-stat-label">This week</span>
+              <strong id="eventsCount">04</strong>
+              <span class="hero-stat-sub" id="eventsCountLabel"
+                >active learning blocks</span
+              >
+            </div>
+            <div class="hero-stat">
+              <span class="hero-stat-label">Next live</span>
+              <strong id="eventsNextTime">6 PM</strong>
+              <span class="hero-stat-sub" id="eventsNextTitle"
+                >Visual Design workshop</span
+              >
+            </div>
+          </div>
+        </section>
+
+        <div class="events-header">
+          <div class="search-wrap glass-panel">
+            <span class="search-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <circle cx="11" cy="11" r="5.75" stroke="currentColor" stroke-width="1.9" />
+                <path d="M16 16L20 20" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" />
+              </svg>
+            </span>
+            <input
+              type="text"
+              placeholder="Search sessions, mentors, or tracks"
+              class="search-input"
+            />
+          </div>
+
+          <div class="toggle-wrap glass-panel">
+            <button class="toggle-btn active">Upcoming</button>
+            <button class="toggle-btn">Past</button>
+          </div>
+
+          <button class="filter-btn glass-panel">
+            <span class="filter-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M5 7H19" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+                <path d="M8 12H16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+                <path d="M10.5 17H13.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+              </svg>
+            </span>
+            <span>Filter</span>
+          </button>
+        </div>
+
+        <section class="events-main-grid">
+          <article class="calendar-stage glass-panel">
+            <div class="calendar-stage-head">
+              <div>
+                <p class="section-kicker">Weekly calendar</p>
+                <h2>Full event visibility</h2>
+              </div>
+              <span class="stage-note"
+                >Best viewed for daily planning and live-session timing.</span
+              >
+            </div>
+            <div class="calendar-container">
+              <iframe
+                src="https://calendar.google.com/calendar/embed?height=450&wkst=1&ctz=Asia%2FKolkata&showPrint=0&src=ZGF2aGFja2xhYkBnbWFpbC5jb20&src=ZW4uaW5kaWFuI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&color=%23039be5&color=%230b8043"
+                style="border: none"
+                width="100%"
+                height="100%"
+                frameborder="0"
+                scrolling="no"
+              ></iframe>
+            </div>
+          </article>
+
+          <aside class="agenda-sidebar">
+            <article class="agenda-card glass-panel" id="liveAgendaCard">
+              <p class="section-kicker">Right now</p>
+              <h3>Visual Storytelling Lab</h3>
+              <p>
+                Join a focused session on layout rhythm, pacing, and
+                presentation polish for student work.
+              </p>
+              <div class="agenda-meta">
+                <span>Mentor: Aviral Tyagi</span>
+                <span>Window: 6:00 PM to 7:00 PM</span>
+              </div>
+            </article>
+
+            <article class="agenda-card glass-panel">
+              <p class="section-kicker">Next up</p>
+              <div class="mini-agenda-list" id="nextAgendaList">
+                <div class="mini-agenda-item">
+                  <strong>Thu</strong>
+                  <span>UI critique circle</span>
+                </div>
+                <div class="mini-agenda-item">
+                  <strong>Fri</strong>
+                  <span>Hackathon planning sprint</span>
+                </div>
+                <div class="mini-agenda-item">
+                  <strong>Sat</strong>
+                  <span>Project showcase rehearsal</span>
+                </div>
+              </div>
+            </article>
+          </aside>
+        </section>
+
+        <section class="details-section">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker" id="eventsSectionKicker">Upcoming lineup</p>
+              <h2 class="section-title" id="eventsSectionTitle">
+                Sessions worth keeping open in your calendar
+              </h2>
+            </div>
+          </div>
+
+          <div class="sessions-grid" id="eventsSessionsGrid">
+            <div class="session-card glass-panel">
+              <div class="session-topline">
+                <span class="ai-badge">Live</span>
+                <span class="session-chip">Nov 14</span>
+              </div>
+              <div class="card-info">
+                <div class="session-meta-row">
+                  <span class="session-meta-chip">Aviral Tyagi</span>
+                  <span class="session-meta-chip">5:00 PM - 6:00 PM</span>
+                </div>
+                <h3>Introduction to Visual Design</h3>
+                <p class="session-date">November 14, 2026</p>
+                <p class="session-summary">
+                  A sharper session on layout rhythm, pacing, and visual
+                  hierarchy for stronger student project presentations.
+                </p>
+                <button class="join-btn">Join Now <span aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M9 6.5L14.5 12L9 17.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg></span></button>
+              </div>
+            </div>
+
+            <div class="session-card glass-panel">
+              <div class="session-topline">
+                <span class="ai-badge">Hot</span>
+                <span class="session-chip">Nov 16</span>
+              </div>
+              <div class="card-info">
+                <div class="session-meta-row">
+                  <span class="session-meta-chip">Tejas Sharma</span>
+                  <span class="session-meta-chip">6:00 PM - 7:30 PM</span>
+                </div>
+                <h3>Creative Coding Build Sprint</h3>
+                <p class="session-date">November 16, 2026</p>
+                <p class="session-summary">
+                  A collaborative build block where students translate ideas
+                  into cleaner demos with mentor checkpoints.
+                </p>
+                <button class="join-btn">View Details <span aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M9 6.5L14.5 12L9 17.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg></span></button>
+              </div>
+            </div>
+
+            <div class="session-card glass-panel">
+              <div class="session-topline">
+                <span class="ai-badge">Prep</span>
+                <span class="session-chip">Nov 18</span>
+              </div>
+              <div class="card-info">
+                <div class="session-meta-row">
+                  <span class="session-meta-chip">Rhea Sethi</span>
+                  <span class="session-meta-chip">4:30 PM - 5:30 PM</span>
+                </div>
+                <h3>Demo Day Presentation Coaching</h3>
+                <p class="session-date">November 18, 2026</p>
+                <p class="session-summary">
+                  A guided rehearsal session focused on storytelling, slide
+                  flow, and presentation confidence before showcase day.
+                </p>
+                <button class="join-btn">View Details <span aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M9 6.5L14.5 12L9 17.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg></span></button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script type="module" src="events.js"></script>
+  </body>
+</html>

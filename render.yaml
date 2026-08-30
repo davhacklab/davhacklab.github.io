@@ -1,0 +1,24 @@
+# HackLab API — hosts Astra DB (required for GitHub Pages frontend)
+# Connect this repo on https://render.com → New → Blueprint
+
+services:
+  - type: web
+    name: hacklab-api
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: ASTRA_DB_APPLICATION_TOKEN
+        sync: false
+      - key: ASTRA_DB_ID
+        sync: false
+      - key: ASTRA_DB_KEYSPACE
+        sync: false
+      - key: ASTRA_DB_SECURE_BUNDLE_PATH
+        value: secure-connect-hack-lab.zip
+      - key: DNS_SERVERS
+        value: 8.8.8.8,1.1.1.1

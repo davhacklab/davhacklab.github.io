@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Course Player - HackLab</title>
+    <link rel="icon" type="image/png" href="images/logo.png" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="course-player.css" />
+  </head>
+
+  <body>
+    <div class="dashboard-wrapper">
+      <aside class="sidebar">
+        <div class="sidebar-top">
+          <div class="sidebar-logo">
+            <img src="images/logo.png" alt="HackLab Logo" class="logo-img" />
+            <span class="logo-text">HackLab</span>
+          </div>
+          <p class="sidebar-label">Dashboard</p>
+          <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item">
+              <img src="images/overview.png" alt="" class="nav-icon" />
+              <span>Overview</span>
+            </a>
+            <a href="resources.html" class="nav-item active">
+              <img src="images/resources-nav.png" alt="" class="nav-icon" />
+              <span>Resources</span>
+            </a>
+            <a href="events.html" class="nav-item">
+              <img src="images/events-nav.png" alt="" class="nav-icon" />
+              <span>Events</span>
+            </a>
+            <a href="community.html" class="nav-item">
+              <img src="images/community-nav.png" alt="" class="nav-icon" />
+              <span>Community</span>
+            </a>
+            <a href="projects.html" class="nav-item">
+              <img src="images/projects-nav.png" alt="" class="nav-icon" />
+              <span>Projects</span>
+            </a>
+            <a href="article.html" class="nav-item">
+              <img src="images/article-nav.png" alt="" class="nav-icon" />
+              <span>Articles</span>
+            </a>
+          </nav>
+        </div>
+        <div class="sidebar-bottom">
+          <a href="community.html#askforge" class="sidebar-doubt">
+            <span class="sidebar-doubt-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M7 8.75C7 7.7835 7.7835 7 8.75 7H15.25C16.2165 7 17 7.7835 17 8.75V12.25C17 13.2165 16.2165 14 15.25 14H12.2L9.5 16.3V14H8.75C7.7835 14 7 13.2165 7 12.25V8.75Z"
+                  stroke="currentColor"
+                  stroke-width="1.7"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </span>
+            <span>Having A Doubt ?</span>
+          </a>
+          <button class="logout-btn" id="logoutBtn">
+            <span class="logout-btn-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M5 12H16.5"
+                  stroke="currentColor"
+                  stroke-width="1.9"
+                  stroke-linecap="round"
+                />
+                <path
+                  d="M12.5 8L16.5 12L12.5 16"
+                  stroke="currentColor"
+                  stroke-width="1.9"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </span>
+            <span>Log Out</span>
+          </button>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <div class="page-header">
+          <h1 class="page-title">
+            Learning Resources <span class="divider">|</span>
+            <span class="accent" id="coursePageAccent">Course Player</span>
+          </h1>
+        </div>
+
+        <div class="player-layout">
+          <div class="player-left">
+            <div class="video-container glass-panel">
+              <iframe
+                id="coursePlayerFrame"
+                width="100%"
+                height="100%"
+                src=""
+                title="Course video player"
+                frameborder="0"
+                allow="
+                  accelerometer;
+                  autoplay;
+                  clipboard-write;
+                  encrypted-media;
+                  gyroscope;
+                  picture-in-picture;
+                  web-share;
+                "
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen
+              ></iframe>
+              <div class="assignment-stage" id="courseAssignmentStage" hidden>
+                <div class="assignment-stage-inner">
+                  <span class="assignment-stage-tag" id="courseAssignmentTag"
+                    >Assignment</span
+                  >
+                  <h2 id="courseAssignmentTitle">Loading assignment...</h2>
+                  <p
+                    class="assignment-stage-summary"
+                    id="courseAssignmentSummary"
+                  >
+                    Assignment details will show here when you open one from the
+                    course outline.
+                  </p>
+                  <div
+                    class="assignment-stage-meta"
+                    id="courseAssignmentMeta"
+                  ></div>
+                  <div
+                    class="assignment-review-note"
+                    id="courseAssignmentReviewNote"
+                    hidden
+                  ></div>
+                  <ol
+                    class="assignment-stage-list"
+                    id="courseAssignmentInstructions"
+                  ></ol>
+                  <div class="assignment-submission-panel">
+                    <label class="assignment-submission-field">
+                      <span>Submission link</span>
+                      <input
+                        type="url"
+                        id="courseAssignmentSubmissionUrl"
+                        placeholder="https://github.com/... or https://drive.google.com/..."
+                      />
+                    </label>
+                    <p
+                      class="assignment-submission-note"
+                      id="courseAssignmentSubmissionNote"
+                    >
+                      Add your assignment link here and send it to the teacher
+                      dashboard for review.
+                    </p>
+                    <div class="assignment-submission-actions">
+                      <span
+                        class="assignment-submission-feedback"
+                        id="courseAssignmentSubmissionFeedback"
+                      ></span>
+                      <button
+                        type="button"
+                        class="assignment-submit-btn"
+                        id="courseAssignmentSubmitBtn"
+                      >
+                        Submit for Review
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="video-meta-strip glass-panel">
+              <div>
+                <p class="video-meta-kicker">Now playing</p>
+                <h2 id="courseLessonTitle">Loading course...</h2>
+              </div>
+              <div class="video-meta-actions">
+                <span class="video-meta-pill" id="courseLessonDuration"
+                  >19 min</span
+                >
+                <button
+                  class="content-complete-btn"
+                  id="courseContentCompleteBtn"
+                  type="button"
+                >
+                  Mark Complete
+                </button>
+              </div>
+            </div>
+
+            <div class="tabs-container glass-panel">
+              <button class="tab active" type="button" data-panel="overview">
+                Overview
+              </button>
+              <button class="tab" type="button" data-panel="qa">Q&amp;A</button>
+              <button class="tab" type="button" data-panel="notes">
+                Notes of this session
+              </button>
+              <button class="tab" type="button" data-panel="reviews">
+                Reviews
+              </button>
+            </div>
+
+            <section
+              class="course-info glass-panel tab-panel active"
+              data-panel="overview"
+            >
+              <h2 id="courseInfoTitle">Loading course...</h2>
+              <p class="authors" id="courseInfoAuthors">By HackLab Mentors</p>
+              <div class="desc-text" id="courseInfoDescription">
+                <p>Loading the teacher-curated course overview...</p>
+              </div>
+            </section>
+
+            <section class="course-info glass-panel tab-panel" data-panel="qa">
+              <h2>Course Q&amp;A</h2>
+              <p class="authors">AskForge support lane</p>
+              <div class="panel-placeholder" id="courseQaPlaceholder">
+                Open the community page whenever you want to ask a doubt about
+                this course.
+              </div>
+            </section>
+
+            <section
+              class="course-info glass-panel tab-panel"
+              data-panel="notes"
+            >
+              <h2>Notes of this session</h2>
+              <p class="authors">Mentor highlights and reminders</p>
+              <ul class="notes-list-panel" id="courseSessionNotesList"></ul>
+            </section>
+
+            <section
+              class="course-info glass-panel tab-panel"
+              data-panel="reviews"
+            >
+              <h2>Course review lane</h2>
+              <p class="authors">Quick reading of this playlist</p>
+              <div
+                class="panel-placeholder"
+                id="courseReviewsPlaceholder"
+              ></div>
+            </section>
+          </div>
+
+          <div class="player-right">
+            <div class="course-content-sidebar glass-panel">
+              <div
+                class="sidebar-tabs"
+                role="tablist"
+                aria-label="Course sidebar"
+              >
+                <button
+                  type="button"
+                  class="s-tab active"
+                  data-sidebar-panel="content"
+                  role="tab"
+                  aria-selected="true"
+                >
+                  Course Content
+                </button>
+                <button
+                  type="button"
+                  class="s-tab"
+                  data-sidebar-panel="ai"
+                  role="tab"
+                  aria-selected="false"
+                >
+                  AI Summary
+                </button>
+              </div>
+
+              <div
+                class="sidebar-panel active"
+                data-sidebar-panel="content"
+                role="tabpanel"
+              >
+                <div class="sections-list" id="courseSectionsList"></div>
+              </div>
+
+              <div
+                class="sidebar-panel"
+                data-sidebar-panel="ai"
+                id="courseAiPanel"
+                role="tabpanel"
+                hidden
+              >
+                <div class="ai-summary-panel">
+                  <div class="ai-summary-head">
+                    <span class="ai-summary-badge" id="courseAiSourceBadge"
+                      >HackLab AI</span
+                    >
+                    <button
+                      type="button"
+                      class="ai-summary-refresh"
+                      id="courseAiRefreshBtn"
+                    >
+                      Refresh summary
+                    </button>
+                  </div>
+                  <h3 class="ai-summary-title" id="courseAiLessonTitle">
+                    Lesson summary
+                  </h3>
+                  <p class="ai-summary-copy" id="courseAiSummaryText">
+                    Select a lesson to generate a focused summary.
+                  </p>
+                  <ul class="ai-summary-points" id="courseAiKeyPoints"></ul>
+                  <div class="ai-summary-actions" id="courseAiActions"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script type="module" src="course-player.js"></script>
+  </body>
+</html>

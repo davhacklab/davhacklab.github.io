@@ -1,0 +1,571 @@
+/* ============================================
+   HackLab — Auth Page Styles
+   ============================================ */
+
+#canvas-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  background: var(--hero-gradient);
+  overflow: hidden;
+}
+
+.auth-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 100px 20px 40px;
+  position: relative;
+  z-index: 10;
+}
+
+.auth-box {
+  width: 100%;
+  max-width: 440px;
+  background: var(--bg-glass);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-xl);
+  backdrop-filter: blur(20px);
+  padding: 40px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  position: relative;
+  overflow: hidden;
+}
+
+.auth-toggle {
+  display: flex;
+  position: relative;
+  margin-bottom: 30px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: var(--radius-full);
+  padding: 4px;
+  border: 1px solid var(--border-glass);
+}
+
+.toggle-btn {
+  flex: 1;
+  padding: 12px 0;
+  text-align: center;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  z-index: 2;
+  transition: var(--transition-smooth);
+}
+
+.toggle-btn.active {
+  color: #fff;
+}
+
+.toggle-slider {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: calc(50% - 4px);
+  height: calc(100% - 8px);
+  background: linear-gradient(135deg, var(--accent-teal), var(--accent-purple));
+  border-radius: var(--radius-full);
+  z-index: 1;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 4px 15px var(--accent-teal-glow);
+}
+
+.auth-form {
+  display: none;
+  animation: fadeSlideUp 0.5s ease forwards;
+}
+
+.auth-form.active {
+  display: block;
+}
+
+.auth-form h2 {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  text-align: center;
+  background: linear-gradient(135deg, #fff, var(--accent-teal));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.auth-form .subtitle {
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin-bottom: 30px;
+}
+
+.input-group {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.input-icon {
+  position: absolute;
+  top: 50%;
+  left: 16px;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  transition: var(--transition-fast);
+}
+
+.input-group input {
+  width: 100%;
+  padding: 14px 16px 14px 48px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  transition: var(--transition-fast);
+  outline: none;
+}
+
+.input-group input:focus {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--accent-teal);
+  box-shadow: 0 0 15px var(--accent-teal-glow);
+}
+
+.input-group input:focus+.input-icon {
+  color: var(--accent-teal);
+}
+
+.reveal-btn {
+  position: absolute;
+  top: 50%;
+  right: 16px;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition-fast);
+}
+
+.reveal-btn:hover {
+  color: var(--text-primary);
+}
+
+.forgot-link {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.85rem;
+  color: var(--accent-teal);
+  transition: var(--transition-fast);
+}
+
+.forgot-link:hover {
+  text-shadow: 0 0 8px var(--accent-teal-glow);
+}
+
+.auth-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.auth-row-between {
+  justify-content: space-between;
+}
+
+.remember-me {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text-secondary);
+  font-size: 0.88rem;
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.25s ease;
+}
+
+.remember-me:hover {
+  color: var(--text-primary);
+}
+
+.remember-me input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.remember-me span {
+  position: relative;
+  padding-left: 42px;
+  line-height: 1.2;
+}
+
+.remember-me span::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 34px;
+  height: 18px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.remember-me span::after {
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.35);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.remember-me input:checked + span::before {
+  background: linear-gradient(135deg, var(--accent-teal), var(--accent-purple));
+  border-color: var(--accent-teal);
+  box-shadow: 0 0 12px var(--accent-teal-glow);
+}
+
+.remember-me input:checked + span::after {
+  transform: translateY(-50%) translateX(15px);
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+.remember-me input:focus-visible + span::before {
+  outline: 2px solid var(--accent-teal);
+  outline-offset: 2px;
+}
+
+.auth-submit {
+  width: 100%;
+  justify-content: center;
+  padding: 16px;
+  font-size: 1.05rem;
+}
+
+.auth-message {
+  margin: 0 0 16px;
+  min-height: 20px;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+.auth-message.error {
+  color: #ffd7d7;
+}
+
+.auth-message.success {
+  color: #b9ffe7;
+}
+
+.auth-message.info {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.auth-submit:disabled,
+.btn-social:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.social-divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 24px 0;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.social-divider::before,
+.social-divider::after {
+  content: "";
+  flex: 1;
+  border-bottom: 1px solid var(--border-glass);
+}
+
+.social-divider span {
+  padding: 0 10px;
+}
+
+.social-logins {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.btn-social {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.btn-social img,
+.btn-social svg {
+  width: 22px;
+  height: 22px;
+}
+
+.btn-social:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--accent-teal);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* ============================================
+   ROLE SELECTOR (STUDENT/TEACHER)
+   ============================================ */
+.role-selector {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.role-option {
+  flex: 1;
+  position: relative;
+  cursor: pointer;
+}
+
+.role-option input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.role-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-md);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.role-icon {
+  font-size: 1.8rem;
+  transition: transform 0.3s ease;
+}
+
+.role-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  transition: color 0.3s ease;
+}
+
+.role-option:hover .role-box {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(77, 208, 225, 0.3);
+}
+
+.role-option input[type="radio"]:checked+.role-box {
+  background: rgba(77, 208, 225, 0.1);
+  border-color: var(--accent-teal);
+  box-shadow: 0 0 15px var(--accent-teal-glow);
+}
+
+.role-option input[type="radio"]:checked+.role-box .role-label {
+  color: var(--text-primary);
+}
+
+.role-option input[type="radio"]:checked+.role-box .role-icon {
+  transform: scale(1.15) translateY(-2px);
+}
+
+/* Modal / Overlay for Google Login Role Selection */
+.role-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(7, 0, 15, 0.8);
+  backdrop-filter: blur(10px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.role-modal-overlay.active {
+  display: flex;
+}
+
+.role-modal {
+  background: rgba(13, 10, 30, 0.95);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-xl);
+  padding: 40px;
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.role-modal h3 {
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+}
+
+.role-modal p {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin-bottom: 24px;
+}
+
+/* ============================================
+   BACK BUTTON
+   ============================================ */
+.back-btn {
+  position: fixed;
+  top: 24px;
+  left: 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: var(--bg-glass);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-full);
+  backdrop-filter: blur(16px);
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 100;
+}
+
+.back-btn:hover {
+  color: #fff;
+  border-color: var(--accent-teal);
+  box-shadow: 0 0 18px var(--accent-teal-glow);
+  transform: translateX(-3px);
+}
+
+.back-btn svg {
+  transition: transform 0.3s ease;
+}
+
+.back-btn:hover svg {
+  transform: translateX(-3px);
+}
+
+@media (max-width: 768px) {
+  .auth-wrapper {
+    align-items: flex-start;
+    padding: 112px 16px 32px;
+  }
+
+  .auth-box {
+    max-width: none;
+    padding: 30px 22px 24px;
+    border-radius: 24px;
+  }
+
+  .auth-form h2 {
+    font-size: 1.8rem;
+  }
+
+  .auth-row-between {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .back-btn {
+    top: 16px;
+    left: 16px;
+    padding: 10px 16px;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .auth-wrapper {
+    padding: 100px 12px 24px;
+  }
+
+  .auth-box {
+    padding: 24px 16px 20px;
+    border-radius: 20px;
+  }
+
+  .auth-toggle {
+    margin-bottom: 24px;
+  }
+
+  .toggle-btn {
+    font-size: 0.88rem;
+  }
+
+  .auth-form h2 {
+    font-size: 1.6rem;
+  }
+
+  .auth-form .subtitle {
+    margin-bottom: 24px;
+  }
+
+  .input-group {
+    margin-bottom: 16px;
+  }
+
+  .social-logins {
+    gap: 10px;
+  }
+
+  .btn-social {
+    height: 44px;
+  }
+}

@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Resources - HackLab</title>
+    <link rel="icon" type="image/png" href="images/logo.png" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="resources.css" />
+</head>
+
+<body>
+    <div class="dashboard-wrapper">
+
+        <aside class="sidebar">
+            <div class="sidebar-top">
+                <div class="sidebar-logo">
+                    <img src="images/logo.png" alt="HackLab Logo" class="logo-img" />
+                    <span class="logo-text">HackLab</span>
+                </div>
+                <p class="sidebar-label">Dashboard</p>
+                <nav class="sidebar-nav">
+                    <a href="dashboard.html" class="nav-item">
+                        <img src="images/overview.png" alt="" class="nav-icon" />
+                        <span>Overview</span>
+                    </a>
+                    <a href="resources.html" class="nav-item active">
+                        <img src="images/resources-nav.png" alt="" class="nav-icon" />
+                        <span>Resources</span>
+                    </a>
+                    <a href="events.html" class="nav-item">
+                        <img src="images/events-nav.png" alt="" class="nav-icon" />
+                        <span>Events</span>
+                    </a>
+                    <a href="community.html" class="nav-item">
+                        <img src="images/community-nav.png" alt="" class="nav-icon" />
+                        <span>Community</span>
+                    </a>
+                    <a href="projects.html" class="nav-item">
+                        <img src="images/projects-nav.png" alt="" class="nav-icon" />
+                        <span>Projects</span>
+                    </a>
+                    <a href="article.html" class="nav-item">
+                        <img src="images/article-nav.png" alt="" class="nav-icon" />
+                        <span>Articles</span>
+                    </a>
+                </nav>
+            </div>
+            <div class="sidebar-bottom">
+                <a href="community.html#askforge" class="sidebar-doubt">
+                    <span class="sidebar-doubt-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <path d="M7 8.75C7 7.7835 7.7835 7 8.75 7H15.25C16.2165 7 17 7.7835 17 8.75V12.25C17 13.2165 16.2165 14 15.25 14H12.2L9.5 16.3V14H8.75C7.7835 14 7 13.2165 7 12.25V8.75Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </span>
+                    <span>Having A Doubt ?</span>
+                </a>
+                <button class="logout-btn" id="logoutBtn">
+                    <span class="logout-btn-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <path d="M5 12H16.5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" />
+                            <path d="M12.5 8L16.5 12L12.5 16" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </span>
+                    <span>Log Out</span>
+                </button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <section class="hero-card glass-panel">
+                <div class="hero-copy">
+                    <p class="eyebrow">Learning Hub</p>
+                    <h1>Choose the resource format that matches how you learn best.</h1>
+                    <p class="hero-text">
+                        Move between video, audio, and reading spaces without losing the same HackLab energy.
+                        Everything here is arranged to feel clear, intentional, and easy to return to.
+                    </p>
+                    <div class="hero-pills">
+                        <span class="hero-pill hero-pill-accent">Curated learning paths</span>
+                        <span class="hero-pill">Fast access to your favorite formats</span>
+                    </div>
+                </div>
+                    <div class="hero-stats">
+                    <div class="hero-stat">
+                        <span class="hero-stat-label">Formats</span>
+                        <strong id="resourceFormatsCount">03</strong>
+                        <span class="hero-stat-sub">ways to keep learning</span>
+                    </div>
+                    <div class="hero-stat">
+                        <span class="hero-stat-label">Focus</span>
+                        <strong id="resourceItemsCount">24/7</strong>
+                        <span class="hero-stat-sub" id="resourceItemsLabel">available on your schedule</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="resource-cards" id="resourceCards">
+                <a href="video-courses.html" class="resource-card resource-card-video">
+                    <div class="resource-card-top">
+                        <span class="resource-badge">Most active</span>
+                        <span class="resource-meta">42 lessons</span>
+                    </div>
+                    <div class="card-icon-wrap video-icon-wrap">
+                        <div class="yt-play">
+                            <svg viewBox="0 0 68 48" xmlns="http://www.w3.org/2000/svg" class="yt-svg">
+                                <path
+                                    d="M66.52 7.74c-.78-2.93-2.49-5.41-5.42-6.19C55.79.13 34 0 34 0S12.21.13 6.9 1.55c-2.93.78-4.63 3.26-5.42 6.19C0 13.05 0 24 0 24s0 10.95 1.48 16.26c.78 2.93 2.49 5.41 5.42 6.19C12.21 47.87 34 48 34 48s21.79-.13 27.1-1.55c2.93-.78 4.64-3.26 5.42-6.19C68 34.95 68 24 68 24s0-10.95-1.48-16.26z"
+                                    fill="#f00" />
+                                <path d="M45 24L27 14v20" fill="#fff" />
+                            </svg>
+                        </div>
+                    </div>
+                    <h3 class="card-title">Video Courses</h3>
+                    <p class="card-desc">
+                        Step into guided visual lessons with a cleaner path from beginner practice to polished project work.
+                    </p>
+                    <div class="resource-footer">
+                        <span>Best for deep dives</span>
+                        <span>Open path</span>
+                    </div>
+                </a>
+
+                <a href="#" class="resource-card resource-card-audio">
+                    <div class="resource-card-top">
+                        <span class="resource-badge">Background mode</span>
+                        <span class="resource-meta">18 episodes</span>
+                    </div>
+                    <div class="card-icon-wrap podcast-icon-wrap">
+                        <img src="images/audio.png" alt="Audio Podcasts" class="card-img" />
+                    </div>
+                    <h3 class="card-title">Audio Podcasts</h3>
+                    <p class="card-desc">
+                        Learn while walking, sketching, or traveling with short audio stories, recap notes, and idea breakdowns.
+                    </p>
+                    <div class="resource-footer">
+                        <span>Best for passive learning</span>
+                        <span>Coming alive</span>
+                    </div>
+                </a>
+
+                <a href="#" class="resource-card resource-card-library">
+                    <div class="resource-card-top">
+                        <span class="resource-badge">Reference shelf</span>
+                        <span class="resource-meta">120 reads</span>
+                    </div>
+                    <div class="card-icon-wrap library-icon-wrap">
+                        <img src="images/read.png" alt="Library" class="card-img" />
+                    </div>
+                    <h3 class="card-title">Library</h3>
+                    <p class="card-desc">
+                        Return to frameworks, notes, and guides when you need quiet focus and a solid written reference.
+                    </p>
+                    <div class="resource-footer">
+                        <span>Best for revision</span>
+                        <span>Browse shelf</span>
+                    </div>
+                </a>
+            </section>
+
+            <section class="resources-grid">
+                <article class="feature-panel glass-panel">
+                    <div class="section-heading">
+                        <div>
+                            <p class="section-kicker">Suggested flow</p>
+                            <h2>A simple path to learn without feeling scattered</h2>
+                        </div>
+                    </div>
+
+                    <div class="flow-steps">
+                        <div class="flow-step">
+                            <span class="step-index">01</span>
+                            <div>
+                                <h3>Start with visual clarity</h3>
+                                <p>Open a video lesson when you need momentum, examples, and a quick sense of the full journey.</p>
+                            </div>
+                        </div>
+                        <div class="flow-step">
+                            <span class="step-index">02</span>
+                            <div>
+                                <h3>Reinforce with audio</h3>
+                                <p>Let key ideas repeat in the background while you move through your day or sketch your next idea.</p>
+                            </div>
+                        </div>
+                        <div class="flow-step">
+                            <span class="step-index">03</span>
+                            <div>
+                                <h3>Lock it in with reading</h3>
+                                <p>Come back to the library for structure, reference notes, and a calmer second pass through the concept.</p>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <aside class="side-stack">
+                    <article class="side-card glass-panel">
+                        <p class="section-kicker">Weekly spotlight</p>
+                        <h3>Creative Coding Foundations</h3>
+                        <p>
+                            A balanced mix of lessons, podcasts, and reading materials chosen for students who want faster progress without overload.
+                        </p>
+                        <div class="mini-pills">
+                            <span>Video first</span>
+                            <span>Audio recap</span>
+                            <span>Library notes</span>
+                        </div>
+                    </article>
+
+                    <article class="side-card glass-panel">
+                        <p class="section-kicker">Resource note</p>
+                        <h3>Keep your learning loop small and repeatable</h3>
+                        <p>
+                            Pick one main format, one support format, and one revision format. That rhythm will feel lighter and more sustainable.
+                        </p>
+                    </article>
+                </aside>
+            </section>
+        </main>
+
+    </div>
+
+    <script type="module" src="resources.js"></script>
+</body>
+
+</html>

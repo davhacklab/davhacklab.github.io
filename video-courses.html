@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Video Courses - HackLab</title>
+    <link rel="icon" type="image/png" href="images/logo.png" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="video-courses.css" />
+</head>
+
+<body>
+    <div class="dashboard-wrapper">
+
+        <!-- ===== SIDEBAR ===== -->
+        <aside class="sidebar">
+            <div class="sidebar-top">
+                <div class="sidebar-logo">
+                    <img src="images/logo.png" alt="HackLab Logo" class="logo-img" />
+                    <span class="logo-text">HackLab</span>
+                </div>
+                <p class="sidebar-label">Dashboard</p>
+                <nav class="sidebar-nav">
+                    <a href="dashboard.html" class="nav-item">
+                        <img src="images/overview.png" alt="" class="nav-icon" />
+                        <span>Overview</span>
+                    </a>
+                    <a href="resources.html" class="nav-item active">
+                        <img src="images/resources-nav.png" alt="" class="nav-icon" />
+                        <span>Resources</span>
+                    </a>
+                    <a href="events.html" class="nav-item">
+                        <img src="images/events-nav.png" alt="" class="nav-icon" />
+                        <span>Events</span>
+                    </a>
+                    <a href="community.html" class="nav-item">
+                        <img src="images/community-nav.png" alt="" class="nav-icon" />
+                        <span>Community</span>
+                    </a>
+                    <a href="projects.html" class="nav-item">
+                        <img src="images/projects-nav.png" alt="" class="nav-icon" />
+                        <span>Projects</span>
+                    </a>
+                    <a href="article.html" class="nav-item">
+                        <img src="images/article-nav.png" alt="" class="nav-icon" />
+                        <span>Articles</span>
+                    </a>
+                </nav>
+            </div>
+            <div class="sidebar-bottom">
+                <a href="community.html#askforge" class="sidebar-doubt">
+                    <span class="sidebar-doubt-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <path d="M7 8.75C7 7.7835 7.7835 7 8.75 7H15.25C16.2165 7 17 7.7835 17 8.75V12.25C17 13.2165 16.2165 14 15.25 14H12.2L9.5 16.3V14H8.75C7.7835 14 7 13.2165 7 12.25V8.75Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </span>
+                    <span>Having A Doubt ?</span>
+                </a>
+                <button class="logout-btn" id="logoutBtn">
+                    <span class="logout-btn-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <path d="M5 12H16.5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" />
+                            <path d="M12.5 8L16.5 12L12.5 16" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </span>
+                    <span>Log Out</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- ===== MAIN CONTENT ===== -->
+        <main class="main-content">
+            <div class="page-header">
+                <h1 class="page-title">Learning Resources <span class="divider">|</span> <span class="accent">Video Courses</span></h1>
+                <p class="page-subtitle" id="videoCoursesSubtitle">Teacher-curated playlists and course lanes will appear here.</p>
+            </div>
+
+            <div class="courses-grid" id="coursesGrid"></div>
+
+            <div class="load-more-wrap" id="videoCoursesLoadMoreWrap">
+                <button class="load-more-btn" id="videoCoursesLoadMoreBtn">Load More &#8964;</button>
+            </div>
+        </main>
+
+    </div>
+
+    <script type="module" src="video-courses.js"></script>
+</body>
+
+</html>

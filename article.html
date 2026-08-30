@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Articles - HackLab</title>
+    <link rel="icon" type="image/png" href="images/logo.png" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="article.css" />
+</head>
+
+<body>
+    <div class="dashboard-wrapper">
+        <aside class="sidebar">
+            <div class="sidebar-top">
+                <div class="sidebar-logo">
+                    <img src="images/logo.png" alt="HackLab Logo" class="logo-img" />
+                    <span class="logo-text">HackLab</span>
+                </div>
+                <p class="sidebar-label">Dashboard</p>
+                <nav class="sidebar-nav">
+                    <a href="dashboard.html" class="nav-item">
+                        <img src="images/overview.png" alt="" class="nav-icon" />
+                        <span>Overview</span>
+                    </a>
+                    <a href="resources.html" class="nav-item">
+                        <img src="images/resources-nav.png" alt="" class="nav-icon" />
+                        <span>Resources</span>
+                    </a>
+                    <a href="events.html" class="nav-item">
+                        <img src="images/events-nav.png" alt="" class="nav-icon" />
+                        <span>Events</span>
+                    </a>
+                    <a href="community.html" class="nav-item">
+                        <img src="images/community-nav.png" alt="" class="nav-icon" />
+                        <span>Community</span>
+                    </a>
+                    <a href="projects.html" class="nav-item">
+                        <img src="images/projects-nav.png" alt="" class="nav-icon" />
+                        <span>Projects</span>
+                    </a>
+                    <a href="article.html" class="nav-item active">
+                        <img src="images/article-nav.png" alt="" class="nav-icon" />
+                        <span>Articles</span>
+                    </a>
+                </nav>
+            </div>
+            <div class="sidebar-bottom">
+                <a href="community.html#askforge" class="sidebar-doubt">
+                    <span class="sidebar-doubt-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <path d="M7 8.75C7 7.7835 7.7835 7 8.75 7H15.25C16.2165 7 17 7.7835 17 8.75V12.25C17 13.2165 16.2165 14 15.25 14H12.2L9.5 16.3V14H8.75C7.7835 14 7 13.2165 7 12.25V8.75Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </span>
+                    <span>Having A Doubt ?</span>
+                </a>
+                <button class="logout-btn" id="logoutBtn">
+                    <span class="logout-btn-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <path d="M5 12H16.5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" />
+                            <path d="M12.5 8L16.5 12L12.5 16" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </span>
+                    <span>Log Out</span>
+                </button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="article-shell">
+                <div class="content-column">
+                    <section class="composer-card composer-feature glass-panel">
+                        <div class="composer-top">
+                            <div>
+                                <p class="section-kicker">Writer desk</p>
+                                <h2>Write the article before students read the card</h2>
+                                <p class="composer-text">
+                                    Treat this like an edit screen, not a quick caption box. Lead with the real build
+                                    or lesson, then close with the exact takeaway you want students to keep.
+                                </p>
+                            </div>
+                            <div class="editor-status">
+                                <div class="editor-status-item">
+                                    <span>Publishing to</span>
+                                    <strong>Student Articles</strong>
+                                </div>
+                                <div class="editor-status-item">
+                                    <span>Current lane</span>
+                                    <strong id="selectedTopicLabel">Build Log</strong>
+                                </div>
+                                <div class="editor-status-item">
+                                    <span>Structure</span>
+                                    <strong>Lead + takeaway</strong>
+                                </div>
+                            </div>
+                            <button
+                                type="button"
+                                class="article-toggle-btn"
+                                id="toggleArticleComposer"
+                                aria-expanded="true"
+                                aria-controls="articleComposerBody"
+                            >
+                                Minimize
+                            </button>
+                        </div>
+
+                        <div class="article-composer-body" id="articleComposerBody">
+                            <div class="writer-panel">
+                                <img src="images/avatar.png" alt="Writer avatar" class="writer-avatar" id="composerAvatar" />
+                                <div class="writer-profile-copy">
+                                    <span class="writer-label">Active writer</span>
+                                    <strong id="composerName">Student</strong>
+                                    <span class="identity-pill" id="composerIdentity">Writing as Student</span>
+                                </div>
+                            </div>
+
+                            <form class="composer-form" id="articleComposer">
+                                <div class="editor-layout">
+                                <div class="editor-main">
+                                    <label class="field-group field-group-hero">
+                                        <span>Article title</span>
+                                        <input id="articleTitle" type="text" maxlength="90"
+                                            placeholder="Example: What changed after I simplified our AI workflow" />
+                                    </label>
+
+                                    <label class="field-group field-group-story">
+                                        <span>Opening paragraph</span>
+                                        <textarea id="articleSummary" rows="5" maxlength="320"
+                                            placeholder="State what you built, learned, or changed. Keep the opening specific enough that a student immediately understands why this article deserves a click."></textarea>
+                                    </label>
+
+                                    <div class="field-group field-group-body">
+                                        <div class="field-group-head">
+                                            <span>Full article</span>
+                                            <span class="field-helper">Use the toolbar to add bold, code, headings, quotes, and lists.</span>
+                                        </div>
+                                        <div class="format-toolbar" id="articleFormatToolbar">
+                                            <button type="button" class="format-btn" data-format="bold">Bold</button>
+                                            <button type="button" class="format-btn" data-format="italic">Italic</button>
+                                            <button type="button" class="format-btn" data-format="heading">Heading</button>
+                                            <button type="button" class="format-btn" data-format="bullet">List</button>
+                                            <button type="button" class="format-btn" data-format="quote">Quote</button>
+                                            <button type="button" class="format-btn" data-format="code">Code</button>
+                                            <button type="button" class="format-btn" data-format="codeblock">Code block</button>
+                                        </div>
+                                        <textarea id="articleBody" rows="14"
+                                            placeholder="Write the full article here. Example: start with a heading, explain what you built, show the steps you tried, and end with the lesson another student can reuse."></textarea>
+                                    </div>
+
+                                    <label class="field-group field-group-takeaway">
+                                        <span>Writer takeaway</span>
+                                        <textarea id="articleTakeaway" rows="5" maxlength="180"
+                                            placeholder="Write the one clear takeaway students should remember after reading your article."></textarea>
+                                    </label>
+                                </div>
+
+                                <aside class="editor-side">
+                                    <div class="editor-side-block">
+                                        <span class="editor-side-label">Choose a lane</span>
+                                        <div class="topic-grid" id="topicGrid">
+                                            <button type="button" class="topic-chip selected" data-topic="Build Log">Build Log</button>
+                                            <button type="button" class="topic-chip" data-topic="Design Journal">Design Journal</button>
+                                            <button type="button" class="topic-chip" data-topic="Coding Notes">Coding Notes</button>
+                                            <button type="button" class="topic-chip" data-topic="Hackathon Prep">Hackathon Prep</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="writer-guide">
+                                        <div class="writer-guide-item">
+                                            <span>Lead</span>
+                                            <p>Open with the real problem, change, or build. Avoid generic intros.</p>
+                                        </div>
+                                        <div class="writer-guide-item">
+                                            <span>Body</span>
+                                            <p>Use headings, short paragraphs, lists, or code blocks so the full article stays easy to read.</p>
+                                        </div>
+                                        <div class="writer-guide-item">
+                                            <span>Value</span>
+                                            <p>Tell the next student what they will gain by opening the article.</p>
+                                        </div>
+                                        <div class="writer-guide-item">
+                                            <span>Takeaway</span>
+                                            <p>End with the single point that should remain after the article is closed.</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="composer-actions composer-actions-single">
+                                        <button type="submit" class="primary-btn">Publish Student Article</button>
+                                    </div>
+
+                                    <p class="composer-message" id="composerMessage">Your article will publish directly into the live student article feed.</p>
+                                </aside>
+                                </div>
+                            </form>
+                        </div>
+                    </section>
+
+                    <section class="toolbar">
+                        <label class="search-bar glass-panel" for="articleSearch">
+                            <span class="search-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none">
+                                    <circle cx="11" cy="11" r="5.75" stroke="currentColor" stroke-width="1.9" />
+                                    <path d="M16 16L20 20" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" />
+                                </svg>
+                            </span>
+                            <input id="articleSearch" type="search"
+                                placeholder="Search titles, authors, summaries, or topics" />
+                        </label>
+                        <div class="filter-row" id="filterRow">
+                            <button class="filter-chip active" type="button" data-filter="all">All Articles</button>
+                            <button class="filter-chip" type="button" data-filter="authority">Authority</button>
+                            <button class="filter-chip" type="button" data-filter="student">Students</button>
+                            <button class="filter-chip" type="button" data-filter="mine">My Articles</button>
+                        </div>
+                    </section>
+
+                    <section class="section-block">
+                        <div class="section-heading">
+                            <div>
+                                <p class="section-kicker">Highlighted for every student</p>
+                                <h2>HackLab Authority Picks</h2>
+                            </div>
+                            <span class="section-note">Gold cards stay elevated so official guidance never gets lost.</span>
+                        </div>
+
+                        <div class="authority-layout">
+                            <article class="authority-feature glass-panel" id="authorityFeature"></article>
+                            <div class="authority-stack" id="authorityList"></div>
+                        </div>
+                    </section>
+
+                    <section class="section-block feed-block" id="feedBlock">
+                        <div class="section-heading">
+                            <div>
+                                <p class="section-kicker" id="feedKicker">Discover and create</p>
+                                <h2 id="feedHeading">Articles from the HackLab network</h2>
+                            </div>
+                            <span class="section-note" id="feedMeta">Loading articles</span>
+                        </div>
+
+                        <div class="article-feed" id="articleFeed"></div>
+                    </section>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script type="module" src="article.js"></script>
+</body>
+
+</html>

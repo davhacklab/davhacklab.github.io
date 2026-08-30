@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projects - HackLab</title>
+  <link rel="icon" type="image/png" href="images/logo.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="projects.css?v=20260326b" />
+</head>
+
+<body>
+  <div class="dashboard-wrapper">
+    <aside class="sidebar">
+      <div class="sidebar-top">
+        <div class="sidebar-logo">
+          <img src="images/logo.png" alt="HackLab Logo" class="logo-img" />
+          <span class="logo-text">HackLab</span>
+        </div>
+        <p class="sidebar-label">Dashboard</p>
+        <nav class="sidebar-nav">
+          <a href="dashboard.html" class="nav-item">
+            <img src="images/overview.png" alt="" class="nav-icon" />
+            <span>Overview</span>
+          </a>
+          <a href="resources.html" class="nav-item">
+            <img src="images/resources-nav.png" alt="" class="nav-icon" />
+            <span>Resources</span>
+          </a>
+          <a href="events.html" class="nav-item">
+            <img src="images/events-nav.png" alt="" class="nav-icon" />
+            <span>Events</span>
+          </a>
+          <a href="community.html" class="nav-item">
+            <img src="images/community-nav.png" alt="" class="nav-icon" />
+            <span>Community</span>
+          </a>
+          <a href="projects.html" class="nav-item active">
+            <img src="images/projects-nav.png" alt="" class="nav-icon" />
+            <span>Projects</span>
+          </a>
+          <a href="article.html" class="nav-item">
+            <img src="images/article-nav.png" alt="" class="nav-icon" />
+            <span>Articles</span>
+          </a>
+        </nav>
+      </div>
+      <div class="sidebar-bottom">
+        <a href="community.html#askforge" class="sidebar-doubt">
+          <span class="sidebar-doubt-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path
+                d="M7 8.75C7 7.7835 7.7835 7 8.75 7H15.25C16.2165 7 17 7.7835 17 8.75V12.25C17 13.2165 16.2165 14 15.25 14H12.2L9.5 16.3V14H8.75C7.7835 14 7 13.2165 7 12.25V8.75Z"
+                stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </span>
+          <span>Having A Doubt ?</span>
+        </a>
+        <button class="logout-btn" id="logoutBtn">
+          <span class="logout-btn-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M5 12H16.5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" />
+              <path d="M12.5 8L16.5 12L12.5 16" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </span>
+          <span>Log Out</span>
+        </button>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <div class="projects-layout">
+        <div class="center-column">
+          <section class="projects-hero glass-panel">
+            <div class="hero-copy">
+              <p class="eyebrow">Build Gallery</p>
+              <h1>Open the best student builds fast.</h1>
+              <p class="hero-text">
+                Less scrolling. Clearer cards. Strong work up front.
+              </p>
+              <div class="hero-pills">
+                <span class="hero-pill hero-pill-accent">Top student builds</span>
+                <span class="hero-pill">Quick portfolio browse</span>
+              </div>
+            </div>
+            <div class="hero-stats">
+              <div class="hero-stat">
+                <span class="hero-stat-label">Showcased</span>
+                <strong>24</strong>
+                <span class="hero-stat-sub">active project cards</span>
+              </div>
+              <div class="hero-stat">
+                <span class="hero-stat-label">Collab ready</span>
+                <strong>08</strong>
+                <span class="hero-stat-sub">teams open for feedback</span>
+              </div>
+            </div>
+          </section>
+
+          <div class="search-row">
+            <div class="search-bar">
+              <span class="search-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <circle cx="11" cy="11" r="5.75" stroke="currentColor" stroke-width="1.9" />
+                  <path d="M16 16L20 20" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" />
+                </svg>
+              </span>
+              <input type="text" placeholder="Search projects, tools, creators, or tracks" class="search-input"
+                id="projectsSearchInput" />
+            </div>
+            <div class="filter-pills" id="projectFilterPills">
+              <span class="filter-pill active" data-filter="featured">Featured</span>
+              <span class="filter-pill" data-filter="ui/ux">UI/UX</span>
+              <span class="filter-pill" data-filter="ai">AI</span>
+              <span class="filter-pill" data-filter="build">All</span>
+            </div>
+          </div>
+
+          <section class="project-upload-card glass-panel" id="projectUploadSection">
+            <div class="upload-card-head">
+              <div class="upload-copy">
+                <p class="section-kicker">Project composer</p>
+                <h2>Add a live project card</h2>
+                <p>
+                  Share a valid Netlify build, then add any accepted
+                  collaborators before publishing the project card.
+                </p>
+              </div>
+              <button type="button" class="upload-toggle-btn" id="toggleProjectUpload" aria-expanded="true"
+                aria-controls="projectUploadBody">
+                Minimize
+              </button>
+            </div>
+
+            <div class="project-upload-body" id="projectUploadBody">
+              <div class="selected-collaborators-panel" id="selectedCollaboratorsPanel" hidden>
+                <div class="selected-collaborators-head">
+                  <div>
+                    <p class="section-kicker">Accepted teammates</p>
+                    <h3>Attached to this draft</h3>
+                  </div>
+                  <span id="selectedCollaboratorsMeta">Accepted collaborators will appear here once you add
+                    them.</span>
+                </div>
+                <div class="selected-collaborators-list" id="selectedCollaboratorsList"></div>
+              </div>
+
+              <form class="project-upload-form" id="projectUploadForm">
+                <label class="upload-field">
+                  <span>Project heading</span>
+                  <input type="text" id="projectTitleInput" maxlength="90"
+                    placeholder="Example: Card Design System for HackLab" />
+                </label>
+                <label class="upload-field">
+                  <span>Short description</span>
+                  <textarea id="projectSummaryInput" rows="4" maxlength="260"
+                    placeholder="State what the project does, why it matters, and what makes it worth opening."></textarea>
+                </label>
+                <div class="upload-field upload-lane-field">
+                  <span>Choose a lane</span>
+                  <div id="projectLaneOptions" class="upload-lane-options" role="radiogroup"
+                    aria-label="Choose project lane">
+                    <label class="upload-lane-option">
+                      <input type="radio" name="projectLane" value="UI/UX" checked />
+                      <span>UI/UX</span>
+                    </label>
+                    <label class="upload-lane-option">
+                      <input type="radio" name="projectLane" value="AI" />
+                      <span>AI</span>
+                    </label>
+                    <label class="upload-lane-option">
+                      <input type="radio" name="projectLane" value="Build Logs" />
+                      <span>Build Logs</span>
+                    </label>
+                    <label class="upload-lane-option is-custom" data-custom-lane="true" hidden>
+                      <input type="radio" name="projectLane" value="" />
+                      <span></span>
+                    </label>
+                  </div>
+                  <div class="upload-lane-tools">
+                    <button type="button" class="upload-lane-add" id="addProjectLaneBtn">
+                      Add lane
+                    </button>
+                    <div class="upload-lane-custom" id="customProjectLaneWrap" hidden>
+                      <input type="text" id="customProjectLaneInput" maxlength="28" placeholder="Example: Robotics" />
+                      <button type="button" class="upload-lane-save" id="saveProjectLaneBtn">
+                        Use lane
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <label class="upload-field upload-field-link">
+                  <span>Netlify link</span>
+                  <input type="url" id="projectNetlifyInput" maxlength="220" inputmode="url"
+                    placeholder="https://your-project.netlify.app" />
+                </label>
+                <div class="upload-actions">
+                  <p class="upload-message" id="projectUploadMessage">
+                    Only live .netlify.app links are accepted here.
+                  </p>
+                  <button type="submit" class="upload-submit-btn">
+                    Add Project
+                  </button>
+                </div>
+              </form>
+            </div>
+          </section>
+
+          <div class="projects-grid" id="projectsGrid"></div>
+        </div>
+
+        <aside class="right-sidebar">
+          <div class="right-rail-heading">
+            <h2>Your Collaboration</h2>
+            <span class="rail-heading-dot" aria-hidden="true"></span>
+          </div>
+
+          <div class="search-bar right-search">
+            <span class="search-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <circle cx="11" cy="11" r="5.75" stroke="currentColor" stroke-width="1.9" />
+                <path d="M16 16L20 20" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" />
+              </svg>
+            </span>
+            <input type="text" placeholder="Search anything" class="search-input" id="projectsSidebarSearch" />
+          </div>
+
+          <div class="progress-widget glass-panel" id="projectPulse">
+            <p class="section-kicker">Project pulse</p>
+            <div class="pulse-row">
+              <span>Ready now</span>
+              <strong>05</strong>
+            </div>
+            <div class="pulse-row">
+              <span>In review</span>
+              <strong>03</strong>
+            </div>
+            <div class="pulse-row">
+              <span>Collab-ready</span>
+              <strong>08</strong>
+            </div>
+          </div>
+
+          <nav class="sidebar-actions">
+            <button type="button" class="action-item action-item-view" id="openProjectComposer">
+              <span class="action-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <rect x="4.5" y="5" width="6.5" height="6.5" rx="1.6" stroke="currentColor" stroke-width="1.7" />
+                  <rect x="13" y="5" width="6.5" height="4.5" rx="1.6" stroke="currentColor" stroke-width="1.7" />
+                  <rect x="13" y="11.5" width="6.5" height="7.5" rx="1.6" stroke="currentColor" stroke-width="1.7" />
+                  <rect x="4.5" y="13.5" width="6.5" height="5.5" rx="1.6" stroke="currentColor" stroke-width="1.7" />
+                </svg>
+              </span>
+              <span class="action-copy">
+                <span class="action-label">Your Work</span>
+                <span class="action-subtext">Projects you published</span>
+              </span>
+              <span class="action-meta" id="yourWorkCount">00</span>
+              <span class="action-arrow" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M9 6.5L14.5 12L9 17.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg>
+              </span>
+            </button>
+            <button type="button" class="action-item action-item-view" id="openFavouriteProjects">
+              <span class="action-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M7.5 5.5H16.5A1.5 1.5 0 0 1 18 7V19L12 15.5L6 19V7A1.5 1.5 0 0 1 7.5 5.5Z"
+                    stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" />
+                </svg>
+              </span>
+              <span class="action-copy">
+                <span class="action-label">Favourites</span>
+                <span class="action-subtext">Saved project picks</span>
+              </span>
+              <span class="action-meta" id="favouritesCount">00</span>
+              <span class="action-arrow" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M9 6.5L14.5 12L9 17.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg>
+              </span>
+            </button>
+            <button type="button" class="action-item action-item-view" id="openTrendingProjects">
+              <span class="action-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M6 16L11 11L14 14L19 9" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                  <path d="M15 9H19V13" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg>
+              </span>
+              <span class="action-copy">
+                <span class="action-label">Trending</span>
+                <span class="action-subtext">Top liked right now</span>
+              </span>
+              <span class="action-meta" id="trendingCount">00</span>
+              <span class="action-arrow" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M9 6.5L14.5 12L9 17.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg>
+              </span>
+            </button>
+            <button type="button" class="action-item action-item-highlight action-item-toggle" id="openCollaboratePanel"
+              aria-expanded="false" aria-controls="collabWidget">
+              <span class="action-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M9.5 11.75A2.75 2.75 0 1 0 9.5 6.25A2.75 2.75 0 0 0 9.5 11.75Z" stroke="currentColor"
+                    stroke-width="1.7" />
+                  <path d="M16.5 10.5A2.25 2.25 0 1 0 16.5 6" stroke="currentColor" stroke-width="1.7"
+                    stroke-linecap="round" />
+                  <path d="M4.75 18.25C5.18 15.8 7.17 14 9.65 14H10.35C12.83 14 14.82 15.8 15.25 18.25"
+                    stroke="currentColor" stroke-width="1.7" stroke-linecap="round" />
+                  <path d="M14.75 14.75H16.1C18.09 14.75 19.57 16.04 19.95 17.9" stroke="currentColor"
+                    stroke-width="1.7" stroke-linecap="round" />
+                </svg>
+              </span>
+              <span class="action-copy">
+                <span class="action-label">Collaborate</span>
+                <span class="action-subtext">Find project partners</span>
+              </span>
+              <span class="action-meta" id="collabCountPill">00</span>
+              <span class="action-arrow" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M9 6.5L14.5 12L9 17.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg>
+              </span>
+            </button>
+          </nav>
+
+          <section class="collab-widget glass-panel" id="collabWidget" hidden>
+            <div class="collab-intro">
+              <div class="collab-intro-head">
+                <div>
+                  <p class="section-kicker">Collaboration matches</p>
+                  <p class="collab-note">
+                    Only students who marked themselves open to collaborate
+                    show up here.
+                  </p>
+                </div>
+                <div class="collab-availability-toggle">
+                  <span>Open to collaborate</span>
+                  <label class="collab-switch" for="collabAvailabilityToggle" aria-label="Open to collaborate">
+                    <input type="checkbox" id="collabAvailabilityToggle" />
+                    <span class="collab-switch-track">
+                      <span class="collab-switch-knob"></span>
+                    </span>
+                  </label>
+                </div>
+              </div>
+              <label class="collab-search">
+                <span class="search-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <circle cx="11" cy="11" r="5.75" stroke="currentColor" stroke-width="1.9" />
+                    <path d="M16 16L20 20" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" />
+                  </svg>
+                </span>
+                <input type="text" id="collabSearchInput" placeholder="Search open collaborators" />
+              </label>
+            </div>
+            <div class="collab-list">
+              <article class="collab-card">
+                <div class="collab-copy">
+                  <h4>Aviral Tyagi</h4>
+                  <p>AI Workflow</p>
+                  <span class="collab-context">Recent: VoicePal Assistant</span>
+                </div>
+                <button class="collab-request-btn" type="button">
+                  Request
+                </button>
+              </article>
+            </div>
+          </section>
+        </aside>
+      </div>
+    </main>
+  </div>
+
+  <script type="module" src="projects.js?v=20260326b"></script>
+</body>
+
+</html>

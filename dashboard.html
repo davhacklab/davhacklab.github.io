@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard - HackLab</title>
+    <link rel="icon" type="image/png" href="images/logo.png" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="dashboard.css" />
+  </head>
+
+  <body>
+    <div class="dashboard-wrapper">
+      <aside class="sidebar">
+        <div class="sidebar-top">
+          <div class="sidebar-logo">
+            <img src="images/logo.png" alt="HackLab Logo" class="logo-img" />
+            <span class="logo-text">HackLab</span>
+          </div>
+          <p class="sidebar-label">Dashboard</p>
+          <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item active">
+              <img src="images/overview.png" alt="" class="nav-icon" />
+              <span>Overview</span>
+            </a>
+            <a href="resources.html" class="nav-item">
+              <img src="images/resources-nav.png" alt="" class="nav-icon" />
+              <span>Resources</span>
+            </a>
+            <a href="events.html" class="nav-item">
+              <img src="images/events-nav.png" alt="" class="nav-icon" />
+              <span>Events</span>
+            </a>
+            <a href="community.html" class="nav-item">
+              <img src="images/community-nav.png" alt="" class="nav-icon" />
+              <span>Community</span>
+            </a>
+            <a href="projects.html" class="nav-item">
+              <img src="images/projects-nav.png" alt="" class="nav-icon" />
+              <span>Projects</span>
+            </a>
+            <a href="article.html" class="nav-item">
+              <img src="images/article-nav.png" alt="" class="nav-icon" />
+              <span>Articles</span>
+            </a>
+          </nav>
+        </div>
+
+        <div class="sidebar-bottom">
+          <a href="community.html#askforge" class="sidebar-doubt">
+            <span class="doubt-icon" aria-hidden="true"></span>
+            <span>Having a doubt</span>
+          </a>
+          <button class="logout-btn" id="logoutBtn" type="button">
+            <span class="logout-icon" aria-hidden="true"></span>
+            <span>Log Out</span>
+          </button>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <div class="greeting">
+          <h1>Hello <strong id="userName">HackLab Student</strong></h1>
+          <p id="dashboardGreetingCopy">
+            Your dashboard is syncing with your latest profile and teacher
+            updates.
+          </p>
+        </div>
+
+        <section class="banner-card">
+          <div class="banner-text">
+            <p class="banner-kicker" id="heroKicker">Teacher sync</p>
+            <h2 id="heroTitle">
+              Your next live learning moment will show up here.
+            </h2>
+            <p id="heroSummary">
+              As sessions are published, this hero area will turn into a quick
+              launch point for the next class.
+            </p>
+            <div class="banner-meta" id="heroMeta">
+              <span class="banner-meta-chip">Loading session details</span>
+            </div>
+            <div class="banner-actions">
+              <button class="btn-join" id="heroPrimaryBtn" type="button">
+                Open Events
+              </button>
+              <a
+                class="btn-arrow"
+                id="heroSecondaryLink"
+                href="events.html"
+                aria-label="Open events"
+              >
+                <img src="images/Arrow up-right.png" alt="" />
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <section class="stats-row">
+          <div class="stat-card" data-route="video-courses.html" tabindex="0" role="link" aria-label="Open video courses">
+            <img src="images/learning 1.png" alt="" class="stat-icon" />
+            <div class="stat-number" id="completedCoursesCount">0</div>
+            <div class="stat-label">Courses</div>
+            <div class="stat-sub">(completed)</div>
+          </div>
+          <div class="stat-card" data-route="events.html" tabindex="0" role="link" aria-label="Open events">
+            <img src="images/events.png" alt="" class="stat-icon" />
+            <div class="stat-number" id="attendedEventsCount">0</div>
+            <div class="stat-label">Events</div>
+            <div class="stat-sub">(attended)</div>
+          </div>
+          <div class="stat-card" data-route="projects.html" tabindex="0" role="link" aria-label="Open projects">
+            <img src="images/projects.png" alt="" class="stat-icon" />
+            <div class="stat-number" id="submittedProjectsCount">0</div>
+            <div class="stat-label">Projects</div>
+            <div class="stat-sub">(submitted)</div>
+          </div>
+          <div class="stat-card" data-route="#action-queue" tabindex="0" role="link" aria-label="Open action queue">
+            <img src="images/assignments.png" alt="" class="stat-icon" />
+            <div class="stat-number" id="completedAssignmentsCount">0</div>
+            <div class="stat-label">Assignments</div>
+            <div class="stat-sub">(completed)</div>
+          </div>
+        </section>
+
+        <section class="rank-section">
+          <div class="rank-header">
+            <div class="rank-title">
+              <h3>Rank Enhancement Tasks</h3>
+              <p>Teacher-published checkpoints for your next jump</p>
+            </div>
+            <div class="rank-badges">
+              <span class="badge badge-green"
+                ><span class="badge-dot"></span>Beginner</span
+              >
+              <span class="badge badge-yellow"
+                ><span class="badge-dot"></span>Intermediate</span
+              >
+              <span class="badge badge-red"
+                ><span class="badge-dot"></span>Expert</span
+              >
+            </div>
+          </div>
+
+          <div id="taskCards"></div>
+        </section>
+
+        <section class="focus-section">
+          <div class="focus-grid">
+            <article class="focus-card">
+              <div class="focus-card-head">
+                <div>
+                  <p class="section-kicker">Learning focus</p>
+                  <h3>Progress tracker</h3>
+                </div>
+                <span class="focus-pill" id="progressSummaryPill"
+                  >00 active</span
+                >
+              </div>
+              <div class="progress-list" id="progressList"></div>
+            </article>
+
+            <article class="focus-card" id="action-queue">
+              <div class="focus-card-head">
+                <div>
+                  <p class="section-kicker">Assignments</p>
+                  <h3>Action queue</h3>
+                </div>
+                <span class="focus-pill" id="assignmentSummaryPill"
+                  >00 open</span
+                >
+              </div>
+              <div class="assignment-list" id="assignmentList"></div>
+            </article>
+          </div>
+        </section>
+      </main>
+
+      <aside class="right-panel">
+        <section class="profile-card">
+          <div class="profile-header">
+            <h2>Profile</h2>
+            <button class="edit-icon-btn" id="profileEditBtn" type="button" aria-label="Edit profile">
+              <img src="images/Edit.png" alt="" class="edit-icon" />
+            </button>
+          </div>
+          <div class="profile-avatar-wrap">
+            <img
+              src="images/avatar.png"
+              alt="HackLab Student"
+              class="profile-avatar"
+              id="profileAvatar"
+            />
+          </div>
+          <div class="profile-name-wrap">
+            <h3 class="profile-name" id="profileName">HackLab Student</h3>
+            <span class="profile-verified-badge" id="profileVerifiedBadge" hidden aria-label="Verified" title="Verified">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path class="verified-shield" d="M12 1.8l2.62 2.2 3.39-.34 1.56 3.03 3.03 1.56-.34 3.39L24.2 12l-2.2 2.62.34 3.39-3.03 1.56-1.56 3.03-3.39-.34L12 24.2l-2.62-2.2-3.39.34-1.56-3.03-3.03-1.56.34-3.39L-.2 12l2.2-2.62-.34-3.39 3.03-1.56 1.56-3.03 3.39.34L12 1.8z"></path>
+                <path class="verified-check" d="M9.9 15.85L6.65 12.6l1.56-1.56 1.69 1.69 4.89-4.89 1.56 1.56-6.45 6.45z"></path>
+              </svg>
+            </span>
+          </div>
+          <p class="profile-subtitle" id="profileSubtitle">Starter Track</p>
+          <p class="profile-email" id="profileEmail">Loading profile</p>
+          <div class="profile-chip-row" id="profileQuickStats"></div>
+          <div class="profile-tags" id="profileTags"></div>
+        </section>
+
+        <section class="calendar-section">
+          <div class="calendar-header">
+            <button class="cal-nav" id="calPrev" type="button">&larr;</button>
+            <span class="cal-title" id="calTitle">March 2026</span>
+            <button class="cal-nav" id="calNext" type="button">&rarr;</button>
+          </div>
+          <div class="calendar-day-row" id="calendarDayRow"></div>
+        </section>
+
+        <section class="collab-inbox-panel">
+          <div class="collab-inbox-head">
+            <div>
+              <p class="section-kicker">Collaboration inbox</p>
+              <h3>Project requests</h3>
+            </div>
+            <span class="collab-inbox-count" id="collabInboxCount">00</span>
+          </div>
+          <div class="collab-inbox-list" id="collabInboxList"></div>
+          <div class="collab-network-list" id="collabNetworkList"></div>
+        </section>
+      </aside>
+    </div>
+
+    <div class="profile-edit-modal" id="profileEditModal" hidden>
+      <div class="profile-edit-backdrop" data-profile-dismiss></div>
+      <div class="profile-edit-shell" role="dialog" aria-modal="true" aria-labelledby="profileEditTitle">
+        <button class="profile-edit-close" id="profileEditClose" type="button" aria-label="Close profile editor">
+          Close
+        </button>
+        <div class="profile-edit-surface">
+          <div class="profile-edit-head">
+            <div>
+              <p class="section-kicker">Personal details</p>
+              <h2 id="profileEditTitle">Update your profile</h2>
+            </div>
+            <p class="profile-edit-copy" id="profileVerifyStatus">
+              Fill the core details to unlock a verified-style badge on your dashboard.
+            </p>
+          </div>
+
+          <form class="profile-edit-form" id="profileEditForm">
+            <div class="profile-edit-grid">
+              <label class="profile-field">
+                <span>Display name</span>
+                <input type="text" id="profileEditName" required />
+              </label>
+              <label class="profile-field">
+                <span>Contact email</span>
+                <input type="email" id="profileEditEmail" />
+              </label>
+              <label class="profile-field">
+                <span>Headline</span>
+                <input type="text" id="profileEditHeadline" placeholder="Frontend builder and presentation mentor" />
+              </label>
+              <label class="profile-field">
+                <span>School / Organization</span>
+                <input type="text" id="profileEditSchool" placeholder="DAV HackLab" />
+              </label>
+              <label class="profile-field">
+                <span>Track</span>
+                <input type="text" id="profileEditTrack" placeholder="UI/UX, Coding, AI" />
+              </label>
+              <label class="profile-field">
+                <span>Location</span>
+                <input type="text" id="profileEditLocation" placeholder="Noida, India" />
+              </label>
+              <label class="profile-field">
+                <span>Phone</span>
+                <input type="text" id="profileEditPhone" placeholder="+91 ..." />
+              </label>
+              <label class="profile-field">
+                <span>Portfolio</span>
+                <input type="url" id="profileEditPortfolio" placeholder="https://..." />
+              </label>
+            </div>
+
+            <label class="profile-field">
+              <span>About</span>
+              <textarea id="profileEditBio" rows="5" placeholder="Share what you are building, learning, and looking to collaborate on."></textarea>
+            </label>
+
+            <div class="profile-edit-actions">
+              <span class="profile-edit-feedback" id="profileEditFeedback"></span>
+              <button class="profile-edit-secondary" id="profileEditCancel" type="button">
+                Cancel
+              </button>
+              <button class="profile-edit-primary" type="submit">
+                Save details
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="dashboard-announcement-modal" id="dashboardAnnouncementModal" hidden>
+      <div class="dashboard-announcement-backdrop" data-announcement-dismiss></div>
+      <div class="dashboard-announcement-shell" role="dialog" aria-modal="true" aria-labelledby="dashboardAnnouncementTitle">
+        <button class="dashboard-announcement-close" id="dashboardAnnouncementClose" type="button" aria-label="Close announcement">
+          Close
+        </button>
+        <div class="dashboard-announcement-surface">
+          <div class="dashboard-announcement-media">
+            <img id="dashboardAnnouncementImage" src="images/class.png" alt="Announcement image" />
+          </div>
+          <div class="dashboard-announcement-content">
+            <p class="dashboard-announcement-eyebrow" id="dashboardAnnouncementEyebrow">Latest announcement</p>
+            <h2 id="dashboardAnnouncementTitle">No announcement is live right now.</h2>
+            <p class="dashboard-announcement-summary" id="dashboardAnnouncementSummary">
+              Teacher updates will appear here first when a new dashboard announcement is published.
+            </p>
+            <div class="dashboard-announcement-details" id="dashboardAnnouncementDetails"></div>
+            <div class="dashboard-announcement-actions">
+              <button class="dashboard-announcement-primary" id="dashboardAnnouncementAction" type="button">
+                Open details
+              </button>
+              <button class="dashboard-announcement-secondary" id="dashboardAnnouncementDismiss" type="button">
+                Continue to dashboard
+              </button>
+            </div>
+            <p class="dashboard-announcement-updated" id="dashboardAnnouncementUpdated">
+              Waiting for the next teacher update
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="dashboard.js"></script>
+  </body>
+</html>

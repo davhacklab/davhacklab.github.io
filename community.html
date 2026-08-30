@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Community - HackLab</title>
+    <link rel="icon" type="image/png" href="images/logo.png" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="community.css" />
+  </head>
+
+  <body>
+    <div class="dashboard-wrapper">
+      <button
+        class="community-menu-toggle"
+        id="communityMenuToggle"
+        type="button"
+        aria-label="Open navigation"
+        aria-expanded="false"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <div
+        class="community-sidebar-backdrop"
+        id="communitySidebarBackdrop"
+        hidden
+      ></div>
+
+      <aside class="sidebar" id="communitySidebar">
+        <div class="sidebar-top">
+          <div class="sidebar-logo">
+            <img src="images/logo.png" alt="HackLab Logo" class="logo-img" />
+            <span class="logo-text">HackLab</span>
+          </div>
+          <p class="sidebar-label">Dashboard</p>
+          <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item">
+              <img src="images/overview.png" alt="" class="nav-icon" />
+              <span>Overview</span>
+            </a>
+            <a href="resources.html" class="nav-item">
+              <img src="images/resources-nav.png" alt="" class="nav-icon" />
+              <span>Resources</span>
+            </a>
+            <a href="events.html" class="nav-item">
+              <img src="images/events-nav.png" alt="" class="nav-icon" />
+              <span>Events</span>
+            </a>
+            <a href="community.html" class="nav-item active">
+              <img src="images/community-nav.png" alt="" class="nav-icon" />
+              <span>Community</span>
+            </a>
+            <a href="projects.html" class="nav-item">
+              <img src="images/projects-nav.png" alt="" class="nav-icon" />
+              <span>Projects</span>
+            </a>
+            <a href="article.html" class="nav-item">
+              <img src="images/article-nav.png" alt="" class="nav-icon" />
+              <span>Articles</span>
+            </a>
+          </nav>
+        </div>
+        <div class="sidebar-bottom">
+          <a href="community.html#askforge" class="sidebar-doubt">
+            <span class="sidebar-doubt-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M7 8.75C7 7.7835 7.7835 7 8.75 7H15.25C16.2165 7 17 7.7835 17 8.75V12.25C17 13.2165 16.2165 14 15.25 14H12.2L9.5 16.3V14H8.75C7.7835 14 7 13.2165 7 12.25V8.75Z"
+                  stroke="currentColor"
+                  stroke-width="1.7"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </span>
+            <span>Having A Doubt ?</span>
+          </a>
+          <button class="logout-btn" id="logoutBtn">
+            <span class="logout-btn-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M5 12H16.5"
+                  stroke="currentColor"
+                  stroke-width="1.9"
+                  stroke-linecap="round"
+                />
+                <path
+                  d="M12.5 8L16.5 12L12.5 16"
+                  stroke="currentColor"
+                  stroke-width="1.9"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </span>
+            <span>Log Out</span>
+          </button>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <div class="community-mobile-bar">
+          <div class="community-mobile-brand">
+            <img src="images/logo.png" alt="HackLab Logo" class="logo-img" />
+            <div class="community-mobile-brand-copy">
+              <span class="community-mobile-kicker">HackLab</span>
+              <span class="community-mobile-title">Community</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="community-layout">
+          <div class="feed-column">
+            <div class="feed-header">
+              <div class="toggle-tabs">
+                <button class="t-tab active" data-tab="general">General</button>
+                <button class="t-tab" data-tab="askforge">AskForge</button>
+              </div>
+            </div>
+
+            <div class="create-post-box single-row">
+              <div class="post-left">
+                <img
+                  src="images/avi.png"
+                  alt="User"
+                  class="post-avatar"
+                  id="composerAvatar"
+                />
+                <input
+                  type="text"
+                  class="post-input"
+                  placeholder="How was your Day ?"
+                />
+              </div>
+              <div class="post-right">
+                <input
+                  type="file"
+                  id="imageUpload"
+                  style="display: none"
+                  accept="image/*,video/*"
+                />
+                <button class="btn-icon" id="btnUploadGif">
+                  <span class="icon-gif" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none">
+                      <path
+                        d="M12 15.5V5.5"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                      ></path>
+                      <path
+                        d="M8.5 9L12 5.5L15.5 9"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      ></path>
+                      <path
+                        d="M5.5 15.5V17.25C5.5 18.2165 6.2835 19 7.25 19H16.75C17.7165 19 18.5 18.2165 18.5 17.25V15.5"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                      ></path>
+                    </svg>
+                  </span>
+                  <span>Upload</span>
+                </button>
+                <button class="btn-post">
+                  Post <span class="post-arrow">></span>
+                </button>
+              </div>
+            </div>
+
+            <div id="view-general" class="feed-view active">
+              <div class="post-feed"></div>
+            </div>
+
+            <div id="view-askforge" class="feed-view">
+              <div class="askforge-header" id="askforge">
+                <div class="search-summary">
+                  <h2 class="question-count">21,45,735 Questions</h2>
+                  <div class="filter-pills">
+                    <button
+                      class="filter-pill active"
+                      data-question-filter="newest"
+                    >
+                      Newest
+                    </button>
+                    <button
+                      class="filter-pill"
+                      data-question-filter="unanswered"
+                    >
+                      Unanswered
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="question-composer">
+                <div class="question-composer-head">
+                  <div>
+                    <p class="section-kicker">Ask Your Doubt</p>
+                    <p class="question-composer-note">
+                      Describe the error clearly so the community can understand
+                      it and answer faster.
+                    </p>
+                  </div>
+                  <button class="ask-question-btn" type="button">
+                    Ask Question
+                  </button>
+                </div>
+                <div class="question-form-grid">
+                  <input
+                    type="text"
+                    class="question-title-input"
+                    placeholder="Short title for your question (optional)"
+                  />
+                  <textarea
+                    class="question-description-input"
+                    placeholder="Describe the error, what you already tried, and where the issue happens."
+                  ></textarea>
+                </div>
+                <div class="question-form-actions">
+                  <span class="question-form-message"
+                    >Your doubt will appear below as soon as you post it.</span
+                  >
+                </div>
+              </div>
+
+              <div class="question-list">
+                <div class="question-card">
+                  <div class="q-left">
+                    <img src="images/tejas.png" alt="User" class="q-avatar" />
+                    <div class="q-info">
+                      <h3 class="q-title">
+                        Does anyone recognise this Build Error when compiling
+                        for Windows Desktop?
+                      </h3>
+                      <p class="q-meta">by Tejas Sharma, asked 2 mins ago</p>
+                    </div>
+                  </div>
+                  <button class="btn-answer">Answer</button>
+                </div>
+                <div class="question-card">
+                  <div class="q-left">
+                    <img src="images/tejas.png" alt="User" class="q-avatar" />
+                    <div class="q-info">
+                      <h3 class="q-title">
+                        Does anyone recognise this Build Error when compiling
+                        for Windows Desktop?
+                      </h3>
+                      <p class="q-meta">by Tejas Sharma, asked 2 mins ago</p>
+                    </div>
+                  </div>
+                  <button class="btn-answer">Answer</button>
+                </div>
+              </div>
+            </div>
+
+            <div id="view-answer" class="feed-view">
+              <div class="question-detail-card">
+                <div class="qd-header">
+                  <img src="images/tejas.png" alt="User" class="qd-avatar" />
+                  <h2 class="qd-title">
+                    Does anyone recognise this Build Error when compiling for
+                    Windows Desktop?
+                  </h2>
+                </div>
+                <div class="qd-body">
+                  <p class="qd-description">
+                    Description - The compiler tripped over a dangling reference
+                    in the project configuration, like a ghost file path
+                    pointing to nowhere. It's as if the build system tried to
+                    open a locked door with the wrong key, and instead of
+                    explaining politely, it just shouted 'Build Error!' and
+                    slammed shut.
+                  </p>
+                </div>
+              </div>
+
+              <div class="answer-input-container">
+                <textarea
+                  class="answer-textarea"
+                  placeholder="Type your answer here!"
+                ></textarea>
+                <div class="answer-submit-row">
+                  <button class="answer-submit-btn" type="button">
+                    Post Answer
+                  </button>
+                </div>
+              </div>
+
+              <div class="other-answers-section">
+                <div class="oa-header">
+                  <h3>Other Answers</h3>
+                  <div class="oa-filters">
+                    <button class="oa-filter active">Relevant</button>
+                    <button class="oa-filter">Latest</button>
+                  </div>
+                </div>
+                <div class="oa-list">
+                  <div class="oa-card">
+                    <p class="oa-text">
+                      Desktop builds in Codename One have always been a
+                      pro-account only feature. You can use the free jar desktop
+                      target which is a part of the maven build and lets you
+                      build a universal jar of the application.
+                    </p>
+                    <p class="oa-author">by - Aviral Tyagi</p>
+                  </div>
+                  <div class="oa-card">
+                    <p class="oa-text">
+                      Desktop builds in Codename One have always been a
+                      pro-account only feature. You can use the free jar desktop
+                      target which is a part of the maven build and lets you
+                      build a universal jar of the application.
+                    </p>
+                    <p class="oa-author">by - Aviral Tyagi</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="widgets-column">
+            <div class="search-widget-new">
+              <span class="search-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <circle
+                    cx="11"
+                    cy="11"
+                    r="5.75"
+                    stroke="currentColor"
+                    stroke-width="1.9"
+                  ></circle>
+                  <path
+                    d="M16 16L20 20"
+                    stroke="currentColor"
+                    stroke-width="1.9"
+                    stroke-linecap="round"
+                  ></path>
+                </svg>
+              </span>
+              <input
+                type="text"
+                placeholder="Search Anything"
+                class="search-input"
+                id="communitySearchInput"
+              />
+            </div>
+
+            <div class="widget-box premium-card">
+              <h3 class="widget-title">Notifications</h3>
+              <div class="notif-list" aria-live="polite"></div>
+            </div>
+
+            <div class="widget-box premium-card">
+              <h3 class="widget-title">#Trending Things</h3>
+              <div class="trending-grid"></div>
+            </div>
+
+            <div class="widget-box premium-card">
+              <h3 class="widget-title">Famous Doubts</h3>
+              <div class="famous-doubts-list"></div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script type="module" src="community.js"></script>
+  </body>
+</html>

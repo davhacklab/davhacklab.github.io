@@ -1,0 +1,16 @@
+{
+  "host": "571e1f93-bd40-4d6b-9c3b-15d50a972439-us-east1.db.astra.datastax.com",
+  "port": 29080,
+  "cql_port": 29042,
+  "keyspace": "hacklab",
+  "localDC": "us-east1",
+  "caCertLocation": "./ca.crt",
+  "keyLocation": "./key",
+  "certLocation": "./cert",
+  "keyStoreLocation": "./identity.jks",
+  "keyStorePassword": "swV2tELRrbH3nT546",
+  "trustStoreLocation": "./trustStore.jks",
+  "trustStorePassword": "s6gWov5e1yX2CjOU0",
+  "csvLocation": "./data",
+  "pfxCertPassword": "81ut5YgEOJ4Z6IUMV"
+}

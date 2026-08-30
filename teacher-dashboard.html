@@ -1,0 +1,985 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Teacher Dashboard - HackLab</title>
+  <link rel="icon" type="image/png" href="images/logo.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="teacher-dashboard.css" />
+</head>
+
+<body>
+  <div class="dashboard-wrapper">
+    <aside class="sidebar">
+      <div class="sidebar-top">
+        <div class="sidebar-logo">
+          <img src="images/logo.png" alt="HackLab Logo" class="logo-img" />
+          <div class="logo-copy">
+            <span class="logo-text">HackLab</span>
+            <span class="role-pill">Teacher</span>
+          </div>
+        </div>
+        <p class="sidebar-label">Teacher Dashboard</p>
+        <nav class="sidebar-nav">
+          <a href="#overview" class="nav-item active" data-tab="overview">
+            <img src="images/overview.png" alt="" class="nav-icon" />
+            <span>Overview</span>
+          </a>
+          <a href="#resources" class="nav-item" data-tab="resources">
+            <img src="images/resources-nav.png" alt="" class="nav-icon" />
+            <span>Resources</span>
+          </a>
+          <a href="#events" class="nav-item" data-tab="events">
+            <img src="images/events-nav.png" alt="" class="nav-icon" />
+            <span>Events</span>
+          </a>
+          <a href="#community" class="nav-item" data-tab="community">
+            <img src="images/community-nav.png" alt="" class="nav-icon" />
+            <span>Community</span>
+          </a>
+          <a href="#projects" class="nav-item" data-tab="projects">
+            <img src="images/projects-nav.png" alt="" class="nav-icon" />
+            <span>Projects</span>
+          </a>
+          <a href="#articles" class="nav-item" data-tab="articles">
+            <img src="images/article-nav.png" alt="" class="nav-icon" />
+            <span>Articles</span>
+          </a>
+        </nav>
+      </div>
+
+      <div class="sidebar-bottom">
+        <a href="dashboard.html" class="sidebar-doubt">
+          <span class="sidebar-doubt-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M6.75 7.5H17.25" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" />
+              <path d="M6.75 12H17.25" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" />
+              <path d="M6.75 16.5H12.75" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" />
+            </svg>
+          </span>
+          <span>Open Student Dashboard</span>
+        </a>
+        <a href="community.html" class="sidebar-doubt">
+          <span class="sidebar-doubt-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path
+                d="M7 8.75C7 7.7835 7.7835 7 8.75 7H15.25C16.2165 7 17 7.7835 17 8.75V12.25C17 13.2165 16.2165 14 15.25 14H12.2L9.5 16.3V14H8.75C7.7835 14 7 13.2165 7 12.25V8.75Z"
+                stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </span>
+          <span>Open Community</span>
+        </a>
+        <button class="logout-btn" id="logoutBtn">
+          <span class="logout-btn-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M5 12H16.5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" />
+              <path d="M12.5 8L16.5 12L12.5 16" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </span>
+          <span>Log Out</span>
+        </button>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <section class="glass-panel teacher-summary-card" id="teacherSummaryCard">
+        <div class="teacher-summary-copy">
+          <p class="teacher-summary-eyebrow" id="teacherSummaryEyebrow">
+            Teacher progress
+          </p>
+          <h1 id="teacherSummaryTitle">
+            Guide what students see first across HackLab.
+          </h1>
+          <p class="teacher-summary-text" id="teacherSummaryText">
+            Use this dashboard to keep the student-facing pages focused,
+            current, and easier to navigate.
+          </p>
+          <div class="teacher-summary-pills">
+            <span class="teacher-summary-pill teacher-summary-pill-accent" id="teacherSummaryChipA">
+              Live student-facing updates
+            </span>
+            <span class="teacher-summary-pill" id="teacherSummaryChipB">
+              Overview edits ready
+            </span>
+          </div>
+        </div>
+
+        <div class="teacher-summary-stats">
+          <div class="teacher-summary-stat">
+            <span class="teacher-summary-label" id="teacherSummaryStatOneLabel">
+              Tasks
+            </span>
+            <strong id="teacherSummaryStatOneValue">03</strong>
+            <span class="teacher-summary-sub" id="teacherSummaryStatOneSub">
+              overview items live
+            </span>
+          </div>
+          <div class="teacher-summary-stat">
+            <span class="teacher-summary-label" id="teacherSummaryStatTwoLabel">
+              Levels
+            </span>
+            <strong id="teacherSummaryStatTwoValue">03</strong>
+            <span class="teacher-summary-sub" id="teacherSummaryStatTwoSub">
+              difficulty lanes active
+            </span>
+          </div>
+        </div>
+      </section>
+
+      <section class="teacher-tab active" id="tab-overview" data-panel="overview">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Overview controls</p>
+            <h2>Edit the tasks students see on their overview page</h2>
+          </div>
+          <a href="dashboard.html" class="section-link">Open student overview</a>
+        </div>
+
+        <div class="admin-grid">
+          <article class="glass-panel form-card">
+            <h3>Task editor</h3>
+            <form id="overviewTaskForm" class="admin-form">
+              <label class="field-group">
+                <span>Task title</span>
+                <input type="text" id="taskTitle" placeholder="Example: Edit the news reporter video" required />
+              </label>
+              <label class="field-group">
+                <span>Description</span>
+                <textarea id="taskDescription" rows="4" placeholder="Describe what the student needs to do."
+                  required></textarea>
+              </label>
+              <div class="field-row">
+                <label class="field-group">
+                  <span>Accent lane</span>
+                  <select id="taskAccent">
+                    <option value="yellow">Beginner</option>
+                    <option value="red">Intermediate</option>
+                    <option value="brown">Expert</option>
+                  </select>
+                </label>
+                <label class="field-group">
+                  <span>Action label</span>
+                  <input type="text" id="taskActionLabel" value="Go Ahead" />
+                </label>
+              </div>
+              <label class="field-group">
+                <span>Action link</span>
+                <input type="text" id="taskActionUrl" value="#" />
+              </label>
+              <div class="form-actions">
+                <button type="button" class="ghost-btn" id="taskCancelBtn">
+                  Cancel Edit
+                </button>
+                <button type="submit" class="primary-btn" id="taskSubmitBtn">
+                  Add Task
+                </button>
+              </div>
+            </form>
+          </article>
+
+          <article class="glass-panel list-card">
+            <div class="list-head">
+              <div>
+                <p class="section-kicker">Live student view</p>
+                <h3>Current overview tasks</h3>
+              </div>
+            </div>
+            <div class="stack-list" id="overviewTaskList"></div>
+          </article>
+        </div>
+
+        <div class="section-heading teacher-subheading">
+          <div>
+            <p class="section-kicker">Announcement popup</p>
+            <h2>Control the first announcement students see when they enter the dashboard</h2>
+          </div>
+          <span class="section-link section-link-static">Student popup preview</span>
+        </div>
+
+        <div class="admin-grid announcement-admin-grid">
+          <article class="glass-panel form-card">
+            <h3>Announcement editor</h3>
+            <form id="dashboardAnnouncementForm" class="admin-form">
+              <label class="field-group">
+                <span>Eyebrow text</span>
+                <input type="text" id="announcementEyebrow" placeholder="Latest announcement" />
+              </label>
+              <label class="field-group">
+                <span>Title</span>
+                <input type="text" id="announcementTitle" placeholder="HackLab Demo Day has moved to Friday" required />
+              </label>
+              <label class="field-group">
+                <span>Short summary</span>
+                <textarea id="announcementSummary" rows="3"
+                  placeholder="Write the short line students should understand first." required></textarea>
+              </label>
+              <label class="field-group">
+                <span>Full details</span>
+                <textarea id="announcementDetails" rows="7"
+                  placeholder="Add all the important details students should read inside the white popup card."
+                  required></textarea>
+              </label>
+              <div class="field-row">
+                <label class="field-group">
+                  <span>Image URL</span>
+                  <input type="text" id="announcementImageUrl" placeholder="images/class.png" />
+                </label>
+                <label class="field-group">
+                  <span>Button label</span>
+                  <input type="text" id="announcementCtaLabel" placeholder="Open event" />
+                </label>
+              </div>
+              <label class="field-group">
+                <span>Button link</span>
+                <input type="text" id="announcementCtaUrl" placeholder="events.html or a public URL" />
+              </label>
+              <label class="toggle-field">
+                <span class="toggle-copy">
+                  <strong>Show popup on student entry</strong>
+                  <small>When this is on, students will see the announcement first when they open the dashboard.</small>
+                </span>
+                <span class="toggle-switch-wrap">
+                  <input type="checkbox" id="announcementIsActive" />
+                  <span class="toggle-switch" aria-hidden="true"></span>
+                </span>
+              </label>
+              <div class="form-actions">
+                <button type="button" class="ghost-btn" id="announcementResetBtn">
+                  Reset Form
+                </button>
+                <button type="submit" class="primary-btn" id="announcementSubmitBtn">
+                  Save Announcement
+                </button>
+              </div>
+            </form>
+          </article>
+
+          <article class="glass-panel list-card announcement-preview-shell">
+            <div class="list-head">
+              <div>
+                <p class="section-kicker">Student popup preview</p>
+                <h3>Announcement modal</h3>
+              </div>
+              <span class="editor-tag announcement-status-chip" id="announcementPreviewStatus">Popup off</span>
+            </div>
+            <div class="announcement-preview-stage">
+              <div class="announcement-preview-glass">
+                <div class="announcement-preview-card">
+                  <div class="announcement-preview-media">
+                    <img id="announcementPreviewImage" src="images/class.png" alt="Announcement preview" />
+                  </div>
+                  <div class="announcement-preview-content">
+                    <p class="announcement-preview-eyebrow" id="announcementPreviewEyebrow">Latest announcement</p>
+                    <h4 id="announcementPreviewTitle">No live dashboard popup yet</h4>
+                    <p class="announcement-preview-summary" id="announcementPreviewSummary">
+                      Save an active announcement here and students will see it as soon as they enter their dashboard.
+                    </p>
+                    <div class="announcement-preview-details" id="announcementPreviewDetails">
+                      <p>Use the form on the left to add the full message, image, and action button.</p>
+                    </div>
+                    <div class="announcement-preview-actions">
+                      <span class="announcement-preview-btn" id="announcementPreviewButton">Open details</span>
+                      <span class="announcement-preview-updated" id="announcementPreviewUpdated">Waiting for first publish</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="admin-grid teacher-collab-grid">
+          <article class="glass-panel list-card">
+            <div class="list-head">
+              <div>
+                <p class="section-kicker">Teacher inbox</p>
+                <h3>Project collaboration requests</h3>
+              </div>
+              <span class="teacher-collab-count" id="teacherCollabCount">00</span>
+            </div>
+            <div class="stack-list teacher-collab-list" id="teacherCollabInbox"></div>
+          </article>
+        </div>
+
+        <div class="section-heading teacher-subheading">
+          <div>
+            <p class="section-kicker">Student profile lane</p>
+            <h2>Review student details, verify assignment links, and add teacher tags that appear on the student dashboard</h2>
+          </div>
+          <span class="section-link section-link-static">Live student profile sync</span>
+        </div>
+
+        <div class="admin-grid student-admin-grid">
+          <article class="glass-panel list-card">
+            <div class="list-head">
+              <div>
+                <p class="section-kicker">Student directory</p>
+                <h3>Profiles you can tag</h3>
+              </div>
+              <span class="editor-tag" id="studentDirectoryCount">00 students</span>
+            </div>
+            <div class="stack-list student-directory-list" id="studentDirectoryList"></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="teacher-tab" id="tab-resources" data-panel="resources">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Resources controls</p>
+            <h2>Add new video, audio, or reading resources for students</h2>
+          </div>
+          <a href="resources.html" class="section-link">Open student resources</a>
+        </div>
+
+        <div class="admin-grid">
+          <article class="glass-panel form-card">
+            <h3>Resource editor</h3>
+            <form id="resourceForm" class="admin-form">
+              <div class="field-row">
+                <label class="field-group">
+                  <span>Type</span>
+                  <select id="resourceType">
+                    <option value="video">Video</option>
+                    <option value="audio">Audio</option>
+                    <option value="reading">Reading</option>
+                  </select>
+                </label>
+                <label class="field-group">
+                  <span>Badge</span>
+                  <input type="text" id="resourceBadge" placeholder="Most active" required />
+                </label>
+              </div>
+              <div class="field-row">
+                <label class="field-group">
+                  <span>Meta</span>
+                  <input type="text" id="resourceMeta" placeholder="42 lessons" required />
+                </label>
+                <label class="field-group">
+                  <span>Open link</span>
+                  <input type="text" id="resourceUrl" value="#" />
+                </label>
+              </div>
+              <label class="field-group">
+                <span>Title</span>
+                <input type="text" id="resourceTitle" placeholder="Video Courses" required />
+              </label>
+              <label class="field-group">
+                <span>Description</span>
+                <textarea id="resourceDescription" rows="4"
+                  placeholder="Write what students will get from this resource." required></textarea>
+              </label>
+              <div class="field-row">
+                <label class="field-group">
+                  <span>Footer left</span>
+                  <input type="text" id="resourceFooterLeft" placeholder="Best for deep dives" />
+                </label>
+                <label class="field-group">
+                  <span>Footer right</span>
+                  <input type="text" id="resourceFooterRight" placeholder="Open path" />
+                </label>
+              </div>
+              <div class="form-actions">
+                <button type="button" class="ghost-btn" id="resourceCancelBtn">
+                  Cancel Edit
+                </button>
+                <button type="submit" class="primary-btn" id="resourceSubmitBtn">
+                  Add Resource
+                </button>
+              </div>
+            </form>
+          </article>
+
+          <article class="glass-panel list-card">
+            <div class="list-head">
+              <div>
+                <p class="section-kicker">Student cards</p>
+                <h3>Published resources</h3>
+              </div>
+            </div>
+            <div class="stack-list" id="resourceList"></div>
+          </article>
+        </div>
+
+        <div class="section-heading teacher-subheading">
+          <div>
+            <p class="section-kicker">Video course playlist</p>
+            <h2>Create and edit the video courses and in-between assignments students open</h2>
+            <p class="section-heading-copy">
+              Assignments are created inside each course builder, between section videos, and can be linked straight into events.
+            </p>
+          </div>
+          <a href="video-courses.html" class="section-link">Open video courses</a>
+        </div>
+
+        <div class="admin-grid">
+          <article class="glass-panel form-card">
+            <h3>Video course editor</h3>
+            <form id="videoCourseForm" class="admin-form">
+              <label class="field-group">
+                <span>Course title</span>
+                <input type="text" id="videoCourseTitle" placeholder="Introduction to JavaScript" required />
+              </label>
+              <div class="field-row">
+                <label class="field-group">
+                  <span>Playlist label</span>
+                  <input type="text" id="videoCoursePlaylistLabel" placeholder="Frontend Playlist" required />
+                </label>
+                <label class="field-group">
+                  <span>Lessons label</span>
+                  <input type="text" id="videoCourseLessons" placeholder="12 lessons" required />
+                </label>
+              </div>
+              <div class="field-row">
+                <label class="field-group">
+                  <span>Access label</span>
+                  <input type="text" id="videoCourseAccessLabel" value="FREE" required />
+                </label>
+                <label class="field-group">
+                  <span>Open link</span>
+                  <input type="text" id="videoCourseUrl" value="course-player.html" />
+                </label>
+              </div>
+              <label class="field-group">
+                <span>Description</span>
+                <textarea id="videoCourseDescription" rows="4"
+                  placeholder="Explain what students will learn in this course." required></textarea>
+              </label>
+              <label class="field-group">
+                <span>Player video embed URL</span>
+                <input type="text" id="videoCoursePlayerEmbedUrl"
+                  placeholder="https://www.youtube.com/embed/..." />
+              </label>
+              <label class="field-group">
+                <span>Authors line</span>
+                <input type="text" id="videoCourseAuthorsLine" placeholder="By Tejas Sharma and Aviral Tyagi" />
+              </label>
+              <label class="field-group">
+                <span>Overview paragraphs</span>
+                <textarea id="videoCourseOverviewText" rows="5"
+                  placeholder="Write one paragraph per line for the course overview area."></textarea>
+              </label>
+              <div class="field-row">
+                <label class="field-group">
+                  <span>Thumbnail image</span>
+                  <input type="text" id="videoCourseImage" value="images/session.png" />
+                </label>
+                <label class="field-group">
+                  <span>CTA label</span>
+                  <input type="text" id="videoCourseCtaLabel" value="Enroll for free" />
+                </label>
+              </div>
+              <div class="field-row">
+                <label class="field-group">
+                  <span>Mentor avatar one</span>
+                  <input type="text" id="videoCourseAvatarOne" value="images/avi.png" />
+                </label>
+                <label class="field-group">
+                  <span>Mentor avatar two</span>
+                  <input type="text" id="videoCourseAvatarTwo" value="images/tejas.png" />
+                </label>
+              </div>
+              <div class="field-row">
+                <label class="field-group">
+                  <span>Section one title</span>
+                  <input type="text" id="videoCourseSectionOneTitle" placeholder="Section 1: The Basics of JavaScript" />
+                </label>
+                <label class="field-group">
+                  <span>Section one meta</span>
+                  <input type="text" id="videoCourseSectionOneMeta" placeholder="4 lessons | 2 hr 51 min" />
+                </label>
+              </div>
+              <label class="field-group">
+                <span>Section one lessons</span>
+                <textarea id="videoCourseSectionOneLessons" rows="4"
+                  placeholder="One lesson per line. Use: Lesson title | 19 min | done"></textarea>
+              </label>
+              <div class="field-row">
+                <label class="field-group">
+                  <span>Section two title</span>
+                  <input type="text" id="videoCourseSectionTwoTitle" placeholder="Section 2: The DOM of JavaScript" />
+                </label>
+                <label class="field-group">
+                  <span>Section two meta</span>
+                  <input type="text" id="videoCourseSectionTwoMeta" placeholder="3 lessons | 3 hr 05 min" />
+                </label>
+              </div>
+              <label class="field-group">
+                <span>Section two lessons</span>
+                <textarea id="videoCourseSectionTwoLessons" rows="4"
+                  placeholder="One lesson per line. Use: Lesson title | 19 min | done"></textarea>
+              </label>
+              <div class="form-actions">
+                <button type="button" class="ghost-btn" id="videoCourseCancelBtn">
+                  Cancel Edit
+                </button>
+                <button type="submit" class="primary-btn" id="videoCourseSubmitBtn">
+                  Add Video Course
+                </button>
+              </div>
+            </form>
+          </article>
+
+          <article class="glass-panel list-card">
+            <div class="list-head">
+              <div>
+                <p class="section-kicker">Video course playlist</p>
+                <h3>Published video courses</h3>
+              </div>
+            </div>
+            <div class="stack-list" id="videoCourseList"></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="teacher-tab" id="tab-events" data-panel="events">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Events controls</p>
+            <h2>
+              Edit the upcoming session details students see on the events
+              page
+            </h2>
+          </div>
+          <a href="events.html" class="section-link">Open student events</a>
+        </div>
+
+        <div class="admin-grid">
+          <article class="glass-panel form-card">
+            <h3>Session editor</h3>
+            <form id="eventForm" class="admin-form">
+              <div class="field-row">
+                <label class="field-group">
+                  <span>Badge</span>
+                  <input type="text" id="eventBadge" placeholder="Live" required />
+                </label>
+                <label class="field-group">
+                  <span>Mentor</span>
+                  <input type="text" id="eventMentor" placeholder="Aviral Tyagi" required />
+                </label>
+              </div>
+              <label class="field-group">
+                <span>Title</span>
+                <input type="text" id="eventTitle" placeholder="Introduction to Visual Design" required />
+              </label>
+              <label class="field-group">
+                <span>Summary</span>
+                <textarea id="eventSummary" rows="4" placeholder="Explain why students should care about this session."
+                  required></textarea>
+              </label>
+              <div class="field-row">
+                <label class="field-group">
+                  <span>Date</span>
+                  <input type="date" id="eventDate" required />
+                </label>
+                <label class="field-group">
+                  <span>Time range</span>
+                  <input type="text" id="eventTimeRange" placeholder="5:00 PM - 6:00 PM" required />
+                </label>
+              </div>
+              <div class="field-row">
+                <label class="field-group">
+                  <span>Thumbnail image</span>
+                  <input type="text" id="eventImage" value="images/class.png" />
+                </label>
+                <label class="field-group">
+                  <span>Join link</span>
+                  <input type="text" id="eventJoinLink" value="#" />
+                </label>
+              </div>
+              <div class="field-row">
+                <label class="field-group">
+                  <span>Linked course</span>
+                  <select id="eventLinkedCourse">
+                    <option value="">No linked course</option>
+                  </select>
+                </label>
+                <label class="field-group">
+                  <span>Linked assignment</span>
+                  <select id="eventLinkedAssignment">
+                    <option value="">Open session only</option>
+                  </select>
+                </label>
+              </div>
+              <p class="form-helper">
+                Link a session to an in-course assignment if you want students to jump straight into that assignment from the events page.
+              </p>
+              <div class="form-actions">
+                <button type="button" class="ghost-btn" id="eventCancelBtn">
+                  Cancel Edit
+                </button>
+                <button type="submit" class="primary-btn" id="eventSubmitBtn">
+                  Add Session
+                </button>
+              </div>
+            </form>
+          </article>
+
+          <article class="glass-panel list-card">
+            <div class="list-head">
+              <div>
+                <p class="section-kicker">Student lineup</p>
+                <h3>Upcoming session cards</h3>
+              </div>
+            </div>
+            <div class="stack-list" id="eventList"></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="teacher-tab" id="tab-community" data-panel="community">
+        <article class="glass-panel teacher-community-shell" id="teacherCommunityRoot">
+          <div class="community-layout">
+            <div class="feed-column">
+              <div class="feed-header">
+                <div class="toggle-tabs">
+                  <button class="t-tab active" data-tab="general" type="button">General</button>
+                  <button class="t-tab" data-tab="askforge" type="button">AskForge</button>
+                </div>
+              </div>
+
+              <div class="create-post-box single-row">
+                <div class="post-left">
+                  <img src="images/avi.png" alt="User" class="post-avatar" id="composerAvatar" />
+                  <input type="text" class="post-input" placeholder="How was your Day ?" />
+                </div>
+                <div class="post-right">
+                  <input type="file" id="imageUpload" style="display: none;" accept="image/*,video/*" />
+                  <button class="btn-icon" id="btnUploadGif" type="button">
+                    <span class="icon-gif" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none">
+                        <path d="M12 15.5V5.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+                        <path d="M8.5 9L12 5.5L15.5 9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path d="M5.5 15.5V17.25C5.5 18.2165 6.2835 19 7.25 19H16.75C17.7165 19 18.5 18.2165 18.5 17.25V15.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+                      </svg>
+                    </span>
+                    <span>Upload</span>
+                  </button>
+                  <button class="btn-post" type="button">
+                    Post <span class="post-arrow">></span>
+                  </button>
+                </div>
+              </div>
+
+              <div id="view-general" class="feed-view active">
+                <div class="post-feed">
+                  <div class="post-card">
+                    <div class="post-author-row">
+                      <img src="images/tejas.png" alt="Tejas Sharma" class="post-avatar" />
+                      <div class="author-heading">
+                        <h4 class="author-name">Tejas Sharma</h4>
+                      </div>
+                    </div>
+                    <div class="post-bubble-container">
+                      <div class="post-bubble">
+                        <p class="post-text">Loading the live community feed...</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+                <div id="view-askforge" class="feed-view">
+                  <div class="askforge-header" id="askforge">
+                    <div class="search-summary">
+                      <h2 class="question-count">21,45,735 Questions</h2>
+                      <div class="filter-pills">
+                        <button class="filter-pill active" data-question-filter="newest" type="button">Newest</button>
+                        <button class="filter-pill" data-question-filter="unanswered" type="button">Unanswered</button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="question-composer">
+                    <div class="question-composer-head">
+                      <div>
+                        <p class="section-kicker">Ask Your Doubt</p>
+                        <p class="question-composer-note">Describe the error clearly so the community can understand it and answer faster.</p>
+                      </div>
+                    </div>
+                    <div class="question-form-grid">
+                      <input type="text" class="question-title-input" placeholder="Short title for your question (optional)" />
+                      <textarea class="question-description-input" placeholder="Describe the error, what you already tried, and where the issue happens."></textarea>
+                    </div>
+                    <div class="question-form-actions">
+                      <span class="question-form-message">Your doubt will appear below as soon as you post it.</span>
+                      <button class="ask-question-btn" type="button">Ask Question</button>
+                    </div>
+                  </div>
+
+                  <div class="question-list">
+                    <div class="question-card">
+                    <div class="q-left">
+                      <img src="images/tejas.png" alt="User" class="q-avatar" />
+                      <div class="q-info">
+                        <h3 class="q-title">Does anyone recognise this Build Error when compiling for Windows Desktop?
+                        </h3>
+                        <p class="q-meta">by Tejas Sharma, asked 2 mins ago</p>
+                      </div>
+                    </div>
+                    <button class="btn-answer" type="button">Answer</button>
+                  </div>
+
+                  <div class="question-card">
+                    <div class="q-left">
+                      <img src="images/tejas.png" alt="User" class="q-avatar" />
+                      <div class="q-info">
+                        <h3 class="q-title">How do I improve weak visual hierarchy without redesigning the whole page?
+                        </h3>
+                        <p class="q-meta">by HackLab Student, asked 6 mins ago</p>
+                      </div>
+                    </div>
+                    <button class="btn-answer" type="button">Answer</button>
+                  </div>
+                </div>
+              </div>
+
+              <div id="view-answer" class="feed-view">
+                <div class="question-detail-card">
+                  <div class="qd-header">
+                    <img src="images/tejas.png" alt="User" class="qd-avatar" />
+                    <h2 class="qd-title">Does anyone recognise this Build Error when compiling for Windows Desktop?</h2>
+                  </div>
+                  <div class="qd-body">
+                    <p class="qd-description">Description - The compiler tripped over a dangling reference in the
+                      project configuration, like a ghost file path pointing to nowhere. It's as if the build system
+                      tried to open a locked door with the wrong key, and instead of explaining politely, it just
+                      shouted 'Build Error!' and slammed shut.</p>
+                  </div>
+                </div>
+
+                <div class="answer-input-container">
+                  <textarea class="answer-textarea" placeholder="Type your answer here!"></textarea>
+                  <div class="answer-submit-row">
+                    <button class="answer-submit-btn" type="button">Post Answer</button>
+                  </div>
+                </div>
+
+                <div class="other-answers-section">
+                  <div class="oa-header">
+                    <h3>Other Answers</h3>
+                    <div class="oa-filters">
+                      <button class="oa-filter active" type="button">Relevant</button>
+                      <button class="oa-filter" type="button">Latest</button>
+                    </div>
+                  </div>
+                  <div class="oa-list">
+                    <div class="oa-card">
+                      <p class="oa-text">Desktop builds in Codename One have always been a pro-account only feature. You
+                        can use the free jar desktop target which is a part of the maven build and lets you build a
+                        universal jar of the application.</p>
+                      <p class="oa-author">by - Aviral Tyagi</p>
+                    </div>
+                    <div class="oa-card">
+                      <p class="oa-text">Check whether the target configuration still points to an older desktop
+                        artifact. A clean rebuild plus validating the generated desktop target usually fixes this class
+                        of issue.</p>
+                      <p class="oa-author">by - HackLab Teacher</p>
+                    </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="widgets-column">
+                <div class="search-widget-new">
+                  <span class="search-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none">
+                      <circle cx="11" cy="11" r="5.75" stroke="currentColor" stroke-width="1.9"></circle>
+                      <path d="M16 16L20 20" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"></path>
+                    </svg>
+                  </span>
+                  <input type="text" placeholder="Search Anything" class="search-input" id="communitySearchInput" />
+                </div>
+
+                <div class="widget-box premium-card">
+                  <h3 class="widget-title">Notifications -</h3>
+                  <div class="notif-list">
+                    <div class="notif-pill">
+                      <span>Congrats! Your Post got over <strong>50+ likes</strong></span>
+                    </div>
+                    <div class="notif-pill">
+                      <span>Congrats! Your Post got over <strong>50+ likes</strong></span>
+                    </div>
+                    <div class="notif-pill">
+                      <span>Congrats! Your Post got over <strong>50+ likes</strong></span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="widget-box premium-card">
+                  <h3 class="widget-title">#Trending Things</h3>
+                  <div class="trending-grid"></div>
+                </div>
+
+                <div class="widget-box premium-card">
+                  <h3 class="widget-title">Famous Doubts</h3>
+                  <div class="famous-doubts-list"></div>
+                </div>
+              </div>
+            </div>
+          </article>
+        </section>
+
+      <section class="teacher-tab" id="tab-projects" data-panel="projects">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Projects lane</p>
+            <h2>
+              Publish spotlight projects that appear in the student projects
+              section
+            </h2>
+          </div>
+          <a href="projects.html" class="section-link">Open student projects</a>
+        </div>
+
+        <div class="admin-grid">
+          <article class="glass-panel form-card">
+            <h3>Spotlight project publisher</h3>
+            <form id="teacherProjectForm" class="admin-form">
+              <label class="field-group">
+                <span>Project title</span>
+                <input type="text" id="teacherProjectTitle" placeholder="VoicePal Assistant" required />
+              </label>
+              <label class="field-group">
+                <span>Summary</span>
+                <textarea id="teacherProjectSummary" rows="4"
+                  placeholder="Describe why this project deserves the spotlight on the student projects page."
+                  required></textarea>
+              </label>
+              <div class="field-row">
+                <label class="field-group">
+                  <span>Category</span>
+                  <input type="text" id="teacherProjectCategory" value="Student Build" />
+                </label>
+                <label class="field-group">
+                  <span>Badge</span>
+                  <input type="text" id="teacherProjectBadge" value="Teacher Spotlight" />
+                </label>
+              </div>
+              <div class="field-row">
+                <label class="field-group">
+                  <span>Status</span>
+                  <input type="text" id="teacherProjectStatus" value="Spotlight" />
+                </label>
+                <label class="field-group">
+                  <span>Live Netlify link</span>
+                  <input type="url" id="teacherProjectLink" placeholder="https://your-project.netlify.app" />
+                </label>
+              </div>
+              <label class="field-group">
+                <span>Image path</span>
+                <input type="text" id="teacherProjectImage" value="images/session.png" />
+              </label>
+              <div class="form-actions">
+                <button type="submit" class="primary-btn" id="teacherProjectSubmitBtn">
+                  Publish Spotlight Project
+                </button>
+              </div>
+            </form>
+          </article>
+
+          <article class="glass-panel list-card">
+            <div class="list-head">
+              <div>
+                <p class="section-kicker">Student project lane</p>
+                <h3>Published public projects</h3>
+              </div>
+            </div>
+            <div class="stack-list" id="teacherProjectList"></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="teacher-tab" id="tab-articles" data-panel="articles">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Authority articles</p>
+            <h2>
+              Add and edit the highlighted articles every student should
+              notice first
+            </h2>
+          </div>
+          <a href="article.html" class="section-link">Open student articles</a>
+        </div>
+
+        <div class="admin-grid">
+          <article class="glass-panel form-card">
+            <h3>Authority article editor</h3>
+            <form id="articleAuthorityForm" class="admin-form">
+              <div class="field-row">
+                <label class="field-group">
+                  <span>Author</span>
+                  <input type="text" id="authorityAuthor" placeholder="HackLab Authority" required />
+                </label>
+                <label class="field-group">
+                  <span>Meta label</span>
+                  <input type="text" id="authorityMeta" placeholder="Mentor reviewed" required />
+                </label>
+              </div>
+              <label class="field-group">
+                <span>Title</span>
+                <input type="text" id="authorityTitle" placeholder="The authority article title" required />
+              </label>
+              <label class="field-group">
+                <span>Summary</span>
+                <textarea id="authoritySummary" rows="4" placeholder="Explain why every student should open this piece."
+                  required></textarea>
+              </label>
+              <label class="field-group">
+                <span>Reader takeaway</span>
+                <textarea id="authoritySupportNote" rows="3" placeholder="State the one lesson students should keep after reading."
+                  required></textarea>
+              </label>
+              <label class="field-group">
+                <span>Full article body</span>
+                <textarea id="authorityBody" rows="10" placeholder="Write the full authority article here. You can use headings, lists, quotes, and code-style formatting."
+                  required></textarea>
+              </label>
+              <div class="field-row">
+                <label class="field-group">
+                  <span>Topic</span>
+                  <input type="text" id="authorityTopic" placeholder="Presentation" required />
+                </label>
+                <label class="field-group">
+                  <span>Read time</span>
+                  <input type="text" id="authorityReadTime" placeholder="5 min read" required />
+                </label>
+              </div>
+              <label class="field-group">
+                <span>Reads label</span>
+                <input type="text" id="authorityReads" placeholder="1.2k reads" required />
+              </label>
+              <div class="form-actions">
+                <button type="button" class="ghost-btn" id="articleCancelBtn">
+                  Cancel Edit
+                </button>
+                <button type="submit" class="primary-btn" id="articleSubmitBtn">
+                  Add Authority Article
+                </button>
+              </div>
+            </form>
+          </article>
+
+          <article class="glass-panel list-card">
+            <div class="list-head">
+              <div>
+                <p class="section-kicker">Student highlights</p>
+                <h3>Published authority picks</h3>
+              </div>
+            </div>
+            <div class="stack-list" id="authorityArticleList"></div>
+          </article>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script type="module" src="teacher-dashboard.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,667 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — HackLab</title>
+  <link rel="icon" type="image/png" href="../images/logo.png" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="dashboard.css" />
+  <!-- Three.js for Background -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+</head>
+
+<body class="dashboard-body">
+  <!-- Canvas for Particle Background -->
+  <div id="canvas-container"></div>
+
+  <div class="dashboard-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <a href="index.html" class="nav-logo">
+          <img src="../images/logo.png" alt="HackLab Logo" />
+          <span>HackLab</span>
+        </a>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="#" class="nav-item active" data-tab="overview">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="7"></rect>
+            <rect x="14" y="3" width="7" height="7"></rect>
+            <rect x="14" y="14" width="7" height="7"></rect>
+            <rect x="3" y="14" width="7" height="7"></rect>
+          </svg>
+          <span>Overview</span>
+        </a>
+        <a href="#" class="nav-item" data-tab="resources">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+          </svg>
+          <span>Resources</span>
+        </a>
+        <a href="#" class="nav-item" data-tab="events">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="16" y1="2" x2="16" y2="6"></line>
+            <line x1="8" y1="2" x2="8" y2="6"></line>
+            <line x1="3" y1="10" x2="21" y2="10"></line>
+          </svg>
+          <span>Events</span>
+        </a>
+        <a href="#" class="nav-item" data-tab="community">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+          <span>Community</span>
+        </a>
+        <a href="#" class="nav-item" data-tab="sessions">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="23 7 16 12 23 17 23 7"></polygon>
+            <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
+          </svg>
+          <span>Sessions</span>
+        </a>
+        <a href="#" class="nav-item" data-tab="settings">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path
+              d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
+            </path>
+          </svg>
+          <span>Settings</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button id="logoutBtn" class="logout-link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+          <span>Logout</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <!-- Header/Top Bar -->
+      <header class="content-header">
+        <div class="header-search">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" placeholder="Search HackLab..." id="dashSearch" />
+        </div>
+
+        <div class="header-user">
+          <div class="notifications">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+            </svg>
+            <span class="notif-badge">3</span>
+          </div>
+          <div class="user-profile">
+            <img src="https://ui-avatars.com/api/?name=User&background=random" alt="User Avatar" id="userAvatar" />
+            <div class="user-info">
+              <span class="user-name" id="userNameDisplay">Loading...</span>
+              <span class="user-rank">🔥 Pro Member</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- ===================== OVERVIEW TAB ===================== -->
+      <div class="tab-content active" id="tab-overview">
+        <div class="content-body">
+          <!-- Welcome + Calendar Row -->
+          <div class="overview-top">
+            <!-- Welcome Card -->
+            <div class="welcome-card">
+              <div class="welcome-card-inner">
+                <div class="welcome-text">
+                  <span class="welcome-date" id="currentDate">March 10, 2026 - Tuesday</span>
+                  <h1>
+                    Welcome Back,
+                    <span class="gradient-text" id="welcomeName">Hacker</span>
+                  </h1>
+                  <div class="session-reminder">
+                    <img src="../images/Teaching-cuate 1.png" alt="Session" class="session-thumb" />
+                    <div class="session-info">
+                      <p><strong>Stay Tuned</strong> for your session</p>
+                      <div class="session-actions">
+                        <button class="btn-join"
+                          onclick="window.location.href='session.html?title=HackLab+Session'">Join Now</button>
+                        <span class="session-time">Join at 5:00 p.m</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="welcome-illustration">
+                  <img src="../images/welcome-img.png" alt="Welcome" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Calendar Widget -->
+            <div class="calendar-widget">
+              <div class="calendar-header">
+                <button class="cal-nav" id="calPrev">‹</button>
+                <div class="cal-month-year">
+                  <span id="calMonth">March</span>
+                  <span id="calYear">2026</span>
+                </div>
+                <button class="cal-nav" id="calNext">›</button>
+              </div>
+              <div class="calendar-days-header">
+                <span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span>
+              </div>
+              <div class="calendar-grid" id="calendarGrid">
+                <!-- Days populated by JS -->
+              </div>
+            </div>
+          </div>
+
+          <!-- My Courses Section -->
+          <div class="section-block">
+            <div class="section-block-header">
+              <h2>My Courses</h2>
+              <a href="#" class="see-all">See All →</a>
+            </div>
+            <div class="courses-grid">
+              <div class="course-card">
+                <div class="course-icon-wrapper">
+                  <img src="../images/coding.png" alt="HTML & CSS" class="course-icon-float" />
+                </div>
+                <div class="course-info">
+                  <h4>HTML & CSS</h4>
+                  <p>Web Foundations</p>
+                  <div class="course-progress">
+                    <div class="course-progress-bar js-bg" style="width: 78%"></div>
+                  </div>
+                  <span class="course-percent">Complete 78%</span>
+                </div>
+              </div>
+              <div class="course-card">
+                <div class="course-icon-wrapper">
+                  <img src="../images/js.png" alt="JavaScript" class="course-icon-float" />
+                </div>
+                <div class="course-info">
+                  <h4>JavaScript</h4>
+                  <p>Interactivity & Logic</p>
+                  <div class="course-progress">
+                    <div class="course-progress-bar js-bg" style="width: 52%"></div>
+                  </div>
+                  <span class="course-percent">Complete 52%</span>
+                </div>
+              </div>
+              <div class="course-card">
+                <div class="course-icon-wrapper">
+                  <img src="../images/python.png" alt="Python" class="course-icon-float" />
+                </div>
+                <div class="course-info">
+                  <h4>Python</h4>
+                  <p>Backend & AI/ML</p>
+                  <div class="course-progress">
+                    <div class="course-progress-bar js-bg" style="width: 35%"></div>
+                  </div>
+                  <span class="course-percent">Complete 35%</span>
+                </div>
+              </div>
+              <div class="course-card">
+                <div class="course-icon-wrapper">
+                  <img src="../images/physics.png" alt="React" class="course-icon-float" />
+                </div>
+                <div class="course-info">
+                  <h4>React</h4>
+                  <p>Modern UI Frameworks</p>
+                  <div class="course-progress">
+                    <div class="course-progress-bar js-bg" style="width: 15%"></div>
+                  </div>
+                  <span class="course-percent">Complete 15%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Stats -->
+          <div class="quick-stats">
+            <div class="qstat-card">
+              <div class="qstat-icon" style="background: rgba(77, 208, 225, 0.12); color: #4dd0e1">
+                🏆
+              </div>
+              <div class="qstat-info">
+                <span class="qstat-value" id="hackPoints">1,240</span>
+                <span class="qstat-label">Hack Points</span>
+              </div>
+            </div>
+            <div class="qstat-card">
+              <div class="qstat-icon" style="background: rgba(124, 77, 255, 0.12); color: #7c4dff">
+                📊
+              </div>
+              <div class="qstat-info">
+                <span class="qstat-value">#42</span>
+                <span class="qstat-label">Global Rank</span>
+              </div>
+            </div>
+            <div class="qstat-card">
+              <div class="qstat-icon" style="background: rgba(255, 64, 129, 0.12); color: #ff4081">
+                🔥
+              </div>
+              <div class="qstat-info">
+                <span class="qstat-value">12</span>
+                <span class="qstat-label">Day Streak</span>
+              </div>
+            </div>
+            <div class="qstat-card">
+              <div class="qstat-icon" style="background: rgba(76, 175, 80, 0.12); color: #4caf50">
+                ✅
+              </div>
+              <div class="qstat-info">
+                <span class="qstat-value">8</span>
+                <span class="qstat-label">Labs Done</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===================== RESOURCES TAB ===================== -->
+      <div class="tab-content" id="tab-resources">
+        <div class="content-body">
+          <div class="section-block">
+            <div class="section-block-header">
+              <h2>📚 Learning Resources</h2>
+              <div class="filter-chips">
+                <button class="chip active">All</button>
+                <button class="chip">Web Dev</button>
+                <button class="chip">Python</button>
+                <button class="chip">AI/ML</button>
+                <button class="chip">Mobile</button>
+              </div>
+            </div>
+            <div class="resources-grid">
+              <div class="resource-card">
+                <div class="resource-badge web">Web Dev</div>
+                <h3>HTML & CSS Crash Course</h3>
+                <p>
+                  Master the building blocks of the web in this
+                  beginner-friendly guide with hands-on projects.
+                </p>
+                <div class="resource-meta">
+                  <span>📖 12 Lessons</span>
+                  <span>⏱ 3 hrs</span>
+                </div>
+                <button class="btn-resource">Start Learning</button>
+              </div>
+              <div class="resource-card">
+                <div class="resource-badge py">Python</div>
+                <h3>Python for Beginners</h3>
+                <p>
+                  From variables to functions — learn Python through
+                  interactive exercises and mini-projects.
+                </p>
+                <div class="resource-meta">
+                  <span>📖 18 Lessons</span>
+                  <span>⏱ 5 hrs</span>
+                </div>
+                <button class="btn-resource">Start Learning</button>
+              </div>
+              <div class="resource-card">
+                <div class="resource-badge js">JavaScript</div>
+                <h3>JavaScript Essentials</h3>
+                <p>
+                  DOM manipulation, events, APIs — the complete guide to
+                  making websites interactive.
+                </p>
+                <div class="resource-meta">
+                  <span>📖 15 Lessons</span>
+                  <span>⏱ 4 hrs</span>
+                </div>
+                <button class="btn-resource">Start Learning</button>
+              </div>
+              <div class="resource-card">
+                <div class="resource-badge ai">AI / ML</div>
+                <h3>Intro to Machine Learning</h3>
+                <p>
+                  Understand the fundamentals of ML, neural networks, and
+                  build your first model with Python.
+                </p>
+                <div class="resource-meta">
+                  <span>📖 10 Lessons</span>
+                  <span>⏱ 6 hrs</span>
+                </div>
+                <button class="btn-resource">Start Learning</button>
+              </div>
+              <div class="resource-card">
+                <div class="resource-badge web">React</div>
+                <h3>React From Scratch</h3>
+                <p>
+                  Components, state, hooks — build modern single-page apps
+                  with the React framework.
+                </p>
+                <div class="resource-meta">
+                  <span>📖 20 Lessons</span>
+                  <span>⏱ 8 hrs</span>
+                </div>
+                <button class="btn-resource">Start Learning</button>
+              </div>
+              <div class="resource-card">
+                <div class="resource-badge py">Data Science</div>
+                <h3>Data Viz with Matplotlib</h3>
+                <p>
+                  Create stunning charts, graphs and dashboards from
+                  real-world datasets using Python.
+                </p>
+                <div class="resource-meta">
+                  <span>📖 8 Lessons</span>
+                  <span>⏱ 3 hrs</span>
+                </div>
+                <button class="btn-resource">Start Learning</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===================== EVENTS TAB ===================== -->
+      <div class="tab-content" id="tab-events">
+        <div class="content-body">
+          <div class="section-block">
+            <div class="section-block-header">
+              <h2>🎉 Upcoming Events</h2>
+            </div>
+            <div class="events-timeline">
+              <div class="event-timeline-card">
+                <div class="event-date-badge">
+                  <span class="event-day">22</span>
+                  <span class="event-month">MAR</span>
+                </div>
+                <div class="event-details">
+                  <div class="event-tag competition">🏆 Competition</div>
+                  <h3>HackLab Hackathon v3.0</h3>
+                  <p>
+                    A 24-hour hackathon where teams compete to build the most
+                    innovative solution. Prizes, mentors, and pizza included!
+                  </p>
+                  <div class="event-footer">
+                    <span>📍 School Auditorium</span>
+                    <button class="btn-register">Register Now</button>
+                  </div>
+                </div>
+              </div>
+              <div class="event-timeline-card">
+                <div class="event-date-badge">
+                  <span class="event-day">05</span>
+                  <span class="event-month">APR</span>
+                </div>
+                <div class="event-details">
+                  <div class="event-tag workshop">💻 Workshop</div>
+                  <h3>Web Dev Bootcamp Weekend</h3>
+                  <p>
+                    Two days of intensive web development — from HTML basics
+                    to deploying a full-stack app with React and Node.js.
+                  </p>
+                  <div class="event-footer">
+                    <span>📍 Computer Lab</span>
+                    <button class="btn-register">Register Now</button>
+                  </div>
+                </div>
+              </div>
+              <div class="event-timeline-card">
+                <div class="event-date-badge">
+                  <span class="event-day">19</span>
+                  <span class="event-month">APR</span>
+                </div>
+                <div class="event-details">
+                  <div class="event-tag session">🧠 Session</div>
+                  <h3>AI & ML Introduction Night</h3>
+                  <p>
+                    An evening session covering the fundamentals of artificial
+                    intelligence and machine learning with live Python demos.
+                  </p>
+                  <div class="event-footer">
+                    <span>📍 Virtual (Zoom)</span>
+                    <button class="btn-register">Register Now</button>
+                  </div>
+                </div>
+              </div>
+              <div class="event-timeline-card">
+                <div class="event-date-badge">
+                  <span class="event-day">10</span>
+                  <span class="event-month">MAY</span>
+                </div>
+                <div class="event-details">
+                  <div class="event-tag workshop">🚀 Workshop</div>
+                  <h3>Flutter App Building Marathon</h3>
+                  <p>
+                    Build a cross-platform mobile app from scratch in one day
+                    with Flutter and Dart. No mobile dev experience needed.
+                  </p>
+                  <div class="event-footer">
+                    <span>📍 Innovation Hub</span>
+                    <button class="btn-register">Register Now</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===================== COMMUNITY TAB ===================== -->
+      <div class="tab-content" id="tab-community">
+        <div class="content-body">
+          <div class="section-block">
+            <div class="section-block-header">
+              <h2>💬 Community Forum</h2>
+              <button class="btn-new-post">+ New Post</button>
+            </div>
+            <div class="forum-threads">
+              <div class="thread-card">
+                <div class="thread-avatar" style="background: rgba(77, 208, 225, 0.15); color: #4dd0e1">
+                  SK
+                </div>
+                <div class="thread-body">
+                  <h4>How do I start with machine learning?</h4>
+                  <p>
+                    I know Python basics but don't know where to go next. Any
+                    roadmap suggestions?
+                  </p>
+                  <div class="thread-meta">
+                    <span class="thread-author">Saanvi K.</span>
+                    <span>2 hours ago</span>
+                  </div>
+                </div>
+                <div class="thread-stats">
+                  <span class="thread-cat cat-ml">ML</span>
+                  <span>💬 14</span>
+                  <span>👍 23</span>
+                </div>
+              </div>
+              <div class="thread-card">
+                <div class="thread-avatar" style="background: rgba(124, 77, 255, 0.15); color: #7c4dff">
+                  AR
+                </div>
+                <div class="thread-body">
+                  <h4>Best resources to learn React in 2026?</h4>
+                  <p>
+                    Looking for updated tutorials that cover React 19 and
+                    Server Components.
+                  </p>
+                  <div class="thread-meta">
+                    <span class="thread-author">Aarav R.</span>
+                    <span>5 hours ago</span>
+                  </div>
+                </div>
+                <div class="thread-stats">
+                  <span class="thread-cat cat-web">Web</span>
+                  <span>💬 21</span>
+                  <span>👍 35</span>
+                </div>
+              </div>
+              <div class="thread-card">
+                <div class="thread-avatar" style="background: rgba(255, 64, 129, 0.15); color: #ff4081">
+                  MP
+                </div>
+                <div class="thread-body">
+                  <h4>Python vs JavaScript — which one first?</h4>
+                  <p>
+                    I'm a complete beginner. Which language should I learn
+                    first and why?
+                  </p>
+                  <div class="thread-meta">
+                    <span class="thread-author">Meera P.</span>
+                    <span>1 day ago</span>
+                  </div>
+                </div>
+                <div class="thread-stats">
+                  <span class="thread-cat cat-general">General</span>
+                  <span>💬 47</span>
+                  <span>👍 62</span>
+                </div>
+              </div>
+              <div class="thread-card">
+                <div class="thread-avatar" style="background: rgba(0, 229, 255, 0.15); color: #00e5ff">
+                  DS
+                </div>
+                <div class="thread-body">
+                  <h4>Need help deploying my Flask API to Render</h4>
+                  <p>
+                    Getting a 502 error after deployment. Tried updating
+                    gunicorn but still failing.
+                  </p>
+                  <div class="thread-meta">
+                    <span class="thread-author">Dev S.</span>
+                    <span>2 days ago</span>
+                  </div>
+                </div>
+                <div class="thread-stats">
+                  <span class="thread-cat cat-python">Python</span>
+                  <span>💬 9</span>
+                  <span>👍 11</span>
+                </div>
+              </div>
+              <div class="thread-card">
+                <div class="thread-avatar" style="background: rgba(156, 39, 176, 0.15); color: #9c27b0">
+                  AT
+                </div>
+                <div class="thread-body">
+                  <h4>Share your first project! 🚀</h4>
+                  <p>
+                    Let's celebrate our wins — drop a link or screenshot of
+                    the first thing you ever built!
+                  </p>
+                  <div class="thread-meta">
+                    <span class="thread-author">Aviral T.</span>
+                    <span>3 days ago</span>
+                  </div>
+                </div>
+                <div class="thread-stats">
+                  <span class="thread-cat cat-general">General</span>
+                  <span>💬 83</span>
+                  <span>👍 120</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===================== SESSIONS TAB ===================== -->
+      <div class="tab-content" id="tab-sessions">
+        <div class="content-body">
+          <div class="section-block">
+            <div class="section-block-header">
+              <h2>🎥 Sessions</h2>
+            </div>
+            <div class="sessions-grid" id="studentSessionsGrid">
+              <!-- Populated dynamically from Firebase RTDB -->
+              <div class="session-card upcoming" style="opacity: 0.5; text-align: center; padding: 40px;">
+                <p>Loading sessions...</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Countdown Timer Overlay -->
+      <div class="countdown-overlay" id="countdownOverlay" style="display: none;">
+        <div class="countdown-content">
+          <div class="countdown-icon">⏳</div>
+          <h2 id="countdownTitle">Session Title</h2>
+          <p class="countdown-subtitle">We will be starting soon!</p>
+          <div class="countdown-timer" id="countdownTimer">00:00</div>
+          <p class="countdown-hint">You'll be redirected when the session starts</p>
+          <button class="btn-remind" id="btnCancelCountdown" style="margin-top: 16px;">Cancel</button>
+        </div>
+      </div>
+
+      <!-- ===================== SETTINGS TAB ===================== -->
+      <div class="tab-content" id="tab-settings">
+        <div class="content-body">
+          <div class="section-block">
+            <div class="section-block-header">
+              <h2>⚙️ Settings</h2>
+            </div>
+            <div class="settings-list">
+              <div class="setting-item">
+                <div class="setting-info">
+                  <h4>Profile</h4>
+                  <p>Update your display name, avatar, and bio</p>
+                </div>
+                <button class="btn-resource">Edit</button>
+              </div>
+              <div class="setting-item">
+                <div class="setting-info">
+                  <h4>Notifications</h4>
+                  <p>Manage email and push notification preferences</p>
+                </div>
+                <button class="btn-resource">Configure</button>
+              </div>
+              <div class="setting-item">
+                <div class="setting-info">
+                  <h4>Appearance</h4>
+                  <p>Customize dashboard theme and accent colors</p>
+                </div>
+                <button class="btn-resource">Customize</button>
+              </div>
+              <div class="setting-item">
+                <div class="setting-info">
+                  <h4>Privacy</h4>
+                  <p>Control who can see your profile and activity</p>
+                </div>
+                <button class="btn-resource">Manage</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Firebase Scripts -->
+  <script type="module" src="dashboard.js"></script>
+  <script src="cursor.js"></script>
+</body>
+
+</html>

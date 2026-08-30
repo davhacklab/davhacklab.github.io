@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Authentication — HackLab</title>
+  <link rel="icon" type="image/png" href="images/logo.png" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="auth.css" />
+  <!-- Three.js for Particle Effects -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+</head>
+
+<body>
+  <!-- Three.js Canvas Container -->
+  <div id="canvas-container"></div>
+
+  <!-- Navbar (simplified for Auth) -->
+  <nav class="navbar" id="navbar">
+    <div class="container" style="justify-content: center">
+      <a href="index.html" class="nav-logo">
+        <img src="images/logo.png" alt="HackLab Logo" />
+        <span>HackLab</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- Auth Container -->
+  <div class="auth-wrapper">
+    <a href="./index.html" class="back-btn" id="backBtn">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="19" y1="12" x2="5" y2="12"></line>
+        <polyline points="12,19 5,12 12,5"></polyline>
+      </svg>
+      <span>Back</span>
+    </a>
+    <div class="auth-box" id="authBox">
+      <!-- Toggle Buttons -->
+      <div class="auth-toggle">
+        <button class="toggle-btn active" onclick="switchTab('login')">
+          Login
+        </button>
+        <button class="toggle-btn" onclick="switchTab('register')">
+          Register
+        </button>
+        <div class="toggle-slider" id="toggleSlider"></div>
+      </div>
+
+      <!-- Login Form -->
+      <form class="auth-form active" id="loginForm">
+        <h2>Welcome Back</h2>
+        <p class="subtitle">
+          Enter your credentials to access your account
+        </p>
+
+        <div class="input-group">
+          <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+            <polyline points="22,6 12,13 2,6"></polyline>
+          </svg>
+          <input type="email" id="loginEmail" placeholder="Email Address" required />
+        </div>
+
+        <div class="input-group">
+          <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+          <input type="password" id="loginPassword" placeholder="Password" required />
+          <span class="reveal-btn" onclick="togglePassword('loginPassword', this)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="feather feather-eye">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+          </span>
+        </div>
+
+        <div class="auth-row auth-row-between">
+          <label class="remember-me">
+            <input type="checkbox" id="loginRememberMe" />
+            <span>Remember me</span>
+          </label>
+          <a href="#" class="forgot-link">Forgot password?</a>
+        </div>
+        <button type="submit" class="btn-primary auth-submit">Login</button>
+
+        <div class="social-divider">
+          <span>Or continue with</span>
+        </div>
+
+        <div class="social-logins">
+          <button type="button" class="btn-social btn-google">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" alt="Google" />
+          </button>
+          <button type="button" class="btn-social btn-apple">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.62 1.54-1.61 3.22-2.53 4.08zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z" />
+            </svg>
+          </button>
+        </div>
+      </form>
+
+      <!-- Register Form -->
+      <form class="auth-form" id="registerForm">
+        <h2>Create Account</h2>
+        <p class="subtitle">Join the HackLab community today. Approved teacher emails are routed automatically.</p>
+
+        <div class="input-group">
+          <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+          <input type="text" id="registerName" placeholder="Full Name" required />
+        </div>
+
+        <div class="input-group">
+          <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+            <polyline points="22,6 12,13 2,6"></polyline>
+          </svg>
+          <input type="email" id="registerEmail" placeholder="Email Address" required />
+        </div>
+
+        <div class="input-group">
+          <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+          <input type="password" id="registerPassword" placeholder="Password" required />
+          <span class="reveal-btn" onclick="togglePassword('registerPassword', this)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="feather feather-eye">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+          </span>
+        </div>
+
+        <button type="submit" class="btn-primary auth-submit">
+          Register
+        </button>
+
+        <div class="social-divider">
+          <span>Or register with</span>
+        </div>
+
+        <div class="social-logins">
+          <button type="button" class="btn-social btn-google">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" alt="Google" />
+          </button>
+          <button type="button" class="btn-social btn-apple">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.62 1.54-1.61 3.22-2.53 4.08zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z" />
+            </svg>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Firebase SDK Setup and Auth Logic placeholder -->
+  <script type="module" src="auth.js"></script>
+  <script src="cursor.js"></script>
+</body>
+
+</html>

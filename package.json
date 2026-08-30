@@ -1,0 +1,19 @@
+{
+  "name": "davhacklab",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "build:folder": "node scripts/prepare-netlify-folder.mjs",
+    "build:upload": "node scripts/prepare-netlify-upload.mjs",
+    "start": "node server/index.js",
+    "dev": "node server/index.js"
+  },
+  "dependencies": {
+    "cassandra-driver": "latest",
+    "dotenv": "latest",
+    "express": "latest",
+    "serverless-http": "^3.2.0"
+  }
+}

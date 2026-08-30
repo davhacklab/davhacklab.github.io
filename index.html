@@ -1,0 +1,989 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="HackLab — A student innovation community that turns creative ideas into real projects. Free coding knowledge, hands-on sessions, and collaborative learning for ages 15–21."
+    />
+    <title>HackLab — Student Innovation Community</title>
+    <link rel="icon" type="image/png" href="images/logo.png" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <!-- ======== NAVBAR ======== -->
+    <nav class="navbar" id="navbar">
+      <div class="container">
+        <a href="index.html" class="nav-logo">
+          <img src="images/logo.png" alt="HackLab Logo" />
+          <span>HackLab</span>
+          <span
+            style="
+              width: 1px;
+              height: 28px;
+              background: rgba(255, 255, 255, 0.25);
+              margin: 0 10px;
+              display: inline-block;
+            "
+          ></span>
+          <img
+            src="images/davlogo.png"
+            alt="DAV Logo"
+            style="height: 36px; width: auto"
+          />
+
+          <h6>DAV CPS Haridwar</h6>
+        </a>
+        <div class="nav-links" id="navLinks">
+          <a href="#about">About</a>
+          <a href="#features">Features</a>
+          <a href="#path">Learning Path</a>
+          <a href="#projects">Projects</a>
+          <a href="#community">Community</a>
+          <a href="#events">Events</a>
+          <a href="#faq">FAQ</a>
+          <a href="auth.html" class="nav-cta">Join HackLab</a>
+        </div>
+        <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- ======== HERO ======== -->
+    <section class="hero" id="hero">
+      <!-- Animated vertical lines -->
+      <div class="hero-lines" id="heroLines"></div>
+      <!-- Canvas for particle effects -->
+      <canvas id="hero-canvas"></canvas>
+
+      <!-- Floating tech elements -->
+      <div class="floating-elements">
+        <div class="float-el">
+          <div class="icon"><img src="images/python.png" alt="" /></div>
+          <span>Python</span>
+        </div>
+        <div class="float-el">
+          <div class="icon"><img src="images/physics.png" alt="" /></div>
+          <span>React</span>
+        </div>
+        <div class="float-el">
+          <div class="icon"><img src="images/js.png" alt="" /></div>
+          <span>JavaScript</span>
+        </div>
+        <div class="float-el">
+          <div class="icon"><img src="images/data-model.png" alt="" /></div>
+          <span>AI / ML</span>
+        </div>
+      </div>
+
+      <!-- Orbital curve SVG -->
+      <div class="orbital-curve">
+        <svg
+          viewBox="0 0 1440 900"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M-100 600 Q 200 200, 720 450 T 1540 300"
+            stroke="url(#curve-grad)"
+            stroke-width="1"
+            fill="none"
+            opacity="0.25"
+          />
+          <path
+            d="M-50 700 Q 350 350, 760 500 T 1500 200"
+            stroke="url(#curve-grad2)"
+            stroke-width="1"
+            fill="none"
+            opacity="0.15"
+          />
+          <defs>
+            <linearGradient id="curve-grad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#4DD0E1" />
+              <stop offset="100%" stop-color="#7C4DFF" />
+            </linearGradient>
+            <linearGradient id="curve-grad2" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#9C27B0" />
+              <stop offset="100%" stop-color="#4DD0E1" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+
+      <div class="hero-content">
+        <div class="hero-badge">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="12" cy="12" r="10" />
+            <path d="M12 6v6l4 2" />
+          </svg>
+          Build the Future
+        </div>
+        <h1 class="hero-title">
+          Ignite Your<br /><span class="gradient-text">Innovation Journey</span>
+        </h1>
+        <p class="hero-subtitle">
+          Join a vibrant student community where creative ideas transform into
+          real-world projects. Learn to code, collaborate, and innovate — all
+          for free.
+        </p>
+        <div class="hero-buttons">
+          <a href="#features" class="btn-primary">
+            Explore Now
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+          </a>
+          <a href="auth.html" class="btn-secondary">
+            Get Started
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <line x1="5" y1="12" x2="19" y2="12" />
+              <polyline points="12 5 19 12 12 19" />
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="scroll-indicator">
+        <span>Scroll</span>
+        <div class="arrow"></div>
+      </div>
+    </section>
+
+    <!-- ======== ABOUT ======== -->
+    <section class="about" id="about">
+      <div class="container">
+        <div class="about-grid">
+          <div class="about-text reveal-left">
+            <div class="section-badge">
+              <span class="badge-dot"></span> Who We Are
+            </div>
+            <h2 class="section-title">Where DAVIANS<br />Become Innovators</h2>
+            <p>
+              <strong>HackLab</strong> is a student-run innovation community
+              inside our school that bridges the gap between learning and
+              creating. We believe every student has the potential to build
+              something amazing.
+            </p>
+            <p>
+              From your very first line of code to launching a full project —
+              HackLab provides the knowledge, mentorship, and collaborative
+              environment to make it happen. All resources are
+              <strong>completely free</strong>.
+            </p>
+            <p>
+              Whether you're into web development, AI, mobile apps, or IoT —
+              there's a place for you here. Ask questions, share ideas, and grow
+              together with a community that gets it.
+            </p>
+          </div>
+          <div class="stats-grid reveal-right">
+            <div class="stat-card">
+              <div class="stat-number" data-target="250">0</div>
+              <div class="stat-label">Active Members</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number" data-target="45">0</div>
+              <div class="stat-label">Projects Built</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number" data-target="30">0</div>
+              <div class="stat-label">Events Hosted</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number" data-target="12">0</div>
+              <div class="stat-label">Languages Taught</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="leadership" id="leadership">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="section-badge">
+            <span class="badge-dot"></span> Who Built HackLab
+          </div>
+          <h2 class="section-title">
+            The people who turned HackLab into a real student organisation.
+          </h2>
+          <p class="section-subtitle">
+            HackLab was shaped by student builders, faculty support, and DAV
+            guidance working together to turn one idea into a real space.
+          </p>
+        </div>
+
+        <div class="leadership-grid reveal">
+          <article class="leader-card leader-card--patron leader-card--mentor">
+            <div class="leader-portrait">
+              <img
+                src="https://davim.ac.in/images/president.jpg"
+                alt="Dr. Punam Suri"
+                loading="lazy"
+                referrerpolicy="no-referrer"
+                onerror="this.onerror=null;this.src='images/avatar.png';"
+              />
+            </div>
+            <h3>Dr. Punam Suri</h3>
+            <p class="leader-role">Grand Patron</p>
+            <p class="leader-copy">
+              Represents the wider DAV vision, institutional encouragement, and
+              long-term belief behind student-led innovation and growth.
+            </p>
+          </article>
+
+          <article class="leader-card leader-card--principal leader-card--mentor">
+            <div class="leader-portrait">
+              <img
+                src="images/dav-principal.jpg"
+                alt="Manoj Kumar Kapil"
+                loading="lazy"
+                onerror="this.onerror=null;this.src='images/davlogo.png';"
+              />
+            </div>
+            <h3>Manoj Kumar Kapil</h3>
+            <p class="leader-role">Presiding Patron</p>
+            <p class="leader-copy">
+              Provides the trust, school-level support, and platform that let
+              HackLab grow as a serious initiative inside the campus.
+            </p>
+          </article>
+
+          <article class="leader-card leader-card--advisor leader-card--mentor">
+            <div class="leader-portrait">
+              <img
+                src="images/deepshikha-mam.png"
+                alt="Ms. Deepshikha Sharma"
+                loading="lazy"
+                onerror="this.onerror=null;this.src='images/avatar.png';"
+              />
+            </div>
+            <h3>Ms. Deepshikha Sharma</h3>
+            <p class="leader-role">Faculty Advisor</p>
+            <p class="leader-copy">
+              Keeps the team focused, supported, and mission-aligned while
+              turning student momentum into sustainable execution.
+            </p>
+          </article>
+
+          <article class="leader-card leader-card--student leader-card--ananye">
+            <div class="leader-portrait-stage">
+              <div class="leader-portrait">
+                <img
+                  src="images/ananye.png"
+                  alt="Ananye Tyagi"
+                  loading="lazy"
+                  onerror="this.onerror=null;this.src='images/avatar.png';"
+                />
+              </div>
+            </div>
+            <span class="leader-tag">Student Leadership</span>
+            <h3>Ananye Tyagi</h3>
+            <p class="leader-role">President</p>
+            <p class="leader-copy">
+              Anchors the overall direction of HackLab and keeps student
+              initiatives aligned, active, and forward-moving.
+            </p>
+          </article>
+
+          <article class="leader-card leader-card--featured leader-card--student leader-card--tejas">
+            <div class="leader-portrait-stage">
+              <div class="leader-portrait">
+                <img
+                  src="images/tejas-real.png"
+                  alt="Tejas Sharma"
+                  loading="lazy"
+                  onerror="this.onerror=null;this.src='images/tejas.png';"
+                />
+              </div>
+            </div>
+            <span class="leader-tag">Student Leadership</span>
+            <h3>Tejas Sharma</h3>
+            <p class="leader-role">Head of UI/UX</p>
+            <p class="leader-copy">
+              Shapes the visual language, interface decisions, and overall
+              experience layer so HackLab feels polished, clear, and memorable.
+            </p>
+          </article>
+
+          <article class="leader-card leader-card--student leader-card--aviral">
+            <div class="leader-portrait-stage">
+              <div class="leader-portrait">
+                <img
+                  src="images/aviral.jpeg"
+                  alt="Aviral Tyagi"
+                  loading="lazy"
+                  onerror="this.onerror=null;this.src='images/avi.png';"
+                />
+              </div>
+            </div>
+            <span class="leader-tag">Student Leadership</span>
+            <h3>Aviral Tyagi</h3>
+            <p class="leader-role">Head of Programming</p>
+            <p class="leader-copy">
+              Drives the technical build quality of HackLab projects, sessions,
+              and product ideas from concept to implementation.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======== FEATURES ======== -->
+    <section class="features" id="features">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="section-badge">
+            <span class="badge-dot"></span> What We Offer
+          </div>
+          <h2 class="section-title">Everything You Need to Grow</h2>
+          <p class="section-subtitle">
+            From fundamentals to advanced projects, HackLab equips you with
+            everything to thrive in tech.
+          </p>
+        </div>
+        <div class="features-grid">
+          <div class="feature-card reveal">
+            <span class="corner-accent top-left"></span>
+            <span class="corner-accent bottom-right"></span>
+            <div class="feature-icon icon-teal">
+              <img src="images/coding.png" alt="" />
+            </div>
+            <h3>Free Coding Knowledge</h3>
+            <p>
+              Learn Python, JavaScript, C++, and more through structured lessons
+              crafted by students for students. Zero cost, maximum value.
+            </p>
+          </div>
+          <div class="feature-card reveal">
+            <span class="corner-accent top-left"></span>
+            <span class="corner-accent bottom-right"></span>
+            <div class="feature-icon icon-purple">
+              <img src="images/training.png" alt="" />
+            </div>
+            <h3>Hands-On Sessions</h3>
+            <p>
+              Weekly live workshops where you build real things — websites,
+              bots, apps. No boring lectures, just pure hands-on coding fun.
+            </p>
+          </div>
+          <div class="feature-card reveal">
+            <span class="corner-accent top-left"></span>
+            <span class="corner-accent bottom-right"></span>
+            <div class="feature-icon icon-pink">
+              <img src="images/resources.png" alt="" />
+            </div>
+            <h3>Learning Resources</h3>
+            <p>
+              Curated tutorials, cheat sheets, project templates, and video
+              guides organized by skill level. Your learning library, always
+              available.
+            </p>
+          </div>
+          <div class="feature-card reveal">
+            <span class="corner-accent top-left"></span>
+            <span class="corner-accent bottom-right"></span>
+            <div class="feature-icon icon-cyan">
+              <img src="images/raised-fist.png" alt="" />
+            </div>
+            <h3>Community Forum</h3>
+            <p>
+              Got stuck? Ask the community! Share solutions, debate approaches,
+              and learn from peers who've been there before.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======== LEARNING PATH ======== -->
+    <section class="learning-path" id="path">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="section-badge">
+            <span class="badge-dot"></span> Your Journey
+          </div>
+          <h2 class="section-title">From Zero to Innovator</h2>
+          <p class="section-subtitle">
+            A clear roadmap guiding you from absolute beginner to building
+            impactful projects.
+          </p>
+        </div>
+        <div class="path-timeline" id="pathTimeline">
+          <div class="path-step reveal">
+            <div class="path-node">01</div>
+            <div class="path-card">
+              <div class="path-label">Stage 1</div>
+              <h3>🌱 Beginner</h3>
+              <p>
+                Start with the basics — HTML, CSS, Python fundamentals. Build
+                your first webpage and write your first programs with guided
+                support.
+              </p>
+            </div>
+            <div style="flex: 1"></div>
+          </div>
+          <div class="path-step reveal">
+            <div class="path-node">02</div>
+            <div class="path-card">
+              <div class="path-label">Stage 2</div>
+              <h3>🔍 Explorer</h3>
+              <p>
+                Dive deeper into JavaScript, APIs, databases, and version
+                control. Start collaborating on small group projects.
+              </p>
+            </div>
+            <div style="flex: 1"></div>
+          </div>
+          <div class="path-step reveal">
+            <div class="path-node">03</div>
+            <div class="path-card">
+              <div class="path-label">Stage 3</div>
+              <h3>🔨 Builder</h3>
+              <p>
+                Take on real projects — build full-stack apps, contribute to
+                open source, and participate in hackathons with your team.
+              </p>
+            </div>
+            <div style="flex: 1"></div>
+          </div>
+          <div class="path-step reveal">
+            <div class="path-node">04</div>
+            <div class="path-card">
+              <div class="path-label">Stage 4</div>
+              <h3>🚀 Innovator</h3>
+              <p>
+                Lead projects, mentor newcomers, and launch solutions that solve
+                real problems. You're now part of the next generation of
+                innovators.
+              </p>
+            </div>
+            <div style="flex: 1"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======== PROJECTS ======== -->
+    <section class="projects" id="projects">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="section-badge">
+            <span class="badge-dot"></span> Showcase
+          </div>
+          <h2 class="section-title">Built by DAVIANS, For Everyone</h2>
+          <p class="section-subtitle">
+            Real projects created by HackLab members — from simple tools to
+            innovative solutions.
+          </p>
+        </div>
+        <div class="projects-grid">
+          <div class="project-card reveal">
+            <div class="project-thumb">
+              <div class="project-gradient gradient-1">
+                <img
+                  src="images/voicepal-logo.png"
+                  alt="VoicePal Logo"
+                  style="width: 100px; height: 100px; object-fit: contain"
+                />
+              </div>
+            </div>
+            <div class="project-info">
+              <div class="project-tags">
+                <span>AI</span>
+                <span>Speech</span>
+                <span>NLP</span>
+              </div>
+              <h3>
+                <a
+                  href="https://voicepal-pec.netlify.app/"
+                  target="_blank"
+                  style="color: inherit; text-decoration: none"
+                  >VoicePal</a
+                >
+              </h3>
+              <p>
+                A speech therapy platform that transforms silence into words of
+                confidence — from diagnosis to fluency using AI.
+              </p>
+            </div>
+          </div>
+          <div class="project-card reveal">
+            <div class="project-thumb">
+              <div class="project-gradient gradient-2">
+                <img
+                  src="images/HerbaLens.png"
+                  alt="HerbaLens Logo"
+                  style="width: 250px; height: 250px; object-fit: contain"
+                />
+              </div>
+            </div>
+            <div class="project-info">
+              <div class="project-tags">
+                <span>Ayurveda</span>
+                <span>AI</span>
+                <span>Health</span>
+              </div>
+              <h3>
+                <a
+                  href="https://herballens.netlify.app/"
+                  target="_blank"
+                  style="color: inherit; text-decoration: none"
+                  >HerbaLens</a
+                >
+              </h3>
+              <p>
+                A platform connecting people to the natural healing power of
+                Ayurveda through modern technology and AI.
+              </p>
+            </div>
+          </div>
+          <div class="project-card reveal">
+            <div class="project-thumb">
+              <div class="project-gradient gradient-3">
+                <img
+                  src="images/vrikshmitra_logo.png"
+                  alt="Vrikshmitra Logo"
+                  style="
+                    width: 100px;
+                    height: 100px;
+                    object-fit: contain;
+                    border-radius: 50px;
+                  "
+                />
+              </div>
+            </div>
+            <div class="project-info">
+              <div class="project-tags">
+                <span>Environment</span>
+                <span>IoT</span>
+                <span>Conservation</span>
+              </div>
+              <h3>
+                <a
+                  href="https://druva.netlify.app"
+                  target="_blank"
+                  style="color: inherit; text-decoration: none"
+                  >Vrikshmitra</a
+                >
+              </h3>
+              <p>
+                A comprehensive calamity protection and forest conservation
+                platform — combining technology with environmental awareness.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======== COMMUNITY ======== -->
+    <section class="community" id="community">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="section-badge"><span class="badge-dot"></span> Forum</div>
+          <h2 class="section-title">Join the Conversation</h2>
+          <p class="section-subtitle">
+            A peek into discussions happening right now in the HackLab community
+            forum.
+          </p>
+        </div>
+        <div class="forum-list">
+          <div class="forum-item reveal">
+            <div
+              class="forum-avatar"
+              style="
+                background: rgba(77, 208, 225, 0.15);
+                color: var(--accent-teal);
+              "
+            >
+              SK
+            </div>
+            <div class="forum-details">
+              <h4>How do I start with machine learning?</h4>
+              <p>Posted by Saanvi K. · 2 hours ago</p>
+            </div>
+            <div class="forum-meta">
+              <span class="forum-category cat-ml">ML</span>
+              <span>💬 14</span>
+              <span>👍 23</span>
+            </div>
+          </div>
+          <div class="forum-item reveal">
+            <div
+              class="forum-avatar"
+              style="
+                background: rgba(124, 77, 255, 0.15);
+                color: var(--accent-purple);
+              "
+            >
+              AR
+            </div>
+            <div class="forum-details">
+              <h4>Best resources to learn React in 2026?</h4>
+              <p>Posted by Aarav R. · 5 hours ago</p>
+            </div>
+            <div class="forum-meta">
+              <span class="forum-category cat-web">Web</span>
+              <span>💬 21</span>
+              <span>👍 35</span>
+            </div>
+          </div>
+          <div class="forum-item reveal">
+            <div
+              class="forum-avatar"
+              style="
+                background: rgba(255, 64, 129, 0.15);
+                color: var(--accent-pink);
+              "
+            >
+              MP
+            </div>
+            <div class="forum-details">
+              <h4>Python vs JavaScript — which one first?</h4>
+              <p>Posted by Meera P. · 1 day ago</p>
+            </div>
+            <div class="forum-meta">
+              <span class="forum-category cat-general">General</span>
+              <span>💬 47</span>
+              <span>👍 62</span>
+            </div>
+          </div>
+          <div class="forum-item reveal">
+            <div
+              class="forum-avatar"
+              style="
+                background: rgba(0, 229, 255, 0.15);
+                color: var(--accent-cyan);
+              "
+            >
+              DS
+            </div>
+            <div class="forum-details">
+              <h4>Need help deploying my Flask API to Render</h4>
+              <p>Posted by Dev S. · 2 days ago</p>
+            </div>
+            <div class="forum-meta">
+              <span class="forum-category cat-python">Python</span>
+              <span>💬 9</span>
+              <span>👍 11</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======== TESTIMONIALS ======== -->
+    <section
+      class="testimonials"
+      id="testimonials"
+      style="background: #0d0a1a; padding: 0"
+    >
+      <div
+        class="container"
+        style="max-width: 100%; height: 100vh; width: 100%; padding: 0"
+      >
+        <h2
+          style="
+            text-align: center;
+            margin-top: 30px;
+            font-size: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+          "
+        >
+          <img
+            src="images/absolute-cinema-cinema.png"
+            alt="Absolute Cinema"
+            style="
+              width: 80px;
+              height: 80px;
+              border-radius: 12px;
+              object-fit: cover;
+            "
+          />
+          What Our Users Said !
+        </h2>
+        <iframe
+          src="https://my.spline.design/autolayoutcardscopycopy-OECzNHgHGMRakWQjeAY9K9lq-mSY/"
+          frameborder="0"
+          width="100%"
+          style="height: 100vh"
+        ></iframe>
+      </div>
+    </section>
+
+    <!-- ======== EVENTS ======== -->
+    <section class="events" id="events">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="section-badge">
+            <span class="badge-dot"></span> Events
+          </div>
+          <h2 class="section-title">What's Coming Up</h2>
+          <p class="section-subtitle">
+            Hackathons, workshops, and sessions designed to level up your
+            skills.
+          </p>
+        </div>
+        <div class="events-grid">
+          <div class="event-card reveal">
+            <div class="event-date">📅 March 22, 2026</div>
+            <h3>HackLab Hackathon v3.0</h3>
+            <p>
+              A 24-hour hackathon where teams compete to build the most
+              innovative solution to a real-world problem. Prizes, mentors, and
+              pizza included.
+            </p>
+          </div>
+          <div class="event-card reveal">
+            <div class="event-date">📅 April 5, 2026</div>
+            <h3>Web Dev Bootcamp Weekend</h3>
+            <p>
+              Two days of intensive web development — from HTML basics to
+              deploying a full-stack app with React and Node.js.
+            </p>
+          </div>
+          <div class="event-card reveal">
+            <div class="event-date">📅 April 19, 2026</div>
+            <h3>AI & ML Introduction Night</h3>
+            <p>
+              An evening session covering the fundamentals of artificial
+              intelligence and machine learning with live Python demos.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======== FAQ ======== -->
+    <section class="faq" id="faq">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="section-badge"><span class="badge-dot"></span> FAQ</div>
+          <h2 class="section-title">Got Questions?</h2>
+          <p class="section-subtitle">
+            Quick answers to the most common questions about HackLab.
+          </p>
+        </div>
+        <div class="faq-list">
+          <div class="faq-item reveal">
+            <button class="faq-question" id="faq-q-1">
+              Do I need prior coding experience to join?
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer" id="faq-a-1">
+              <div class="faq-answer-inner">
+                Not at all! HackLab is designed for students at every level —
+                from complete beginners to advanced coders. Our learning path
+                starts from scratch and guides you step by step.
+              </div>
+            </div>
+          </div>
+          <div class="faq-item reveal">
+            <button class="faq-question" id="faq-q-2">
+              Is there any fee to join HackLab?
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer" id="faq-a-2">
+              <div class="faq-answer-inner">
+                No! HackLab is completely free. All resources, workshops,
+                sessions, and mentorship are provided at zero cost. Our mission
+                is to make tech education accessible to every student.
+              </div>
+            </div>
+          </div>
+          <div class="faq-item reveal">
+            <button class="faq-question" id="faq-q-3">
+              What programming languages do you teach?
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer" id="faq-a-3">
+              <div class="faq-answer-inner">
+                We cover Python, JavaScript, HTML/CSS, C++, Java, React,
+                Node.js, Flutter, and more. Our curriculum evolves based on what
+                the community wants to learn and what's in demand.
+              </div>
+            </div>
+          </div>
+          <div class="faq-item reveal">
+            <button class="faq-question" id="faq-q-4">
+              How can I contribute or become a mentor?
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer" id="faq-a-4">
+              <div class="faq-answer-inner">
+                Once you reach the Builder or Innovator stage, you can apply to
+                become a peer mentor. You'll help guide newer members, create
+                resources, and lead sessions — a great leadership experience!
+              </div>
+            </div>
+          </div>
+          <div class="faq-item reveal">
+            <button class="faq-question" id="faq-q-5">
+              Can I join if I'm from a different school?
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer" id="faq-a-5">
+              <div class="faq-answer-inner">
+                Currently HackLab operates within our school, but we're working
+                on expanding to include students from neighboring schools. Stay
+                tuned for updates on our community page!
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======== CTA ======== -->
+    <section class="cta-section" id="cta">
+      <div class="container">
+        <div class="cta-box reveal">
+          <h2>Ready to Start <span class="gradient-text">Building?</span></h2>
+          <p>
+            Join hundreds of students already learning, creating, and innovating
+            with HackLab. Your journey starts now.
+          </p>
+          <a href="auth.html" class="btn-primary">
+            Join HackLab — It's Free
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <line x1="5" y1="12" x2="19" y2="12" />
+              <polyline points="12 5 19 12 12 19" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======== FOOTER ======== -->
+    <footer class="footer" style="position: relative; overflow: hidden">
+      <!-- Spline 3D Background -->
+      <script
+        type="module"
+        src="https://unpkg.com/@splinetool/viewer@1.12.68/build/spline-viewer.js"
+      ></script>
+      <spline-viewer
+        url="https://prod.spline.design/05BTudCTX1VNrCs5/scene.splinecode"
+        style="
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          z-index: 0;
+          pointer-events: none;
+        "
+      ></spline-viewer>
+      <div class="container" style="position: relative; z-index: 1">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <a href="index.html" class="nav-logo">
+              <img src="images/logo.png" />
+              <span>HackLab</span>
+            </a>
+            <p>
+              A student innovation community turning creative ideas into
+              real-world projects. Learn. Build. Innovate.
+            </p>
+            <div class="footer-socials">
+              <a href="#" aria-label="Instagram">📸</a>
+              <a href="#" aria-label="GitHub">🐙</a>
+              <a href="#" aria-label="Discord">🎮</a>
+              <a href="#" aria-label="LinkedIn">💼</a>
+            </div>
+          </div>
+          <div class="footer-col">
+            <h4>Quick Links</h4>
+            <a href="#about">About Us</a>
+            <a href="#features">Features</a>
+            <a href="#path">Learning Path</a>
+            <a href="#projects">Projects</a>
+          </div>
+          <div class="footer-col">
+            <h4>Community</h4>
+            <a href="#community">Forum</a>
+            <a href="#events">Events</a>
+            <a href="#testimonials">Testimonials</a>
+            <a href="#faq">FAQ</a>
+          </div>
+          <div class="footer-col">
+            <h4>Resources</h4>
+            <a href="#">Tutorials</a>
+            <a href="#">Cheat Sheets</a>
+            <a href="#">Project Ideas</a>
+            <a href="#">Contact Us</a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          &copy; 2026 HackLab. Built with 💙 by students, for students.
+        </div>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+
+    <!-- Absolute Cinema Easter Egg -->
+    <div
+      id="absoluteCinema"
+      style="
+        position: fixed;
+        top: 50%;
+        left: -400px;
+        transform: translateY(-50%);
+        z-index: 9999;
+        pointer-events: none;
+        transition: none;
+        opacity: 0;
+      "
+    >
+      <img
+        src="images/absolute-cinema-cinema.png"
+        alt="Absolute Cinema"
+        style="width: 350px; height: auto; border-radius: 18px"
+      />
+    </div>
+  </body>
+</html>
+
