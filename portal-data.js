@@ -100,7 +100,7 @@ function resolveDataMode() {
     }
 
     const hostname = String(window.location.hostname || "").trim().toLowerCase();
-    if (hostname === "localhost" || hostname === "127.0.0.1") {
+    if (hostname === "localhost" || hostname === "127.0.0.1" || hostname.endsWith("onrender.com")) {
         return "api";
     }
 
