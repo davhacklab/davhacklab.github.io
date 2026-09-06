@@ -10,6 +10,21 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="dashboard.css" />
+    <script>
+      (function() {
+        try {
+          const cachedName = localStorage.getItem('hacklab.userDisplayName');
+          if (cachedName && cachedName !== 'HackLab Student' && cachedName !== 'HackLab Member') {
+            document.addEventListener('DOMContentLoaded', function() {
+              const u = document.getElementById('userName');
+              const p = document.getElementById('profileName');
+              if (u) u.textContent = cachedName;
+              if (p) p.textContent = cachedName;
+            });
+          }
+        } catch (_) {}
+      })();
+    </script>
   </head>
 
   <body>
@@ -63,7 +78,7 @@
 
       <main class="main-content">
         <div class="greeting">
-          <h1>Hello <strong id="userName">HackLab Student</strong></h1>
+          <h1>Hello <strong id="userName">Student</strong></h1>
           <p id="dashboardGreetingCopy">
             Your dashboard is syncing with your latest profile and teacher
             updates.
@@ -190,13 +205,13 @@
           <div class="profile-avatar-wrap">
             <img
               src="images/avatar.png"
-              alt="HackLab Student"
+              alt="Student"
               class="profile-avatar"
               id="profileAvatar"
             />
           </div>
           <div class="profile-name-wrap">
-            <h3 class="profile-name" id="profileName">HackLab Student</h3>
+            <h3 class="profile-name" id="profileName">Student</h3>
             <span class="profile-verified-badge" id="profileVerifiedBadge" hidden aria-label="Verified" title="Verified">
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <path class="verified-shield" d="M12 1.8l2.62 2.2 3.39-.34 1.56 3.03 3.03 1.56-.34 3.39L24.2 12l-2.2 2.62.34 3.39-3.03 1.56-1.56 3.03-3.39-.34L12 24.2l-2.62-2.2-3.39.34-1.56-3.03-3.03-1.56.34-3.39L-.2 12l2.2-2.62-.34-3.39 3.03-1.56 1.56-3.03 3.39.34L12 1.8z"></path>
@@ -246,7 +261,7 @@
               <h2 id="profileEditTitle">Update your profile</h2>
             </div>
             <p class="profile-edit-copy" id="profileVerifyStatus">
-              Fill the core details to unlock a verified-style badge on your dashboard.
+              Update your personal and contact details for your student profile.
             </p>
           </div>
 

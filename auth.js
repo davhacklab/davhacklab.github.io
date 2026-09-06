@@ -1,5 +1,5 @@
-import { createUserWithEmailAndPassword, getAdditionalUserInfo, signInWithEmailAndPassword, GoogleAuthProvider, OAuthProvider, browserLocalPersistence, browserSessionPersistence, setPersistence, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
-import { auth, isTeacherEmail } from "./portal-data.js";
+import { createUserWithEmailAndPassword, getAdditionalUserInfo, signInWithEmailAndPassword, GoogleAuthProvider, OAuthProvider, browserLocalPersistence, browserSessionPersistence, setPersistence, signInWithPopup, onAuthStateChanged, updateProfile } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+import { auth, isTeacherEmail, saveStudentProfile } from "./portal-data.js";
 const AUTH_ACTIVE_TAB_STORAGE_KEY = "hacklab.auth.activeTab";
 const AUTH_LOGIN_DRAFT_STORAGE_KEY = "hacklab.auth.loginDraft";
 const AUTH_REGISTER_DRAFT_STORAGE_KEY = "hacklab.auth.registerDraft";
@@ -380,6 +380,18 @@ loginForm?.addEventListener('submit', async (e) => {
         const user = userCredential.user;
         const role = await resolveRoleForEmail(user.email || email);
 
+        if (user.displayName) {
+            try {
+                window.localStorage.setItem('hacklab.userDisplayName', user.displayName);
+            } catch (_) {}
+        } else if (user.email) {
+            const emailPrefix = user.email.split('@')[0];
+            const formattedName = emailPrefix.charAt(0).toUpperCase() + emailPrefix.slice(1);
+            try {
+                window.localStorage.setItem('hacklab.userDisplayName', formattedName);
+            } catch (_) {}
+        }
+
         clearAuthDraft('login');
         setAuthMessage('login', '');
         redirectBasedOnRole(role);
@@ -406,6 +418,29 @@ registerForm?.addEventListener('submit', async (e) => {
     try {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
+        const trimmedName = (name || '').trim();
+
+        if (trimmedName) {
+            try {
+                await updateProfile(user, { displayName: trimmedName });
+            } catch (profileError) {
+                console.warn('Unable to set displayName on Firebase auth user:', profileError);
+            }
+
+            try {
+                window.localStorage.setItem('hacklab.userDisplayName', trimmedName);
+            } catch (_) {}
+
+            try {
+                await saveStudentProfile(user.uid, {
+                    displayName: trimmedName,
+                    email: (user.email || email || '').trim()
+                });
+            } catch (saveError) {
+                console.warn('Unable to save student profile on registration:', saveError);
+            }
+        }
+
         const role = await resolveRoleForEmail(email);
 
         setDashboardWalkthroughPending(user.uid, true);
@@ -433,6 +468,24 @@ const handleSocialLogin = async (provider, providerName, buttonElement) => {
         const user = result.user;
         const role = await resolveRoleForEmail(user.email);
         const additionalUserInfo = getAdditionalUserInfo(result);
+
+        if (user.displayName) {
+            try {
+                window.localStorage.setItem('hacklab.userDisplayName', user.displayName);
+            } catch (_) {}
+            try {
+                await saveStudentProfile(user.uid, {
+                    displayName: user.displayName,
+                    email: user.email || ''
+                });
+            } catch (_) {}
+        } else if (user.email) {
+            const emailPrefix = user.email.split('@')[0];
+            const formattedName = emailPrefix.charAt(0).toUpperCase() + emailPrefix.slice(1);
+            try {
+                window.localStorage.setItem('hacklab.userDisplayName', formattedName);
+            } catch (_) {}
+        }
 
         if (additionalUserInfo?.isNewUser) {
             setDashboardWalkthroughPending(user.uid, true);

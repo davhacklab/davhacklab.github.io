@@ -18,7 +18,6 @@ import {
     DEFAULT_DASHBOARD_ANNOUNCEMENT,
     DEFAULT_EVENTS,
     DEFAULT_OVERVIEW_TASKS,
-    DEFAULT_PROJECTS,
     DEFAULT_RESOURCES,
     DEFAULT_STUDENT_ARTICLES,
     DEFAULT_STUDENT_PROFILE,
@@ -199,29 +198,6 @@ function normalizeCommunityPost(post, feed = "general") {
     };
 }
 
-function normalizeProject(project, visibility = "public") {
-    return {
-        id: project.id || crypto.randomUUID(),
-        visibility: project.visibility || visibility,
-        ownerId: project.ownerId || "anonymous",
-        ownerName: project.ownerName || "HackLab Student",
-        ownerAvatar: project.ownerAvatar || "images/avatar.png",
-        collaboratorIds: Array.isArray(project.collaboratorIds) ? project.collaboratorIds.filter(Boolean) : [],
-        collaboratorNames: Array.isArray(project.collaboratorNames) ? project.collaboratorNames.filter(Boolean) : [],
-        collaboratorAvatars: Array.isArray(project.collaboratorAvatars) ? project.collaboratorAvatars : [],
-        title: project.title || "Untitled project",
-        summary: project.summary || "A student project summary will appear here.",
-        category: project.category || "Student Build",
-        status: project.status || "New",
-        badge: project.badge || "Fresh",
-        projectLink: project.projectLink || "",
-        imageUrl: project.imageUrl || "images/session.png",
-        likesCount: parseCompactCount(project.likesCount),
-        isFeatured: Boolean(project.isFeatured),
-        createdAt: project.createdAt || createIsoNow()
-    };
-}
-
 function normalizeCollaborationRequest(request = {}) {
     const status = String(request.status || "pending").toLowerCase();
 
@@ -326,20 +302,6 @@ function sortByCreatedAtDesc(items) {
     });
 }
 
-function sortProjects(projects) {
-    return [...projects].sort((left, right) => {
-        if (Boolean(right.isFeatured) !== Boolean(left.isFeatured)) {
-            return Number(right.isFeatured) - Number(left.isFeatured);
-        }
-
-        if ((right.likesCount || 0) !== (left.likesCount || 0)) {
-            return (right.likesCount || 0) - (left.likesCount || 0);
-        }
-
-        return new Date(right.createdAt || 0).getTime() - new Date(left.createdAt || 0).getTime();
-    });
-}
-
 function buildInitialState() {
     const now = createIsoNow();
 
@@ -355,9 +317,6 @@ function buildInitialState() {
         ),
         community: {
             general: sortByCreatedAtDesc(DEFAULT_COMMUNITY_POSTS.map((post) => normalizeCommunityPost(post, "general")))
-        },
-        projects: {
-            public: sortProjects(DEFAULT_PROJECTS.map((project) => normalizeProject(project, "public")))
         },
         collaboration: {},
         studentProfiles: {}
@@ -394,7 +353,6 @@ class JsonStore {
 
         this.data.content ||= {};
         this.data.community ||= {};
-        this.data.projects ||= {};
         this.data.collaboration ||= {};
         this.data.studentProfiles ||= {};
 
@@ -562,74 +520,6 @@ class JsonStore {
         return cloneData(post);
     }
 
-    async listProjects(visibility = "public") {
-        await this.ensureData();
-
-        if (!Array.isArray(this.data.projects[visibility]) || !this.data.projects[visibility].length) {
-            if (visibility === "public") {
-                this.data.projects[visibility] = sortProjects(DEFAULT_PROJECTS.map((project) => normalizeProject(project, visibility)));
-                await this.persist();
-            } else {
-                this.data.projects[visibility] = [];
-            }
-        }
-
-        return sortProjects(this.data.projects[visibility].map((project) => normalizeProject(project, visibility)));
-    }
-
-    async createProject(payload) {
-        await this.ensureData();
-
-        const visibility = payload.visibility || "public";
-        const project = normalizeProject({
-            ...payload,
-            id: crypto.randomUUID(),
-            createdAt: createIsoNow(),
-            likesCount: 0
-        }, visibility);
-
-        this.data.projects[visibility] ||= [];
-        this.data.projects[visibility].unshift(project);
-        this.data.projects[visibility] = sortProjects(this.data.projects[visibility]);
-        await this.persist();
-        return cloneData(project);
-    }
-
-    async likeProject(visibility = "public", projectId) {
-        await this.ensureData();
-        this.data.projects[visibility] ||= [];
-
-        const index = this.data.projects[visibility].findIndex((project) => project.id === projectId);
-        if (index === -1) {
-            throw new Error("Project not found.");
-        }
-
-        const project = this.data.projects[visibility][index];
-        project.likesCount = parseCompactCount(project.likesCount) + 1;
-        this.data.projects[visibility] = sortProjects(this.data.projects[visibility]);
-        await this.persist();
-        return cloneData(project);
-    }
-
-    async deleteProject(visibility = "public", projectId, requesterId = "") {
-        await this.ensureData();
-        this.data.projects[visibility] ||= [];
-
-        const index = this.data.projects[visibility].findIndex((project) => project.id === projectId);
-        if (index === -1) {
-            throw new Error("Project not found.");
-        }
-
-        const project = normalizeProject(this.data.projects[visibility][index], visibility);
-        if (String(project.ownerId || "") !== String(requesterId || "")) {
-            throw new Error("You can only delete your own projects.");
-        }
-
-        const [deletedProject] = this.data.projects[visibility].splice(index, 1);
-        await this.persist();
-        return cloneData(deletedProject);
-    }
-
     async getCollaborationState(userId) {
         await this.ensureData();
 
@@ -742,15 +632,6 @@ class AstraStore {
                 payload text,
                 created_at timestamp,
                 PRIMARY KEY ((feed), post_id)
-            )
-        `);
-        await this.client.execute(`
-            CREATE TABLE IF NOT EXISTS student_projects (
-                visibility text,
-                project_id text,
-                payload text,
-                created_at timestamp,
-                PRIMARY KEY ((visibility), project_id)
             )
         `);
         await this.client.execute(`
@@ -963,96 +844,6 @@ class AstraStore {
         return cloneData(post);
     }
 
-    async listProjects(visibility = "public") {
-        const result = await this.client.execute(
-            "SELECT project_id, payload FROM student_projects WHERE visibility = ?",
-            [visibility],
-            { prepare: true }
-        );
-
-        if (!result.rowLength && visibility === "public") {
-            for (const project of DEFAULT_PROJECTS.map((item) => normalizeProject(item, visibility))) {
-                await this.client.execute(
-                    "INSERT INTO student_projects (visibility, project_id, payload, created_at) VALUES (?, ?, ?, ?)",
-                    [visibility, project.id, JSON.stringify(project), new Date(project.createdAt)],
-                    { prepare: true }
-                );
-            }
-
-            return this.listProjects(visibility);
-        }
-
-        return sortProjects(
-            result.rows.map((row) => normalizeProject(JSON.parse(row.payload || "{}"), visibility))
-        );
-    }
-
-    async createProject(payload) {
-        const visibility = payload.visibility || "public";
-        const project = normalizeProject({
-            ...payload,
-            id: crypto.randomUUID(),
-            createdAt: createIsoNow(),
-            likesCount: 0
-        }, visibility);
-
-        await this.client.execute(
-            "INSERT INTO student_projects (visibility, project_id, payload, created_at) VALUES (?, ?, ?, ?)",
-            [visibility, project.id, JSON.stringify(project), new Date(project.createdAt)],
-            { prepare: true }
-        );
-
-        return cloneData(project);
-    }
-
-    async likeProject(visibility = "public", projectId) {
-        const result = await this.client.execute(
-            "SELECT payload FROM student_projects WHERE visibility = ? AND project_id = ?",
-            [visibility, projectId],
-            { prepare: true }
-        );
-
-        if (!result.rowLength) {
-            throw new Error("Project not found.");
-        }
-
-        const project = normalizeProject(JSON.parse(result.first().payload || "{}"), visibility);
-        project.likesCount = parseCompactCount(project.likesCount) + 1;
-
-        await this.client.execute(
-            "INSERT INTO student_projects (visibility, project_id, payload, created_at) VALUES (?, ?, ?, ?)",
-            [visibility, project.id, JSON.stringify(project), new Date(project.createdAt)],
-            { prepare: true }
-        );
-
-        return cloneData(project);
-    }
-
-    async deleteProject(visibility = "public", projectId, requesterId = "") {
-        const result = await this.client.execute(
-            "SELECT payload FROM student_projects WHERE visibility = ? AND project_id = ?",
-            [visibility, projectId],
-            { prepare: true }
-        );
-
-        if (!result.rowLength) {
-            throw new Error("Project not found.");
-        }
-
-        const project = normalizeProject(JSON.parse(result.first().payload || "{}"), visibility);
-        if (String(project.ownerId || "") !== String(requesterId || "")) {
-            throw new Error("You can only delete your own projects.");
-        }
-
-        await this.client.execute(
-            "DELETE FROM student_projects WHERE visibility = ? AND project_id = ?",
-            [visibility, projectId],
-            { prepare: true }
-        );
-
-        return cloneData(project);
-    }
-
     async getCollaborationState(userId) {
         const result = await this.client.execute(
             "SELECT payload FROM collaboration_state WHERE user_id = ?",
@@ -1186,7 +977,6 @@ function invalidateApiCache(scope = "all") {
 
     apiCache.deletePrefix("content:");
     apiCache.deletePrefix("community:");
-    apiCache.deletePrefix("projects:");
     apiCache.deletePrefix("collaboration:");
     apiCache.deletePrefix("student:");
     apiCache.deletePrefix("bootstrap:");
@@ -1218,19 +1008,6 @@ async function getCachedCommunityPosts(feed = "general") {
     return body;
 }
 
-async function getCachedProjects(visibility = "public") {
-    const key = `projects:${visibility}`;
-    const cached = apiCache.get(key);
-    if (cached) {
-        return cached;
-    }
-
-    const projects = await store.listProjects(visibility);
-    const body = { visibility, projects };
-    apiCache.set(key, body);
-    return body;
-}
-
 async function buildBootstrapPayload(userId = "") {
     const contentEntries = await Promise.all(
         BOOTSTRAP_CONTENT_SECTIONS.map(async (section) => {
@@ -1239,9 +1016,8 @@ async function buildBootstrapPayload(userId = "") {
         })
     );
 
-    const [communityPayload, projectsPayload, profile, collaboration] = await Promise.all([
+    const [communityPayload, profile, collaboration] = await Promise.all([
         getCachedCommunityPosts("general"),
-        getCachedProjects("public"),
         userId
             ? store.getStudentProfile(userId).then((profile) => ({ profile })).catch(() => ({ profile: null }))
             : Promise.resolve({ profile: null }),
@@ -1255,9 +1031,6 @@ async function buildBootstrapPayload(userId = "") {
         content: Object.fromEntries(contentEntries),
         community: {
             general: communityPayload.posts
-        },
-        projects: {
-            public: projectsPayload.projects
         },
         studentProfile: profile.profile,
         collaboration: collaboration.state
@@ -1450,82 +1223,6 @@ app.post("/api/community/posts/:postId/like", async (request, response) => {
         response.json({ post });
     } catch (error) {
         response.status(404).json({ error: error.message });
-    }
-});
-
-app.get("/api/projects", async (request, response) => {
-    try {
-        const visibility = String(request.query.visibility || "public");
-        const payload = await getCachedProjects(visibility);
-        response.set("Cache-Control", "private, max-age=15");
-        response.json(payload);
-    } catch (error) {
-        response.status(500).json({ error: error.message });
-    }
-});
-
-app.post("/api/projects", async (request, response) => {
-    try {
-        const title = String(request.body?.title || "").trim();
-        const summary = String(request.body?.summary || "").trim();
-
-        if (!title || !summary) {
-            response.status(400).json({ error: "A project needs both a title and a summary." });
-            return;
-        }
-
-        const project = await store.createProject({
-            visibility: String(request.body?.visibility || "public"),
-            ownerId: String(request.body?.ownerId || "anonymous"),
-            ownerName: String(request.body?.ownerName || "HackLab Student"),
-            ownerAvatar: String(request.body?.ownerAvatar || "images/avatar.png"),
-            collaboratorIds: Array.isArray(request.body?.collaboratorIds) ? request.body.collaboratorIds : [],
-            collaboratorNames: Array.isArray(request.body?.collaboratorNames) ? request.body.collaboratorNames : [],
-            collaboratorAvatars: Array.isArray(request.body?.collaboratorAvatars) ? request.body.collaboratorAvatars : [],
-            title,
-            summary,
-            category: String(request.body?.category || "Student Build"),
-            status: String(request.body?.status || "New"),
-            badge: String(request.body?.badge || "Fresh"),
-            projectLink: String(request.body?.projectLink || ""),
-            imageUrl: String(request.body?.imageUrl || "images/session.png"),
-            isFeatured: Boolean(request.body?.isFeatured)
-        });
-
-        invalidateApiCache();
-        response.status(201).json({ project });
-    } catch (error) {
-        response.status(500).json({ error: error.message });
-    }
-});
-
-app.post("/api/projects/:projectId/like", async (request, response) => {
-    try {
-        const visibility = String(request.body?.visibility || "public");
-        const project = await store.likeProject(visibility, request.params.projectId);
-        invalidateApiCache();
-        response.json({ project });
-    } catch (error) {
-        response.status(404).json({ error: error.message });
-    }
-});
-
-app.delete("/api/projects/:projectId", async (request, response) => {
-    try {
-        const deletedProject = await store.deleteProject(
-            String(request.body?.visibility || "public"),
-            request.params.projectId,
-            String(request.body?.requesterId || "anonymous")
-        );
-        invalidateApiCache();
-        response.json({ deleted: true, project: deletedProject });
-    } catch (error) {
-        const statusCode = error.message.includes("own projects")
-            ? 403
-            : error.message.includes("not found")
-                ? 404
-                : 500;
-        response.status(statusCode).json({ error: error.message });
     }
 });
 

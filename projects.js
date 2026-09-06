@@ -168,7 +168,7 @@ function getSelectedCollaboratorEntries() {
 }
 
 function getVisibleOpenCollaborators() {
-    return openCollaborators.filter((entry) => entry.userId && entry.isOpenToCollaborate && entry.userId !== currentUser?.uid);
+    return openCollaborators.filter((entry) => entry.userId && entry.isOpenToCollaborate && entry.userId !== currentUser?.uid && !entry.userId.startsWith("seed-"));
 }
 
 function syncCollaborationAvailabilityToggle() {
@@ -462,7 +462,7 @@ function persistFavouriteProjects() {
     }
 }
 
-function normalizeNetlifyUrl(value) {
+function normalizeProjectUrl(value) {
     const rawValue = String(value || "").trim();
     if (!rawValue) return null;
 
@@ -470,8 +470,11 @@ function normalizeNetlifyUrl(value) {
 
     try {
         const url = new URL(candidate);
+        if (url.protocol !== "http:" && url.protocol !== "https:") {
+            return null;
+        }
         const hostname = url.hostname.toLowerCase().replace(/^www\./, "");
-        if (!hostname.endsWith("netlify.app")) {
+        if (!hostname || !hostname.includes(".") || hostname.endsWith(".")) {
             return null;
         }
         url.hash = "";
@@ -480,6 +483,8 @@ function normalizeNetlifyUrl(value) {
         return null;
     }
 }
+
+const normalizeNetlifyUrl = normalizeProjectUrl;
 
 function getProjectLinkLabel(projectLink) {
     try {
@@ -804,8 +809,8 @@ function renderCollaborateWidget() {
             name: acceptedContact?.name || entry.profile?.name || recentProject?.ownerName || "HackLab Student",
             email: acceptedContact?.email || entry.profile?.email || "",
             avatar: acceptedContact?.avatar || entry.profile?.avatar || recentProject?.ownerAvatar || "images/avatar.png",
-            focus: recentProject?.category || "Open to collaborate",
-            projectTitle: recentProject?.title || "Ready to join a new build"
+            focus: entry.focus || recentProject?.category || "Open to collaborate",
+            projectTitle: entry.projectTitle || recentProject?.title || "Ready to join a new build"
         });
     });
 
@@ -1003,7 +1008,7 @@ async function handleProjectCreation(event) {
     }
 
     if (!projectLink) {
-        setUploadMessage("Paste a valid live .netlify.app project link.", "error");
+        setUploadMessage("Paste a valid live project link (e.g. https://your-project.com).", "error");
         return;
     }
 
@@ -1044,7 +1049,7 @@ async function handleProjectCreation(event) {
         setUploadMessage(
             collaboratorEntries.length
                 ? "Project added. Your accepted collaborator is attached to the live card."
-                : "Project added. Students can open the live Netlify build now.",
+                : "Project added. Students can open the live project build now.",
             "success"
         );
         searchQuery = title;
@@ -1115,7 +1120,7 @@ function handleProjectOpen(target) {
         return;
     }
 
-    setUploadMessage(`No live Netlify link is attached to ${project.title} yet.`, "error");
+    setUploadMessage(`No live project link is attached to ${project.title} yet.`, "error");
 }
 
 function handleOpenUpload(event) {
@@ -1221,6 +1226,7 @@ async function handleCollaborationAction(button) {
         setUploadMessage("Unable to send the collaboration request right now.", "error");
     } finally {
         button.disabled = false;
+        renderCollaborateWidget();
     }
 }
 
@@ -1406,7 +1412,10 @@ onAuthStateChanged(auth, async (user) => {
     }
 
     currentUser = user;
-    currentUserName = getDisplayName(user, "HackLab Student");
+    const cachedName = (typeof window !== "undefined" && window.localStorage?.getItem("hacklab.userDisplayName")) || "";
+    currentUserName = (user.displayName && user.displayName !== "HackLab Student")
+        ? user.displayName
+        : (cachedName || getDisplayName(user, "Student"));
     currentUserAvatar = user.photoURL || "images/avatar.png";
 
     window.removeEventListener("hacklab:bootstrap", handleProjectsBootstrap);

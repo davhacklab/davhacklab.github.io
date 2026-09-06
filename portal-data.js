@@ -170,7 +170,24 @@ function readLocalCollaboratorDirectory() {
     try {
         const rawValue = window.localStorage.getItem(LOCAL_COLLAB_DIRECTORY_STORAGE_KEY);
         const parsedValue = rawValue ? JSON.parse(rawValue) : {};
-        return parsedValue && typeof parsedValue === "object" ? parsedValue : {};
+        if (!parsedValue || typeof parsedValue !== "object") {
+            return {};
+        }
+
+        let hasSeeds = false;
+        Object.keys(parsedValue).forEach((key) => {
+            if (key.startsWith("seed-")) {
+                delete parsedValue[key];
+                hasSeeds = true;
+            }
+        });
+        if (hasSeeds) {
+            try {
+                window.localStorage.setItem(LOCAL_COLLAB_DIRECTORY_STORAGE_KEY, JSON.stringify(parsedValue));
+            } catch (_) {}
+        }
+
+        return parsedValue;
     } catch (error) {
         console.warn("Unable to read cached collaboration directory:", error);
         return {};
@@ -191,7 +208,7 @@ function writeLocalCollaboratorDirectory(directory = {}) {
 
 function cacheCollaborationStateForDirectory(state = {}) {
     const normalizedState = normalizeCollaborationState(state, state.userId || "");
-    if (!normalizedState.userId) {
+    if (!normalizedState.userId || normalizedState.userId.startsWith("seed-")) {
         return;
     }
 
@@ -206,7 +223,7 @@ function cacheOpenCollaboratorEntries(entries = []) {
 
     entries.forEach((entry) => {
         const normalizedEntry = normalizeOpenCollaborator(entry);
-        if (!normalizedEntry.userId) {
+        if (!normalizedEntry.userId || normalizedEntry.userId.startsWith("seed-")) {
             return;
         }
 
@@ -231,7 +248,7 @@ function cacheOpenCollaboratorEntries(entries = []) {
 function readCachedOpenCollaborators() {
     return Object.values(readLocalCollaboratorDirectory())
         .map((entry) => normalizeOpenCollaborator(entry))
-        .filter((entry) => entry.userId && entry.isOpenToCollaborate);
+        .filter((entry) => entry.userId && entry.isOpenToCollaborate && !entry.userId.startsWith("seed-"));
 }
 
 export function cloneData(value) {
@@ -319,9 +336,24 @@ function watchFirebaseValue(path, fallbackValue, callback) {
 }
 
 export function getDisplayName(user, fallback = "HackLab Member") {
-    if (!user) return fallback;
-    if (user.displayName) return user.displayName;
-    if (user.email) return user.email.split("@")[0];
+    if (!user) {
+        if (typeof window !== "undefined") {
+            const cached = window.localStorage?.getItem("hacklab.userDisplayName");
+            if (cached && cached !== "HackLab Student" && cached !== "HackLab Member") return cached;
+        }
+        return fallback;
+    }
+    if (user.displayName && user.displayName !== "HackLab Student" && user.displayName !== "HackLab Member") {
+        return user.displayName;
+    }
+    if (typeof window !== "undefined") {
+        const cached = window.localStorage?.getItem("hacklab.userDisplayName");
+        if (cached && cached !== "HackLab Student" && cached !== "HackLab Member") return cached;
+    }
+    if (user.email) {
+        const username = user.email.split("@")[0];
+        return username.charAt(0).toUpperCase() + username.slice(1);
+    }
     return fallback;
 }
 
@@ -814,6 +846,29 @@ export function formatCompactCount(value) {
     return String(numeric);
 }
 
+export function normalizeProject(project, visibility = "public") {
+    return {
+        id: project.id || createClientId("project"),
+        visibility: project.visibility || visibility,
+        ownerId: project.ownerId || "anonymous",
+        ownerName: project.ownerName || "HackLab Student",
+        ownerAvatar: project.ownerAvatar || "images/avatar.png",
+        collaboratorIds: Array.isArray(project.collaboratorIds) ? project.collaboratorIds.filter(Boolean) : [],
+        collaboratorNames: Array.isArray(project.collaboratorNames) ? project.collaboratorNames.filter(Boolean) : [],
+        collaboratorAvatars: Array.isArray(project.collaboratorAvatars) ? project.collaboratorAvatars : [],
+        title: project.title || "Untitled project",
+        summary: project.summary || "A student project summary will appear here.",
+        category: project.category || "Student Build",
+        status: project.status || "New",
+        badge: project.badge || "Fresh",
+        projectLink: project.projectLink || "",
+        imageUrl: project.imageUrl || "images/session.png",
+        likesCount: parseCompactCount(project.likesCount),
+        isFeatured: Boolean(project.isFeatured),
+        createdAt: project.createdAt || createTimestamp()
+    };
+}
+
 function normalizeCommunityPost(post, feed = "general") {
     const explicitRole = String(post.authorRole || post.role || "").trim().toLowerCase();
     const authorRole = explicitRole === "teacher"
@@ -846,29 +901,6 @@ function normalizeCommunityPost(post, feed = "general") {
             ? [...new Set(post.likedBy.map((entry) => String(entry || "").trim()).filter(Boolean))]
             : [],
         createdAt: post.createdAt || createTimestamp()
-    };
-}
-
-function normalizeProject(project, visibility = "public") {
-    return {
-        id: project.id || createClientId("project"),
-        visibility: project.visibility || visibility,
-        ownerId: project.ownerId || "anonymous",
-        ownerName: project.ownerName || "HackLab Student",
-        ownerAvatar: project.ownerAvatar || "images/avatar.png",
-        collaboratorIds: Array.isArray(project.collaboratorIds) ? project.collaboratorIds.filter(Boolean) : [],
-        collaboratorNames: Array.isArray(project.collaboratorNames) ? project.collaboratorNames.filter(Boolean) : [],
-        collaboratorAvatars: Array.isArray(project.collaboratorAvatars) ? project.collaboratorAvatars : [],
-        title: project.title || "Untitled project",
-        summary: project.summary || "A student project summary will appear here.",
-        category: project.category || "Student Build",
-        status: project.status || "New",
-        badge: project.badge || "Fresh",
-        projectLink: project.projectLink || "",
-        imageUrl: project.imageUrl || "images/session.png",
-        likesCount: parseCompactCount(project.likesCount),
-        isFeatured: Boolean(project.isFeatured),
-        createdAt: project.createdAt || createTimestamp()
     };
 }
 
@@ -988,8 +1020,9 @@ function buildProfileFromAuthUser(user = null, fallbackValue = DEFAULT_STUDENT_P
         return normalizeStudentProfile(fallbackValue, fallbackValue);
     }
 
+    const resolvedName = getDisplayName(user, "");
     return normalizeStudentProfile({
-        displayName: getDisplayName(user, fallbackValue.displayName),
+        displayName: (resolvedName && resolvedName !== "HackLab Student") ? resolvedName : (fallbackValue.displayName || "Student"),
         email: user.email || fallbackValue.email || "",
         avatar: user.photoURL || fallbackValue.avatar || "images/avatar.png",
         role: "student"
@@ -1313,10 +1346,13 @@ export async function loadStudentProfile(userId, fallbackValue = DEFAULT_STUDENT
             const authDefaults = buildProfileFromAuthUser(authUser, fallbackValue);
 
             if (savedProfile) {
+                const effectiveName = (savedProfile.displayName && savedProfile.displayName !== "HackLab Student")
+                    ? savedProfile.displayName
+                    : (authDefaults.displayName || "Student");
                 return normalizeStudentProfile({
                     ...authDefaults,
                     ...cloneData(savedProfile),
-                    displayName: savedProfile.displayName || authDefaults.displayName,
+                    displayName: effectiveName,
                     email: savedProfile.email || authDefaults.email || ""
                 }, fallbackValue);
             }
@@ -1531,7 +1567,11 @@ export async function saveCollaborationState(userId, state) {
             userId,
             updatedAt: createTimestamp()
         }, userId);
-        await writeFirebaseValue(buildCollaborationStatePath(userId), normalizedState);
+        try {
+            await writeFirebaseValue(buildCollaborationStatePath(userId), normalizedState);
+        } catch (error) {
+            console.warn("Firebase saveCollaborationState write failed, caching locally:", error);
+        }
         cacheCollaborationStateForDirectory(normalizedState);
         return normalizedState;
     }
@@ -1553,7 +1593,7 @@ export async function loadOpenCollaborators() {
             const states = normalizeRecordMap(await readFirebaseValue(FIREBASE_COLLECTIONS.collaboration));
             const collaborators = Object.values(states)
                 .map((state) => normalizeOpenCollaborator(normalizeCollaborationState(state, state?.userId || "")))
-                .filter((entry) => entry.userId && entry.isOpenToCollaborate);
+                .filter((entry) => entry.userId && entry.isOpenToCollaborate && !entry.userId.startsWith("seed-"));
             cacheOpenCollaboratorEntries(collaborators);
             return collaborators;
         } catch (error) {
@@ -1572,7 +1612,9 @@ export async function loadOpenCollaborators() {
                     continue;
                 }
 
-                const collaborators = response.collaborators.map((entry) => normalizeOpenCollaborator(entry));
+                const collaborators = response.collaborators
+                    .map((entry) => normalizeOpenCollaborator(entry))
+                    .filter((entry) => entry.userId && entry.isOpenToCollaborate && !entry.userId.startsWith("seed-"));
                 cacheOpenCollaboratorEntries(collaborators);
                 return collaborators;
             } catch (error) {

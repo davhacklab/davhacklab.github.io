@@ -1,17 +1,7 @@
 {
   "content": {
     "portalContent/overviewTasks": {
-      "value": [
-        {
-          "id": "task-js-hello-world",
-          "title": "Create a js hello world",
-          "description": "Teacher note: bye",
-          "level": "beginner",
-          "accent": "brown",
-          "actionLabel": "Submit Assignment",
-          "actionUrl": "course-player.html?courseId=video-course-javascript-foundations&sectionId=js-foundations-section-1&contentId=assignment-js-variables-practice"
-        }
-      ],
+      "value": [],
       "updatedAt": "2026-03-24T19:46:34.792Z"
     },
     "portalContent/resources": {
@@ -176,7 +166,10 @@
           "accessLabel": "FREE",
           "description": "Build JavaScript confidence from syntax to practical UI interactions with short lessons, checkpoints, and assignment handoffs.",
           "imageUrl": "images/session.png",
-          "mentorAvatars": ["images/avi.png", "images/tejas.png"],
+          "mentorAvatars": [
+            "images/avi.png",
+            "images/tejas.png"
+          ],
           "ctaLabel": "Enroll for free",
           "courseUrl": "course-player.html",
           "playerEmbedUrl": "https://www.youtube.com/embed/ER9SspLe4Hg?si=psSOzWKeyWVhl3t9",
@@ -287,7 +280,10 @@
           "accessLabel": "FREE",
           "description": "A visual design playlist on spacing, rhythm, and hierarchy with assignment checkpoints placed between the lessons.",
           "imageUrl": "images/class.png",
-          "mentorAvatars": ["images/avi.png", "images/avatar.png"],
+          "mentorAvatars": [
+            "images/avi.png",
+            "images/avatar.png"
+          ],
           "ctaLabel": "Start playlist",
           "courseUrl": "course-player.html",
           "playerEmbedUrl": "https://www.youtube.com/embed/3Y6QJ1QxtvU",
@@ -372,7 +368,10 @@
           "accessLabel": "FREE",
           "description": "Follow the way HackLab mentors break a build into smaller checkpoints so projects feel easier to finish and review.",
           "imageUrl": "images/python.png",
-          "mentorAvatars": ["images/tejas.png", "images/avatar.png"],
+          "mentorAvatars": [
+            "images/tejas.png",
+            "images/avatar.png"
+          ],
           "ctaLabel": "Open course",
           "courseUrl": "course-player.html",
           "playerEmbedUrl": "https://www.youtube.com/embed/zOjov-2OZ0E",
@@ -441,6 +440,84 @@
   "community": {
     "general": [
       {
+        "id": "1dd7d9b5-e8f7-4ce8-983d-52ae9e91a696",
+        "feed": "general",
+        "authorId": "vR6EPiH8EcTFPvjlfsiLe0YcszE2",
+        "authorName": "Wonder Tale",
+        "authorRole": "student",
+        "authorAvatar": "https://lh3.googleusercontent.com/a/ACg8ocJlkr5a-LRqsF4ieV6bGc4h5vKK937ObyhnB2r6mCylNWMP2w=s96-c",
+        "text": "hieihh",
+        "mediaLabel": "",
+        "mediaType": "",
+        "mediaDataUrl": "",
+        "replyToPostId": "",
+        "replyToAuthorId": "",
+        "replyToAuthorName": "",
+        "replyToText": "",
+        "likeCount": 0,
+        "likedBy": [],
+        "createdAt": "2026-09-06T20:47:25.043Z"
+      },
+      {
+        "id": "584e9b5c-364c-48ae-80f3-7a5e6ec6ea16",
+        "feed": "general",
+        "authorId": "vR6EPiH8EcTFPvjlfsiLe0YcszE2",
+        "authorName": "Wonder Tale",
+        "authorRole": "student",
+        "authorAvatar": "https://lh3.googleusercontent.com/a/ACg8ocJlkr5a-LRqsF4ieV6bGc4h5vKK937ObyhnB2r6mCylNWMP2w=s96-c",
+        "text": "hieh",
+        "mediaLabel": "",
+        "mediaType": "",
+        "mediaDataUrl": "",
+        "replyToPostId": "",
+        "replyToAuthorId": "",
+        "replyToAuthorName": "",
+        "replyToText": "",
+        "likeCount": 0,
+        "likedBy": [],
+        "createdAt": "2026-09-06T20:47:23.788Z"
+      },
+      {
+        "id": "2c5bae00-1e11-4522-b131-961b81d2e697",
+        "feed": "general",
+        "authorId": "vR6EPiH8EcTFPvjlfsiLe0YcszE2",
+        "authorName": "Wonder Tale",
+        "authorRole": "student",
+        "authorAvatar": "https://lh3.googleusercontent.com/a/ACg8ocJlkr5a-LRqsF4ieV6bGc4h5vKK937ObyhnB2r6mCylNWMP2w=s96-c",
+        "text": "hi",
+        "mediaLabel": "",
+        "mediaType": "",
+        "mediaDataUrl": "",
+        "replyToPostId": "",
+        "replyToAuthorId": "",
+        "replyToAuthorName": "",
+        "replyToText": "",
+        "likeCount": 0,
+        "likedBy": [],
+        "createdAt": "2026-09-06T20:47:21.848Z"
+      },
+      {
+        "id": "2a0a8011-92fc-4863-ad22-b62b25fe12f8",
+        "feed": "general",
+        "authorId": "KdmR83zyosbhYmjuFJdQ0dzLBkD3",
+        "authorName": "Osprexon",
+        "authorRole": "student",
+        "authorAvatar": "https://lh3.googleusercontent.com/a/ACg8ocJK9JkeK0rI-Ob_H4UyPwb3Rie8BRT15U_HI3vqxCyz_mldDro=s96-c",
+        "text": "ho",
+        "mediaLabel": "",
+        "mediaType": "",
+        "mediaDataUrl": "",
+        "replyToPostId": "",
+        "replyToAuthorId": "",
+        "replyToAuthorName": "",
+        "replyToText": "",
+        "likeCount": 1,
+        "likedBy": [
+          "KdmR83zyosbhYmjuFJdQ0dzLBkD3"
+        ],
+        "createdAt": "2026-09-06T20:25:58.596Z"
+      },
+      {
         "id": "c5145e43-23bb-4004-b2e7-58c8ab59356e",
         "feed": "general",
         "authorId": "EQIRlvZddkgArTk0sPeOM5pxnzt1",
@@ -455,9 +532,11 @@
         "replyToAuthorId": "",
         "replyToAuthorName": "",
         "replyToText": "",
-        "likeCount": 0,
-        "createdAt": "2026-03-30T15:15:56.935Z",
-        "likedBy": []
+        "likeCount": 1,
+        "likedBy": [
+          "KdmR83zyosbhYmjuFJdQ0dzLBkD3"
+        ],
+        "createdAt": "2026-03-30T15:15:56.935Z"
       },
       {
         "id": "51ec77a4-22c1-4912-9b66-36309d0c5386",
@@ -556,86 +635,13 @@
       }
     ]
   },
-  "projects": {
-    "public": [
-      {
-        "id": "project-voicepal",
-        "visibility": "public",
-        "ownerId": "seed-aviral",
-        "ownerName": "Aviral Tyagi",
-        "ownerAvatar": "images/avi.png",
-        "collaboratorAvatars": ["images/avi.png", "images/tejas.png"],
-        "title": "VoicePal Assistant",
-        "summary": "A voice-driven assistant concept with cleaner flows, calmer UI, and stronger prompt sequencing for student productivity.",
-        "category": "AI Workflow",
-        "status": "Live Demo",
-        "badge": "Trending",
-        "imageUrl": "images/session.png",
-        "likesCount": 21500,
-        "isFeatured": true,
-        "createdAt": "2026-03-24T17:28:53.595Z"
-      },
-      {
-        "id": "project-absolute-cinema",
-        "visibility": "public",
-        "ownerId": "seed-cinema",
-        "ownerName": "Absolute Cinema Team",
-        "ownerAvatar": "images/avi.png",
-        "collaboratorAvatars": ["images/avi.png", "images/avatar.png"],
-        "title": "Absolute Cinema Showcase",
-        "summary": "A high-energy presentation project focused on sequencing, motion cues, and cleaner visual rhythm for final delivery moments.",
-        "category": "Showcase",
-        "status": "Polished",
-        "badge": "Media",
-        "imageUrl": "images/absolute_cinema.png",
-        "likesCount": 18200,
-        "isFeatured": false,
-        "createdAt": "2026-03-24T17:28:53.595Z"
-      },
-      {
-        "id": "project-herbalens",
-        "visibility": "public",
-        "ownerId": "seed-rhea",
-        "ownerName": "Rhea Sethi",
-        "ownerAvatar": "images/avatar.png",
-        "collaboratorAvatars": ["images/avatar.png", "images/avi.png"],
-        "title": "HerbaLens Scanner",
-        "summary": "A concept product that translates plant recognition into a practical student-facing experience with a cleaner information hierarchy.",
-        "category": "Case Study",
-        "status": "In Review",
-        "badge": "Health Tech",
-        "imageUrl": "images/HerbaLens.png",
-        "likesCount": 13800,
-        "isFeatured": false,
-        "createdAt": "2026-03-24T17:28:53.595Z"
-      },
-      {
-        "id": "project-brand-motion",
-        "visibility": "public",
-        "ownerId": "seed-tejas",
-        "ownerName": "Tejas Sharma",
-        "ownerAvatar": "images/tejas.png",
-        "collaboratorAvatars": ["images/tejas.png", "images/avatar.png"],
-        "title": "HackLab Brand Motion Pack",
-        "summary": "A reusable system of transitions, title cards, and visual elements built to help student presentations feel more refined.",
-        "category": "Design Journal",
-        "status": "New",
-        "badge": "Branding",
-        "imageUrl": "images/voicepal_logo.png",
-        "likesCount": 9700,
-        "isFeatured": false,
-        "createdAt": "2026-03-24T17:28:53.595Z"
-      }
-    ]
-  },
   "studentProfiles": {
     "bnxXx3wlBlYGwayfn8aUabD59YA2": {
-      "displayName": "HackLab Student",
+      "displayName": "",
       "role": "student",
       "stats": {
         "completedCourses": 0,
         "attendedEvents": 0,
-        "submittedProjects": 0,
         "completedAssignments": 0
       },
       "progress": [
@@ -654,12 +660,11 @@
       "updatedAt": "2026-03-24T19:46:17.439Z"
     },
     "tFeEXzSLVNeg8Wa0b7vYRMiUyNy1": {
-      "displayName": "HackLab Student",
+      "displayName": "",
       "role": "student",
       "stats": {
         "completedCourses": 0,
         "attendedEvents": 0,
-        "submittedProjects": 0,
         "completedAssignments": 0
       },
       "progress": [
@@ -678,12 +683,11 @@
       "updatedAt": "2026-03-24T19:53:35.950Z"
     },
     "EQIRlvZddkgArTk0sPeOM5pxnzt1": {
-      "displayName": "HackLab Student",
+      "displayName": "",
       "role": "student",
       "stats": {
         "completedCourses": 0,
         "attendedEvents": 0,
-        "submittedProjects": 0,
         "completedAssignments": 0
       },
       "progress": [
@@ -703,12 +707,11 @@
       "updatedAt": "2026-03-28T09:56:36.942Z"
     },
     "gtLogVFic3ZKHLpkJ9BnTDrdNkf2": {
-      "displayName": "HackLab Student",
+      "displayName": "",
       "role": "student",
       "stats": {
         "completedCourses": 0,
         "attendedEvents": 0,
-        "submittedProjects": 0,
         "completedAssignments": 0
       },
       "progress": [
@@ -725,6 +728,93 @@
       ],
       "assignments": [],
       "updatedAt": "2026-03-30T14:43:04.169Z"
+    },
+    "KdmR83zyosbhYmjuFJdQ0dzLBkD3": {
+      "displayName": "",
+      "role": "student",
+      "email": "",
+      "headline": "",
+      "school": "",
+      "track": "",
+      "location": "",
+      "bio": "",
+      "phone": "",
+      "portfolioUrl": "",
+      "teacherTags": [],
+      "courseProgress": {},
+      "stats": {
+        "completedCourses": 0,
+        "attendedEvents": 0,
+        "completedAssignments": 0
+      },
+      "progress": [],
+      "assignments": [],
+      "updatedAt": "2026-09-06T18:32:37.855Z"
+    },
+    "vR6EPiH8EcTFPvjlfsiLe0YcszE2": {
+      "displayName": "Wonder Tale",
+      "role": "student",
+      "email": "wondertaleai123@gmail.com",
+      "headline": "",
+      "school": "",
+      "track": "",
+      "location": "",
+      "bio": "",
+      "phone": "",
+      "portfolioUrl": "",
+      "teacherTags": [],
+      "courseProgress": {},
+      "stats": {
+        "completedCourses": 0,
+        "attendedEvents": 0,
+        "completedAssignments": 0
+      },
+      "progress": [],
+      "assignments": [],
+      "updatedAt": "2026-09-06T20:31:32.930Z"
+    },
+    "YyAI12yjcOSlhNFYcU7w1cGAssA3": {
+      "displayName": "Alakh Paandeh",
+      "role": "student",
+      "email": "bleep-hesitate97@bravealias.com",
+      "headline": "",
+      "school": "",
+      "track": "",
+      "location": "",
+      "bio": "",
+      "phone": "",
+      "portfolioUrl": "",
+      "teacherTags": [],
+      "courseProgress": {},
+      "stats": {
+        "completedCourses": 0,
+        "attendedEvents": 0,
+        "completedAssignments": 0,
+        "submittedProjects": 0
+      },
+      "progress": [
+        {
+          "id": "progress-video-course-javascript-foundations",
+          "courseId": "video-course-javascript-foundations",
+          "title": "Introduction to JavaScript",
+          "percent": 14
+        },
+        {
+          "id": "progress-video-course-ui-systems",
+          "courseId": "video-course-ui-systems",
+          "title": "UI Systems and Visual Hierarchy",
+          "percent": 20
+        },
+        {
+          "id": "progress-video-course-build-workflows",
+          "courseId": "video-course-build-workflows",
+          "title": "Creative Build Workflows",
+          "percent": 0
+        }
+      ],
+      "assignments": [],
+      "updatedAt": "2026-09-06T20:49:42.990Z",
+      "walkthroughCompletedAt": "2026-09-06T20:49:54.750Z"
     }
   },
   "collaboration": {
@@ -732,7 +822,7 @@
       "userId": "gtLogVFic3ZKHLpkJ9BnTDrdNkf2",
       "isOpenToCollaborate": false,
       "profile": {
-        "name": "HackLab Member",
+        "name": "",
         "avatar": "images/avatar.png",
         "role": "student"
       },
@@ -753,6 +843,82 @@
       "sent": [],
       "contacts": [],
       "updatedAt": "2026-03-30T14:40:24.613Z"
+    },
+    "KdmR83zyosbhYmjuFJdQ0dzLBkD3": {
+      "userId": "KdmR83zyosbhYmjuFJdQ0dzLBkD3",
+      "isOpenToCollaborate": false,
+      "profile": {
+        "name": "",
+        "email": "",
+        "avatar": "images/avatar.png",
+        "role": "student"
+      },
+      "inbox": [],
+      "sent": [],
+      "contacts": [],
+      "updatedAt": "2026-09-06T18:32:37.856Z"
+    },
+    "vR6EPiH8EcTFPvjlfsiLe0YcszE2": {
+      "userId": "vR6EPiH8EcTFPvjlfsiLe0YcszE2",
+      "isOpenToCollaborate": true,
+      "profile": {
+        "name": "Wonder Tale",
+        "email": "",
+        "avatar": "https://lh3.googleusercontent.com/a/ACg8ocJlkr5a-LRqsF4ieV6bGc4h5vKK937ObyhnB2r6mCylNWMP2w=s96-c",
+        "role": "student"
+      },
+      "inbox": [
+        {
+          "id": "388e0025-f841-477e-9ee5-2100329243c3",
+          "fromUserId": "YyAI12yjcOSlhNFYcU7w1cGAssA3",
+          "fromUserName": "Alakh Paandeh",
+          "fromUserEmail": "bleep-hesitate97@bravealias.com",
+          "fromUserAvatar": "images/avatar.png",
+          "toUserId": "vR6EPiH8EcTFPvjlfsiLe0YcszE2",
+          "toUserName": "Wonder Tale",
+          "toUserEmail": "",
+          "toUserAvatar": "https://lh3.googleusercontent.com/a/ACg8ocJlkr5a-LRqsF4ieV6bGc4h5vKK937ObyhnB2r6mCylNWMP2w=s96-c",
+          "lane": "UI/UX",
+          "projectTitle": "",
+          "note": "Alakh Paandeh wants to collaborate with you in UI/UX.",
+          "status": "pending",
+          "createdAt": "2026-09-06T20:50:08.370Z"
+        }
+      ],
+      "sent": [],
+      "contacts": [],
+      "updatedAt": "2026-09-06T20:50:08.373Z"
+    },
+    "YyAI12yjcOSlhNFYcU7w1cGAssA3": {
+      "userId": "YyAI12yjcOSlhNFYcU7w1cGAssA3",
+      "isOpenToCollaborate": false,
+      "profile": {
+        "name": "HackLab Member",
+        "email": "",
+        "avatar": "images/avatar.png",
+        "role": "student"
+      },
+      "inbox": [],
+      "sent": [
+        {
+          "id": "388e0025-f841-477e-9ee5-2100329243c3",
+          "fromUserId": "YyAI12yjcOSlhNFYcU7w1cGAssA3",
+          "fromUserName": "Alakh Paandeh",
+          "fromUserEmail": "bleep-hesitate97@bravealias.com",
+          "fromUserAvatar": "images/avatar.png",
+          "toUserId": "vR6EPiH8EcTFPvjlfsiLe0YcszE2",
+          "toUserName": "Wonder Tale",
+          "toUserEmail": "",
+          "toUserAvatar": "https://lh3.googleusercontent.com/a/ACg8ocJlkr5a-LRqsF4ieV6bGc4h5vKK937ObyhnB2r6mCylNWMP2w=s96-c",
+          "lane": "UI/UX",
+          "projectTitle": "",
+          "note": "Alakh Paandeh wants to collaborate with you in UI/UX.",
+          "status": "pending",
+          "createdAt": "2026-09-06T20:50:08.370Z"
+        }
+      ],
+      "contacts": [],
+      "updatedAt": "2026-09-06T20:50:08.372Z"
     }
   }
 }

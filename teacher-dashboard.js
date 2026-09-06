@@ -640,7 +640,7 @@ function getLinkedAssignmentMeta(eventItem = {}) {
         .find((assignment) => assignment.assignmentId === eventItem.linkedAssignmentId) || null;
 }
 
-function normalizeNetlifyUrl(value) {
+function normalizeProjectUrl(value) {
     const rawValue = String(value || "").trim();
     if (!rawValue) return "";
 
@@ -648,8 +648,11 @@ function normalizeNetlifyUrl(value) {
 
     try {
         const url = new URL(candidate);
+        if (url.protocol !== "http:" && url.protocol !== "https:") {
+            return "";
+        }
         const hostname = url.hostname.toLowerCase().replace(/^www\./, "");
-        if (!hostname.endsWith("netlify.app")) {
+        if (!hostname || !hostname.includes(".") || hostname.endsWith(".")) {
             return "";
         }
 
@@ -659,6 +662,8 @@ function normalizeNetlifyUrl(value) {
         return "";
     }
 }
+
+const normalizeNetlifyUrl = normalizeProjectUrl;
 
 function resetTaskForm() {
     editingTaskId = null;
@@ -712,6 +717,15 @@ function resetArticleForm() {
     setFormMode(articleSubmitBtn, articleCancelBtn, false, "Add Authority Article", "Save Authority Article");
 }
 
+function resetTeacherProjectForm() {
+    teacherProjectForm?.reset();
+    if (teacherProjectCategoryEl) teacherProjectCategoryEl.value = "Student Build";
+    if (teacherProjectBadgeEl) teacherProjectBadgeEl.value = "Teacher Spotlight";
+    if (teacherProjectStatusEl) teacherProjectStatusEl.value = "Spotlight";
+    if (teacherProjectLinkEl) teacherProjectLinkEl.value = "";
+    if (teacherProjectImageEl) teacherProjectImageEl.value = "images/session.png";
+}
+
 function fillAnnouncementForm(announcement = dashboardAnnouncement) {
     const safeAnnouncement = normalizeAnnouncement(announcement);
     if (announcementEyebrowEl) announcementEyebrowEl.value = safeAnnouncement.eyebrow || "";
@@ -722,15 +736,6 @@ function fillAnnouncementForm(announcement = dashboardAnnouncement) {
     if (announcementCtaLabelEl) announcementCtaLabelEl.value = safeAnnouncement.ctaLabel || DEFAULT_DASHBOARD_ANNOUNCEMENT.ctaLabel;
     if (announcementCtaUrlEl) announcementCtaUrlEl.value = safeAnnouncement.ctaUrl || "";
     if (announcementIsActiveEl) announcementIsActiveEl.checked = Boolean(safeAnnouncement.isActive);
-}
-
-function resetTeacherProjectForm() {
-    teacherProjectForm?.reset();
-    if (teacherProjectCategoryEl) teacherProjectCategoryEl.value = "Student Build";
-    if (teacherProjectBadgeEl) teacherProjectBadgeEl.value = "Teacher Spotlight";
-    if (teacherProjectStatusEl) teacherProjectStatusEl.value = "Spotlight";
-    if (teacherProjectLinkEl) teacherProjectLinkEl.value = "";
-    if (teacherProjectImageEl) teacherProjectImageEl.value = "images/session.png";
 }
 
 function renderOverviewTaskList() {
@@ -1018,6 +1023,13 @@ function renderTeacherCollaborationInbox() {
     `).join("");
 }
 
+async function refreshTeacherCollaboration() {
+    if (!teacherUser?.uid) return;
+
+    teacherCollaborationState = await loadUserCollaborationState(getTeacherCollaborationIdentity());
+    renderTeacherCollaborationInbox();
+}
+
 function renderStudentDirectory() {
     if (!studentDirectoryListEl || !studentDirectoryCountEl) return;
 
@@ -1048,7 +1060,7 @@ function renderStudentDirectory() {
             <article class="editor-card student-directory-item" data-student-id="${escapeHtml(entry.userId)}">
                 <div class="student-directory-top">
                     <div class="student-directory-name">
-                        <strong>${escapeHtml(profile.displayName || "HackLab Student")}</strong>
+                        <strong>${escapeHtml(profile.displayName || "Student")}</strong>
                         <span class="student-directory-email">${escapeHtml(profile.email || "No email added yet")}</span>
                     </div>
                     <span class="editor-tag">${escapeHtml(profile.headline || "Student profile")}</span>
@@ -1180,12 +1192,6 @@ async function refreshStudentDirectory() {
     renderStudentDirectory();
 }
 
-async function refreshTeacherCollaboration() {
-    if (!teacherUser?.uid) return;
-
-    teacherCollaborationState = await loadUserCollaborationState(getTeacherCollaborationIdentity());
-    renderTeacherCollaborationInbox();
-}
 
 async function persistOverviewTasks(nextTasks) {
     overviewTasks = nextTasks;
@@ -1634,9 +1640,9 @@ function bindStaticEvents() {
 
         if (!teacherUser) return;
 
-        const projectLink = normalizeNetlifyUrl(teacherProjectLinkEl?.value || "");
+        const projectLink = normalizeProjectUrl(teacherProjectLinkEl?.value || "");
         if (teacherProjectLinkEl?.value.trim() && !projectLink) {
-            window.alert("Add a valid live .netlify.app link for the spotlight project.");
+            window.alert("Add a valid live project link (e.g. https://your-project.com).");
             return;
         }
 

@@ -801,6 +801,19 @@ export function mountCommunityExperience({
             .slice(0, 4);
     }
 
+    function getNotificationIconSvg(type) {
+        switch (type) {
+            case "reply":
+                return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>`;
+            case "answer":
+                return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>`;
+            case "like":
+                return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>`;
+            default:
+                return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>`;
+        }
+    }
+
     function renderNotifications() {
         if (!notifListEl) return;
 
@@ -808,8 +821,13 @@ export function mountCommunityExperience({
         if (!notificationItems.length) {
             notifListEl.innerHTML = `
                 <div class="notif-pill notif-pill--empty">
-                    <span class="notif-pill-title">No notifications yet</span>
-                    <span class="notif-pill-meta">When anything happens in the community, it will appear here automatically.</span>
+                    <div class="notif-pill-icon" aria-hidden="true">
+                        ${getNotificationIconSvg("empty")}
+                    </div>
+                    <div class="notif-pill-body">
+                        <span class="notif-pill-title">No notifications yet</span>
+                        <span class="notif-pill-meta">When anything happens in the community, it will appear here automatically.</span>
+                    </div>
                 </div>
             `;
             return;
@@ -817,8 +835,13 @@ export function mountCommunityExperience({
 
         notifListEl.innerHTML = notificationItems.map((item) => `
             <div class="notif-pill notif-pill--${escapeHtml(item.type)}">
-                <span class="notif-pill-title">${escapeHtml(item.title)}</span>
-                <span class="notif-pill-meta">${escapeHtml(item.meta)}</span>
+                <div class="notif-pill-icon" aria-hidden="true">
+                    ${getNotificationIconSvg(item.type)}
+                </div>
+                <div class="notif-pill-body">
+                    <span class="notif-pill-title">${escapeHtml(item.title)}</span>
+                    <span class="notif-pill-meta">${escapeHtml(item.meta)}</span>
+                </div>
             </div>
         `).join("");
     }

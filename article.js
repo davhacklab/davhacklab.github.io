@@ -86,7 +86,7 @@ function normalizeArticles(items = [], roleFallback = "student") {
         summary: article.summary || "A short article summary will appear here.",
         supportNote: article.supportNote || "Share the one lesson a reader should keep after the article closes.",
         body: article.body || article.summary || "No full article has been written yet.",
-        author: article.author || "HackLab Student",
+        author: article.author || "Student",
         authorId: article.authorId || "",
         meta: article.meta || (roleFallback === "authority" ? "Official reading track" : "Student contributor"),
         topic: article.topic || "Build Log",

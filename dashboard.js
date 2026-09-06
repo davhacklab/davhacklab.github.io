@@ -118,17 +118,14 @@ const profileSubtitle = document.getElementById("profileSubtitle");
 const profileEmail = document.getElementById("profileEmail");
 const profileQuickStats = document.getElementById("profileQuickStats");
 const profileTags = document.getElementById("profileTags");
-const profileVerifiedBadge = document.getElementById("profileVerifiedBadge");
-if (profileVerifiedBadge) {
-    profileVerifiedBadge.hidden = true;
-}
 const profileEditBtn = document.getElementById("profileEditBtn");
 const profileEditModal = document.getElementById("profileEditModal");
 const profileEditForm = document.getElementById("profileEditForm");
 const profileEditFeedback = document.getElementById("profileEditFeedback");
-const profileVerifyStatus = document.getElementById("profileVerifyStatus");
 const profileEditClose = document.getElementById("profileEditClose");
 const profileEditCancel = document.getElementById("profileEditCancel");
+const profileVerifiedBadge = document.getElementById("profileVerifiedBadge");
+const profileVerifyStatus = document.getElementById("profileVerifyStatus");
 const statCards = Array.from(document.querySelectorAll(".stat-card[data-route]"));
 const profileEditFields = {
     displayName: document.getElementById("profileEditName"),
@@ -641,15 +638,21 @@ function normalizePercent(value) {
 }
 
 function normalizeProfile(profile, user) {
+    const cachedName = (typeof window !== "undefined" && window.localStorage?.getItem("hacklab.userDisplayName")) || "";
+    const authDisplayName = (user?.displayName && user.displayName !== "HackLab Student") ? user.displayName : "";
+    const profileDisplayName = (profile?.displayName && profile.displayName !== "HackLab Student") ? profile.displayName : "";
+    const resolvedDisplayName = profileDisplayName || authDisplayName || cachedName || getDisplayName(user, "Student");
+
     const fallbackProfile = {
         ...cloneData(DEFAULT_STUDENT_PROFILE),
-        displayName: getDisplayName(user, DEFAULT_STUDENT_PROFILE.displayName),
+        displayName: resolvedDisplayName,
         email: user?.email || ""
     };
 
     return {
         ...fallbackProfile,
         ...cloneData(profile || {}),
+        displayName: resolvedDisplayName,
         stats: {
             ...(fallbackProfile.stats || {}),
             ...cloneData(profile?.stats || {})
@@ -691,7 +694,7 @@ function getProfileVerificationChecks(profile = {}) {
     const phoneDigits = String(requiredFields.phone || "").replace(/\D/g, "");
 
     return {
-        displayName: isMeaningfulText(requiredFields.displayName, 2) && normalizedDisplayName !== "hacklab student",
+        displayName: isMeaningfulText(requiredFields.displayName, 2) && normalizedDisplayName !== "hacklab student" && normalizedDisplayName !== "student",
         email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(requiredFields.email || "").trim()),
         headline: isMeaningfulText(requiredFields.headline, 2),
         school: isMeaningfulText(requiredFields.school, 2),
@@ -721,6 +724,56 @@ function syncProfileVerifiedBadge(profile = state.profile) {
     profileVerifiedBadge.setAttribute("title", verified ? "Verified" : "Complete your profile to unlock the verified badge");
 }
 
+function updateProfileVerificationCopy(profile = state.profile) {
+    if (!profileVerifyStatus) return;
+
+    const filledCount = getFilledProfileFieldCount(profile);
+    const totalCount = Object.keys(getProfileRequiredFields(profile)).length;
+    const remainingCount = Math.max(0, totalCount - filledCount);
+
+    profileVerifyStatus.textContent = isProfileVerified(profile)
+        ? "Verified tick active. Your profile now looks complete and trusted on the dashboard."
+        : `Fill ${remainingCount} more core detail${remainingCount === 1 ? "" : "s"} properly to unlock the verified tick.`;
+}
+
+function getCommunityGoalStatus(progressCount = 0, targetCount = 1) {
+    if (progressCount >= targetCount) return "completed";
+    if (progressCount > 0) return "in-progress";
+    return "up-next";
+}
+
+function getProfileVerificationTask(profile = state.profile) {
+    const completedDetails = getFilledProfileFieldCount(profile);
+    const totalDetails = Object.keys(getProfileVerificationChecks(profile)).length;
+    const verified = isProfileVerified(profile);
+
+    return {
+        id: "profile-verify-account",
+        title: "Verify your account",
+        description: verified
+            ? "Your profile is verified and the badge is now active on your dashboard."
+            : `${completedDetails}/${totalDetails} profile details completed. Fill the full profile to unlock the verified badge.`,
+        status: verified
+            ? "completed"
+            : completedDetails > 0 ? "in-progress" : "up-next",
+        actionUrl: "#profile-edit",
+        ctaLabel: verified ? "Verified" : "Complete Profile",
+        tag: "Profile",
+        source: "profile-verification"
+    };
+}
+
+function applyCommunityMetricsFromPosts(posts) {
+    if (!state.user?.uid || !Array.isArray(posts)) return;
+
+    const userId = state.user.uid;
+    state.communityMetrics = {
+        postsCount: posts.filter((post) => post.authorId === userId).length,
+        likesGivenCount: posts.filter((post) => Array.isArray(post.likedBy) && post.likedBy.includes(userId)).length
+    };
+    syncStudentProfile();
+}
+
 function syncDerivedProfileState(profile = state.profile) {
     const nextProfile = syncProfileCourseStats(normalizeProfile(profile, state.user), state.courses);
     nextProfile.stats ||= {};
@@ -743,18 +796,6 @@ function setProfileEditFeedback(text = "", tone = "") {
     if (!profileEditFeedback) return;
     profileEditFeedback.textContent = text;
     profileEditFeedback.dataset.state = tone || "";
-}
-
-function updateProfileVerificationCopy(profile = state.profile) {
-    if (!profileVerifyStatus) return;
-
-    const filledFields = getFilledProfileFieldCount(profile);
-    const totalFields = Object.keys(getProfileRequiredFields(profile)).length;
-    const remainingFields = Math.max(0, totalFields - filledFields);
-
-    profileVerifyStatus.textContent = isProfileVerified(profile)
-        ? "Verified tick active. Your profile now looks complete and trusted on the dashboard."
-        : `Fill ${remainingFields} more core detail${remainingFields === 1 ? "" : "s"} properly to unlock the verified tick.`;
 }
 
 function openProfileEditor() {
@@ -871,33 +912,6 @@ function maybeAlignCalendarToEvents(force = false) {
     calendarDate = parsed;
 }
 
-function getCommunityGoalStatus(progressCount = 0, targetCount = 1) {
-    if (progressCount >= targetCount) return "completed";
-    if (progressCount > 0) return "in-progress";
-    return "up-next";
-}
-
-function getProfileVerificationTask(profile = state.profile) {
-    const completedDetails = getFilledProfileFieldCount(profile);
-    const totalDetails = Object.keys(getProfileVerificationChecks(profile)).length;
-    const verified = isProfileVerified(profile);
-
-    return {
-        id: "profile-verify-account",
-        title: "Verify your account",
-        description: verified
-            ? "Your profile is verified and the badge is now active on your dashboard."
-            : `${completedDetails}/${totalDetails} profile details completed. Fill the full profile to unlock the verified badge.`,
-        status: verified
-            ? "completed"
-            : completedDetails > 0 ? "in-progress" : "up-next",
-        actionUrl: "#profile-edit",
-        ctaLabel: verified ? "Verified" : "Complete Profile",
-        tag: "Profile",
-        source: "profile-verification"
-    };
-}
-
 function isLegacyVideoTask(task = {}) {
     const raw = `${task.id || ""} ${task.title || ""} ${task.description || ""}`.toLowerCase();
     return /news reporter|filmora|premiere|after effects|tnp news/.test(raw);
@@ -971,27 +985,30 @@ function getVisibleAssignments() {
             ctaLabel: "Open Community",
             progressCount: state.communityMetrics.postsCount,
             targetCount: 3,
+            tag: "Community",
             source: "community-goal"
         },
         {
             id: "community-goal-likes",
-            title: "Give 4 likes on community posts",
-            description: `${Math.min(state.communityMetrics.likesGivenCount, 4)}/4 likes given on community posts.`,
-            status: getCommunityGoalStatus(state.communityMetrics.likesGivenCount, 4),
+            title: "Give 5 likes on community posts",
+            description: `${Math.min(state.communityMetrics.likesGivenCount, 5)}/5 likes given on community posts.`,
+            status: getCommunityGoalStatus(state.communityMetrics.likesGivenCount, 5),
             actionUrl: "community.html",
             ctaLabel: "Open Community",
             progressCount: state.communityMetrics.likesGivenCount,
-            targetCount: 4,
+            targetCount: 5,
+            tag: "Community",
             source: "community-goal"
         }
     ].map(mergeSavedAssignment);
 
-    const knownAssignments = [...taskAssignments, ...courseAssignments, ...communityGoals];
+    const profileVerificationTask = getProfileVerificationTask(state.profile);
+
+    const knownAssignments = [...taskAssignments, ...courseAssignments, ...communityGoals, profileVerificationTask];
     const extraAssignments = savedAssignments.filter((assignment) => {
         return !knownAssignments.some((item) => item.id === assignment.id || item.title === assignment.title);
     });
 
-    const profileVerificationTask = getProfileVerificationTask(state.profile);
     const orderedAssignments = [
         profileVerificationTask,
         ...taskAssignments.slice(0, 1),
@@ -1013,56 +1030,31 @@ function getVisibleAssignments() {
     });
 }
 
-function getRankTaskTone(assignment = {}, index = 0) {
-    if (assignment.source === "community-goal") {
-        if (assignment.status === "completed") return "brown";
-        if (assignment.status === "in-progress") return "red";
-        return "yellow";
-    }
-
-    if (assignment.status === "completed") return "brown";
-    if (assignment.status === "in-progress" || assignment.status === "submitted") return "red";
-    return index === 0 ? "brown" : "yellow";
-}
-
-function getRankShowcaseTasks(fallbackTasks = []) {
-    const visibleAssignments = getVisibleAssignments().slice(0, 4);
-    if (visibleAssignments.length) {
-        return visibleAssignments.map((assignment, index) => {
-            const statusKey = assignmentStatusMeta[assignment.status] ? assignment.status : "up-next";
-            const detailCopy = assignment.teacherFeedback
-                ? `Teacher note: ${assignment.teacherFeedback}`
-                : assignment.description
-                || (statusKey === "completed"
-                    ? "You have already cleared this checkpoint."
-                    : "Use this as your next dashboard checkpoint.");
-
-            return {
-                id: assignment.id || assignment.title || `rank-task-${index + 1}`,
-                title: assignment.title || "Untitled task",
-                description: detailCopy,
-                accent: getRankTaskTone(assignment, index),
-                actionLabel: assignment.ctaLabel || (assignment.actionUrl ? "Open details" : "Saved in dashboard"),
-                actionUrl: assignment.actionUrl || "#"
-            };
-        });
-    }
-
-    return Array.isArray(fallbackTasks) ? fallbackTasks : cloneData(DEFAULT_OVERVIEW_TASKS);
-}
-
 function getLearningLevel(stats = {}) {
     const score = normalizeNumber(stats.completedCourses)
         + normalizeNumber(stats.attendedEvents)
         + normalizeNumber(stats.submittedProjects);
 
     if (score >= 24) return "Master Track";
-    if (score >= 14) return "Builder Track";
+    if (score >= 12) return "Intermediate Track";
     return "Starter Track";
 }
 
 function updateIdentity(user) {
-    const name = getDisplayName(user, "HackLab Student");
+    const cachedName = (typeof window !== "undefined" && window.localStorage?.getItem("hacklab.userDisplayName")) || "";
+    let name = user?.displayName;
+    if (!name || name === "HackLab Student") {
+        name = cachedName;
+    }
+    if (!name || name === "HackLab Student") {
+        name = getDisplayName(user, "Student");
+    }
+    if (name && name !== "HackLab Student" && name !== "Student" && typeof window !== "undefined") {
+        try {
+            window.localStorage.setItem("hacklab.userDisplayName", name);
+        } catch (_) {}
+    }
+
     nameTargets.forEach((target) => {
         if (target) {
             target.replaceChildren(document.createTextNode(name));
@@ -1070,7 +1062,7 @@ function updateIdentity(user) {
     });
 
     if (profileAvatar) {
-        profileAvatar.src = user.photoURL || "images/avatar.png";
+        profileAvatar.src = user?.photoURL || "images/avatar.png";
         profileAvatar.alt = name;
     }
 }
@@ -1091,7 +1083,10 @@ function updateOverviewCopy() {
 
 function renderProfileCard() {
     const profile = state.profile || DEFAULT_STUDENT_PROFILE;
-    const displayName = profile.displayName || getDisplayName(state.user, "HackLab Student");
+    const cachedName = (typeof window !== "undefined" && window.localStorage?.getItem("hacklab.userDisplayName")) || "";
+    let displayName = (profile.displayName && profile.displayName !== "HackLab Student")
+        ? profile.displayName
+        : (state.user?.displayName || cachedName || getDisplayName(state.user, "Student"));
     const level = getLearningLevel(profile.stats);
     const activeTracks = Array.isArray(profile.progress) ? profile.progress.length : 0;
     const openAssignments = state.assignments.filter((assignment) => assignment.status !== "completed").length;
@@ -1129,8 +1124,6 @@ function renderProfileCard() {
         profileQuickStats.innerHTML = chips.map((item) => `<span class="profile-chip">${escapeHtml(item)}</span>`).join("");
     }
 
-    syncProfileVerifiedBadge(profile);
-
     if (profileTags) {
         const tags = Array.isArray(profile.teacherTags) ? profile.teacherTags : [];
         profileTags.innerHTML = tags.length
@@ -1139,7 +1132,7 @@ function renderProfileCard() {
         profileTags.hidden = !tags.length;
     }
 
-    updateProfileVerificationCopy(profile);
+    syncProfileVerifiedBadge(profile);
 }
 
 function renderStats() {
@@ -1159,11 +1152,65 @@ function renderStats() {
     });
 }
 
-function renderTasks(tasks) {
+function getRankTaskTone(assignment = {}, index = 0) {
+    if (assignment.source === "community-goal") {
+        if (assignment.status === "completed") return "brown";
+        if (assignment.status === "in-progress") return "red";
+        return "yellow";
+    }
+
+    if (assignment.status === "completed") return "brown";
+    if (assignment.status === "in-progress" || assignment.status === "submitted") return "red";
+    return index === 0 ? "brown" : "yellow";
+}
+
+function getRankShowcaseTasks(fallbackTasks = []) {
+    const pendingAssignments = getVisibleAssignments().filter((assignment) => assignment.status !== "completed");
+    if (pendingAssignments.length) {
+        return pendingAssignments.slice(0, 4).map((assignment, index) => {
+            const statusKey = assignmentStatusMeta[assignment.status] ? assignment.status : "up-next";
+            const detailCopy = assignment.teacherFeedback
+                ? `Teacher note: ${assignment.teacherFeedback}`
+                : assignment.description
+                || (statusKey === "completed"
+                    ? "You have already cleared this checkpoint."
+                    : "Use this as your next dashboard checkpoint.");
+
+            return {
+                id: assignment.id || assignment.title || `rank-task-${index + 1}`,
+                title: assignment.title || "Untitled task",
+                description: detailCopy,
+                accent: getRankTaskTone(assignment, index),
+                actionLabel: assignment.ctaLabel || (assignment.actionUrl ? "Open details" : "Saved in dashboard"),
+                actionUrl: assignment.actionUrl || "#"
+            };
+        });
+    }
+
+    return [];
+}
+
+let isDismissingTaskCard = false;
+
+function paintTaskCards(safeTasks) {
     if (!taskCards) return;
 
-    const safeTasks = getRankShowcaseTasks(Array.isArray(tasks) ? tasks : DEFAULT_OVERVIEW_TASKS);
     if (!safeTasks.length) {
+        const hasCompletedAssignments = state.assignments.some((a) => a.status === "completed");
+        if (hasCompletedAssignments) {
+            taskCards.innerHTML = `
+                <div class="task-card task-all-completed">
+                    <div class="task-dot green"></div>
+                    <div class="task-content">
+                        <h4>All rank checkpoints cleared! 🚀</h4>
+                        <p>Great job! You have completed all active checkpoints. All completed items are safely tracked in your Action Queue below.</p>
+                        <a href="#action-queue" class="task-link green-link">View Action Queue</a>
+                    </div>
+                </div>
+            `;
+            return;
+        }
+
         taskCards.innerHTML = `
             <div class="task-card task-yellow">
                 <div class="task-dot yellow"></div>
@@ -1183,7 +1230,7 @@ function renderTasks(tasks) {
         const linkUrl = task.actionUrl || "#";
 
         return `
-            <div class="task-card ${tone.cardClass}">
+            <div class="task-card ${tone.cardClass}" data-task-id="${escapeHtml(task.id)}">
                 <div class="task-dot ${tone.dotClass}"></div>
                 <div class="task-content">
                     <h4>${escapeHtml(task.title || "Untitled task")}</h4>
@@ -1196,6 +1243,33 @@ function renderTasks(tasks) {
             </div>
         `;
     }).join("");
+}
+
+function renderTasks(tasks) {
+    if (!taskCards) return;
+
+    const safeTasks = getRankShowcaseTasks(Array.isArray(tasks) ? tasks : DEFAULT_OVERVIEW_TASKS);
+
+    const existingCards = Array.from(taskCards.querySelectorAll(".task-card[data-task-id]"));
+    const newIds = new Set(safeTasks.map((t) => t.id));
+    const completedCardsOnScreen = existingCards.filter(
+        (card) => !newIds.has(card.dataset.taskId) && !card.classList.contains("task-card-dismissing")
+    );
+
+    if (completedCardsOnScreen.length > 0 && !isDismissingTaskCard) {
+        isDismissingTaskCard = true;
+        completedCardsOnScreen.forEach((card) => {
+            card.classList.add("task-card-dismissing");
+        });
+
+        window.setTimeout(() => {
+            isDismissingTaskCard = false;
+            paintTaskCards(safeTasks);
+        }, 340);
+        return;
+    }
+
+    paintTaskCards(safeTasks);
 }
 
 function renderProgress() {
@@ -1240,13 +1314,6 @@ function getAssignmentToggleState(assignment = {}) {
         return {
             disabled: assignment.status === "completed",
             label: assignment.status === "completed" ? "Verified" : "Verify Now"
-        };
-    }
-
-    if ((assignment.id || "") === "task-js-hello-world") {
-        return {
-            disabled: true,
-            label: assignment.status === "completed" ? "Verified" : "Submit Assignment"
         };
     }
 
@@ -1307,31 +1374,61 @@ function renderAssignments() {
         const assignmentId = assignment.id || assignment.title;
         const isSaving = state.savingAssignmentId === assignmentId;
         const actionUrl = assignment.actionUrl || "";
-        const actionLabel = assignment.ctaLabel || (actionUrl ? "Open details" : "Saved in dashboard");
         const toggleState = getAssignmentToggleState(assignment);
         const detailCopy = assignment.teacherFeedback
             ? `Teacher note: ${assignment.teacherFeedback}`
             : assignment.description
             || (statusKey === "completed" ? "You have already cleared this checkpoint." : "Use this as your next dashboard checkpoint.");
 
+        const isAutoSync = assignment.source === "community-goal" || assignment.source === "profile-verification";
+        let tagText = assignment.tag || "";
+        if (!tagText) {
+            if (assignment.source === "profile-verification") tagText = "Profile";
+            else if (assignment.source === "community-goal") tagText = "Community";
+            else if (assignment.source === "course-assignment") tagText = "Course";
+            else tagText = "Checkpoint";
+        }
+
         return `
-            <article class="assignment-item" data-assignment-entry="${escapeHtml(assignmentId)}" data-assignment-url="${escapeHtml(actionUrl)}">
+            <article class="assignment-item ${statusKey === "completed" ? "is-completed" : ""}" data-assignment-entry="${escapeHtml(assignmentId)}" data-assignment-url="${escapeHtml(actionUrl)}">
                 <div class="assignment-copy" data-assignment-open="${escapeHtml(assignmentId)}" role="button" tabindex="0">
-                    <div class="assignment-title-row">
-                        <h4>${escapeHtml(assignment.title || "Untitled assignment")}</h4>
-                        <span class="assignment-status ${statusMeta.className}">${escapeHtml(statusMeta.label)}</span>
+                    <div class="assignment-header">
+                        <div class="assignment-title-wrap">
+                            <h4>${escapeHtml(assignment.title || "Untitled assignment")}</h4>
+                        </div>
+                        <span class="assignment-status ${statusMeta.className}">
+                            <span class="status-dot"></span>
+                            ${escapeHtml(statusMeta.label)}
+                        </span>
                     </div>
-                    <p>${escapeHtml(detailCopy)}</p>
-                    <div class="assignment-meta-row">
-                        <span class="assignment-link-hint">${escapeHtml(actionLabel)}</span>
-                        <span class="assignment-tag-chip" title="This task auto syncs with your saved dashboard progress.">Auto syncing</span>
-                        ${assignment.tag ? `<span class="assignment-tag-chip">${escapeHtml(assignment.tag)}</span>` : ""}
-                        ${assignment.awardedPoints ? `<span class="assignment-tag-chip">${escapeHtml(`${assignment.awardedPoints} pts awarded`)}</span>` : ""}
-                    </div>
+                    <p class="assignment-desc">${escapeHtml(detailCopy)}</p>
                 </div>
-                <button type="button" class="assignment-toggle" data-assignment-id="${escapeHtml(assignmentId)}" ${(isSaving || toggleState.disabled) ? "disabled" : ""}>
-                    ${escapeHtml(isSaving ? "Saving..." : toggleState.label)}
-                </button>
+                <div class="assignment-footer">
+                    <div class="assignment-pills-wrap">
+                        ${isAutoSync ? `
+                            <span class="assignment-pill pill-sync" title="Auto-synced with dashboard progress">
+                                <svg class="pill-svg" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                                    <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
+                                    <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
+                                </svg>
+                                <span>Auto Syncing</span>
+                            </span>
+                        ` : ""}
+                        ${tagText ? `
+                            <span class="assignment-pill pill-tag">
+                                <span>${escapeHtml(tagText)}</span>
+                            </span>
+                        ` : ""}
+                        ${assignment.awardedPoints ? `
+                            <span class="assignment-pill pill-points">
+                                <span>+${escapeHtml(String(assignment.awardedPoints))} pts</span>
+                            </span>
+                        ` : ""}
+                    </div>
+                    <button type="button" class="assignment-toggle ${statusKey === 'completed' ? 'is-completed' : ''}" data-assignment-id="${escapeHtml(assignmentId)}" data-completed="${statusKey === 'completed' ? 'true' : 'false'}" ${(isSaving || toggleState.disabled) ? "disabled" : ""}>
+                        ${escapeHtml(isSaving ? "Saving..." : toggleState.label)}
+                    </button>
+                </div>
             </article>
         `;
     }).join("");
@@ -1569,10 +1666,23 @@ function maybeOpenAnnouncementPopup() {
     setAnnouncementModalOpen(true);
 }
 
+
+
 function getCollaborationIdentity(user = state.user) {
+    const cachedName = (typeof window !== "undefined" && window.localStorage?.getItem("hacklab.userDisplayName")) || "";
+    let name = user?.displayName;
+    if (!name || name === "HackLab Student") {
+        name = cachedName;
+    }
+    if (!name || name === "HackLab Student") {
+        name = state.profile?.displayName;
+    }
+    if (!name || name === "HackLab Student") {
+        name = getDisplayName(user, "Student");
+    }
     return {
         uid: user?.uid || "",
-        name: getDisplayName(user, "HackLab Student"),
+        name: name || "Student",
         email: state.profile?.email || user?.email || "",
         avatar: user?.photoURL || "images/avatar.png",
         role: "student"
@@ -1641,10 +1751,17 @@ function renderCollaborationPanel() {
     `;
 }
 
+async function refreshCollaborationState(user = state.user) {
+    if (!user?.uid) return;
+
+    state.collaboration = await loadUserCollaborationState(getCollaborationIdentity(user));
+    renderCollaborationPanel();
+}
+
 async function refreshStudentProfile(user) {
     const profile = await loadStudentProfile(user.uid, {
         ...DEFAULT_STUDENT_PROFILE,
-        displayName: getDisplayName(user, DEFAULT_STUDENT_PROFILE.displayName),
+        displayName: getDisplayName(user, "Student"),
         email: user.email || ""
     });
 
@@ -1656,17 +1773,6 @@ async function refreshStudentProfile(user) {
     renderProgress();
     renderAssignments();
     updateOverviewCopy();
-}
-
-function applyCommunityMetricsFromPosts(posts) {
-    if (!state.user?.uid || !Array.isArray(posts)) return;
-
-    const userId = state.user.uid;
-    state.communityMetrics = {
-        postsCount: posts.filter((post) => post.authorId === userId).length,
-        likesGivenCount: posts.filter((post) => Array.isArray(post.likedBy) && post.likedBy.includes(userId)).length
-    };
-    syncStudentProfile();
 }
 
 function applyBootstrapToDashboard(bootstrap) {
@@ -1731,6 +1837,7 @@ async function refreshCommunityMetrics() {
     try {
         const posts = await loadCommunityPosts("general");
         applyCommunityMetricsFromPosts(posts);
+        renderTasks(state.tasks);
         renderAssignments();
         renderStats();
         renderProfileCard();
@@ -1739,13 +1846,6 @@ async function refreshCommunityMetrics() {
     } catch (error) {
         console.error("Unable to refresh community metrics:", error);
     }
-}
-
-async function refreshCollaborationState(user = state.user) {
-    if (!user?.uid) return;
-
-    state.collaboration = await loadUserCollaborationState(getCollaborationIdentity(user));
-    renderCollaborationPanel();
 }
 
 async function persistAssignments(nextAssignments, previousAssignments, assignmentId) {
@@ -1996,6 +2096,8 @@ collabInboxList?.addEventListener("click", async (event) => {
     }
 });
 
+
+
 assignmentList?.addEventListener("keydown", (event) => {
     if (event.key !== "Enter" && event.key !== " ") return;
     const openTrigger = event.target.closest("[data-assignment-open]");
@@ -2048,6 +2150,8 @@ profileEditModal?.addEventListener("click", (event) => {
     }
 });
 
+
+
 profileEditForm?.addEventListener("input", () => {
     const draftProfile = {
         ...state.profile,
@@ -2078,6 +2182,9 @@ profileEditForm?.addEventListener("submit", async (event) => {
 
         await saveStudentProfile(state.user.uid, state.profile);
 
+        syncProfileVerifiedBadge(state.profile);
+        updateProfileVerificationCopy(state.profile);
+        renderTasks(state.tasks);
         renderProfileCard();
         renderStats();
         renderProgress();
@@ -2094,6 +2201,8 @@ profileEditForm?.addEventListener("submit", async (event) => {
     }
 });
 
+syncProfileVerifiedBadge(state.profile);
+updateProfileVerificationCopy(state.profile);
 renderTasks(state.tasks);
 renderProgress();
 renderAssignments();
@@ -2116,6 +2225,7 @@ onAuthStateChanged(auth, async (user) => {
     try {
         const bootstrap = await loadBootstrap(user.uid);
         applyBootstrapToDashboard(bootstrap);
+        await refreshCommunityMetrics();
     } catch (error) {
         console.error("Unable to load dashboard bootstrap:", error);
         await Promise.all([

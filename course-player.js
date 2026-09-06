@@ -5,6 +5,7 @@ import {
     DEFAULT_VIDEO_COURSES,
     auth,
     escapeHtml,
+    getDisplayName,
     loadStudentProfile,
     saveStudentProfile,
     watchContent
@@ -476,7 +477,7 @@ async function persistProfile(nextProfile) {
 
     const profileWithStats = syncProfileCourseStats({
         ...nextProfile,
-        displayName: currentProfile.displayName || currentUser.displayName || "HackLab Student",
+        displayName: (currentProfile.displayName && currentProfile.displayName !== "HackLab Student") ? currentProfile.displayName : getDisplayName(currentUser, "Student"),
         email: currentProfile.email || currentUser.email || ""
     }, activeCourses);
 
@@ -663,7 +664,7 @@ onAuthStateChanged(auth, async (user) => {
     currentUser = user;
     currentProfile = syncProfileCourseStats(await loadStudentProfile(user.uid, {
         ...DEFAULT_STUDENT_PROFILE,
-        displayName: user.displayName || "HackLab Student",
+        displayName: getDisplayName(user, "Student"),
         email: user.email || ""
     }), activeCourses);
     renderCourse();

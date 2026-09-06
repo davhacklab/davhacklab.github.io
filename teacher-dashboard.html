@@ -712,77 +712,12 @@
                   </div>
 
                   <div class="question-list">
-                    <div class="question-card">
-                    <div class="q-left">
-                      <img src="images/tejas.png" alt="User" class="q-avatar" />
-                      <div class="q-info">
-                        <h3 class="q-title">Does anyone recognise this Build Error when compiling for Windows Desktop?
-                        </h3>
-                        <p class="q-meta">by Tejas Sharma, asked 2 mins ago</p>
-                      </div>
-                    </div>
-                    <button class="btn-answer" type="button">Answer</button>
+                    <!-- Question cards rendered by teacher-dashboard.js from database -->
                   </div>
-
-                  <div class="question-card">
-                    <div class="q-left">
-                      <img src="images/tejas.png" alt="User" class="q-avatar" />
-                      <div class="q-info">
-                        <h3 class="q-title">How do I improve weak visual hierarchy without redesigning the whole page?
-                        </h3>
-                        <p class="q-meta">by HackLab Student, asked 6 mins ago</p>
-                      </div>
-                    </div>
-                    <button class="btn-answer" type="button">Answer</button>
-                  </div>
-                </div>
               </div>
 
               <div id="view-answer" class="feed-view">
-                <div class="question-detail-card">
-                  <div class="qd-header">
-                    <img src="images/tejas.png" alt="User" class="qd-avatar" />
-                    <h2 class="qd-title">Does anyone recognise this Build Error when compiling for Windows Desktop?</h2>
-                  </div>
-                  <div class="qd-body">
-                    <p class="qd-description">Description - The compiler tripped over a dangling reference in the
-                      project configuration, like a ghost file path pointing to nowhere. It's as if the build system
-                      tried to open a locked door with the wrong key, and instead of explaining politely, it just
-                      shouted 'Build Error!' and slammed shut.</p>
-                  </div>
-                </div>
-
-                <div class="answer-input-container">
-                  <textarea class="answer-textarea" placeholder="Type your answer here!"></textarea>
-                  <div class="answer-submit-row">
-                    <button class="answer-submit-btn" type="button">Post Answer</button>
-                  </div>
-                </div>
-
-                <div class="other-answers-section">
-                  <div class="oa-header">
-                    <h3>Other Answers</h3>
-                    <div class="oa-filters">
-                      <button class="oa-filter active" type="button">Relevant</button>
-                      <button class="oa-filter" type="button">Latest</button>
-                    </div>
-                  </div>
-                  <div class="oa-list">
-                    <div class="oa-card">
-                      <p class="oa-text">Desktop builds in Codename One have always been a pro-account only feature. You
-                        can use the free jar desktop target which is a part of the maven build and lets you build a
-                        universal jar of the application.</p>
-                      <p class="oa-author">by - Aviral Tyagi</p>
-                    </div>
-                    <div class="oa-card">
-                      <p class="oa-text">Check whether the target configuration still points to an older desktop
-                        artifact. A clean rebuild plus validating the generated desktop target usually fixes this class
-                        of issue.</p>
-                      <p class="oa-author">by - HackLab Teacher</p>
-                    </div>
-                    </div>
-                  </div>
-                </div>
+                <!-- Answer detail view rendered by teacher-dashboard.js -->
               </div>
 
               <div class="widgets-column">
@@ -797,18 +732,8 @@
                 </div>
 
                 <div class="widget-box premium-card">
-                  <h3 class="widget-title">Notifications -</h3>
-                  <div class="notif-list">
-                    <div class="notif-pill">
-                      <span>Congrats! Your Post got over <strong>50+ likes</strong></span>
-                    </div>
-                    <div class="notif-pill">
-                      <span>Congrats! Your Post got over <strong>50+ likes</strong></span>
-                    </div>
-                    <div class="notif-pill">
-                      <span>Congrats! Your Post got over <strong>50+ likes</strong></span>
-                    </div>
-                  </div>
+                  <h3 class="widget-title">Notifications</h3>
+                  <div class="notif-list" aria-live="polite"></div>
                 </div>
 
                 <div class="widget-box premium-card">
@@ -867,8 +792,8 @@
                   <input type="text" id="teacherProjectStatus" value="Spotlight" />
                 </label>
                 <label class="field-group">
-                  <span>Live Netlify link</span>
-                  <input type="url" id="teacherProjectLink" placeholder="https://your-project.netlify.app" />
+                  <span>Live project link</span>
+                  <input type="url" id="teacherProjectLink" placeholder="https://your-project.com" />
                 </label>
               </div>
               <label class="field-group">

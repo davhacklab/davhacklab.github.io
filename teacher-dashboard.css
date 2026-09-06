@@ -1086,15 +1086,6 @@ body::before {
     padding-left: 18px;
 }
 
-.projects-preview-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 20px;
-}
-
-.preview-project-card {
-    padding: 24px;
-}
 
 .teacher-community-shell {
     border-radius: 28px;
@@ -1766,20 +1757,201 @@ body::before {
     gap: 8px;
 }
 
-.teacher-community-shell .notif-pill {
-    background: #50c17a;
-    color: #fff;
-    padding: 10px 16px;
-    border-radius: 50px;
-    margin-bottom: 10px;
-    font-size: 13px;
-    font-weight: 500;
-    border: none;
+/* Liquid Glass Notification Pill */
+.teacher-community-shell .notif-pill,
+.notif-pill {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 13px 16px;
+    border-radius: 16px;
+    margin-bottom: 0;
+    max-width: 100%;
+    min-width: 0;
+    overflow: hidden;
+    cursor: default;
+    user-select: none;
+    
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
+    backdrop-filter: blur(24px) saturate(135%);
+    -webkit-backdrop-filter: blur(24px) saturate(135%);
+    
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-top: 1px solid rgba(255, 255, 255, 0.32);
+    border-left: 1px solid rgba(255, 255, 255, 0.20);
+    
+    box-shadow: 
+        0 10px 30px -6px rgba(0, 0, 0, 0.42),
+        inset 0 1px 1px 0 rgba(255, 255, 255, 0.35),
+        inset 0 -1px 1px 0 rgba(255, 255, 255, 0.04);
+        
+    transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.teacher-community-shell .notif-pill strong {
-    color: #fff;
-    font-weight: 700;
+.teacher-community-shell .notif-pill::before,
+.notif-pill::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 48%;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 100%);
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0.9;
+}
+
+.teacher-community-shell .notif-pill::after,
+.notif-pill::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 15%;
+    right: 15%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.22) 50%, transparent 100%);
+    pointer-events: none;
+}
+
+.teacher-community-shell .notif-pill:hover,
+.notif-pill:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.04) 100%);
+    border-top-color: rgba(255, 255, 255, 0.42);
+    border-color: rgba(255, 255, 255, 0.18);
+    box-shadow: 
+        0 14px 36px -6px rgba(0, 0, 0, 0.52),
+        inset 0 1px 2px 0 rgba(255, 255, 255, 0.5),
+        inset 0 -1px 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.teacher-community-shell .notif-pill-icon,
+.notif-pill-icon {
+    position: relative;
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.03) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-top-color: rgba(255, 255, 255, 0.36);
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.28), 0 4px 12px rgba(0, 0, 0, 0.2);
+    color: rgba(255, 255, 255, 0.88);
+}
+
+.teacher-community-shell .notif-pill-icon svg,
+.notif-pill-icon svg {
+    width: 16px;
+    height: 16px;
+}
+
+.teacher-community-shell .notif-pill-body,
+.notif-pill-body {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    flex: 1;
+    min-width: 0;
+}
+
+.teacher-community-shell .notif-pill-title,
+.notif-pill-title {
+    color: #f8fafc;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+}
+
+.teacher-community-shell .notif-pill-meta,
+.notif-pill-meta {
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.45;
+    word-break: break-word;
+}
+
+.teacher-community-shell .notif-pill:not(:has(.notif-pill-icon)),
+.notif-pill:not(:has(.notif-pill-icon)) {
+    flex-direction: column;
+    gap: 4px;
+}
+
+/* Reply: Frosted Ice-Blue Mist */
+.teacher-community-shell .notif-pill--reply,
+.notif-pill--reply {
+    background: linear-gradient(135deg, rgba(147, 197, 253, 0.08) 0%, rgba(255, 255, 255, 0.03) 60%, rgba(255, 255, 255, 0.01) 100%);
+    border-color: rgba(147, 197, 253, 0.18);
+    border-top-color: rgba(191, 219, 254, 0.35);
+}
+
+.teacher-community-shell .notif-pill--reply .notif-pill-icon,
+.notif-pill--reply .notif-pill-icon {
+    color: #bfdbfe;
+    border-color: rgba(147, 197, 253, 0.25);
+    background: linear-gradient(135deg, rgba(147, 197, 253, 0.14) 0%, rgba(255, 255, 255, 0.04) 100%);
+}
+
+/* Answer: Frosted Mint Glass */
+.teacher-community-shell .notif-pill--answer,
+.notif-pill--answer {
+    background: linear-gradient(135deg, rgba(110, 231, 183, 0.07) 0%, rgba(255, 255, 255, 0.03) 60%, rgba(255, 255, 255, 0.01) 100%);
+    border-color: rgba(110, 231, 183, 0.18);
+    border-top-color: rgba(167, 243, 208, 0.35);
+}
+
+.teacher-community-shell .notif-pill--answer .notif-pill-icon,
+.notif-pill--answer .notif-pill-icon {
+    color: #a7f3d0;
+    border-color: rgba(110, 231, 183, 0.25);
+    background: linear-gradient(135deg, rgba(110, 231, 183, 0.14) 0%, rgba(255, 255, 255, 0.04) 100%);
+}
+
+/* Like / Reaction: Ethereal Frosted Violet Tint - ZERO ORANGE */
+.teacher-community-shell .notif-pill--like,
+.notif-pill--like {
+    background: linear-gradient(135deg, rgba(196, 181, 253, 0.08) 0%, rgba(255, 255, 255, 0.03) 60%, rgba(255, 255, 255, 0.01) 100%);
+    border-color: rgba(196, 181, 253, 0.18);
+    border-top-color: rgba(221, 214, 254, 0.35);
+}
+
+.teacher-community-shell .notif-pill--like .notif-pill-icon,
+.notif-pill--like .notif-pill-icon {
+    color: #ddd6fe;
+    border-color: rgba(196, 181, 253, 0.25);
+    background: linear-gradient(135deg, rgba(196, 181, 253, 0.14) 0%, rgba(255, 255, 255, 0.04) 100%);
+}
+
+/* Empty: Pure Crystalline Liquid Glass */
+.teacher-community-shell .notif-pill--empty,
+.notif-pill--empty {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.11);
+    border-top-color: rgba(255, 255, 255, 0.24);
+}
+
+.teacher-community-shell .notif-pill--empty .notif-pill-icon,
+.notif-pill--empty .notif-pill-icon {
+    color: rgba(255, 255, 255, 0.65);
+}
+
+.teacher-community-shell .notif-pill--empty .notif-pill-title,
+.notif-pill--empty .notif-pill-title {
+    color: rgba(255, 255, 255, 0.94);
+}
+
+.teacher-community-shell .notif-pill--empty .notif-pill-meta,
+.notif-pill--empty .notif-pill-meta {
+    color: rgba(255, 255, 255, 0.60);
 }
 
 .teacher-community-shell .trending-grid {
@@ -1866,9 +2038,6 @@ body::before {
         grid-template-columns: 1fr;
     }
 
-    .projects-preview-grid {
-        grid-template-columns: 1fr;
-    }
 
     .teacher-community-shell .community-layout {
         grid-template-columns: 1fr;

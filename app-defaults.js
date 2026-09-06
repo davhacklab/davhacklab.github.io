@@ -22,17 +22,7 @@ export const DEFAULT_DASHBOARD_ANNOUNCEMENT = {
     updatedAt: ""
 };
 
-export const DEFAULT_OVERVIEW_TASKS = [
-    {
-        id: "task-js-hello-world",
-        title: "Create a js hello world",
-        description: "Teacher note: bye",
-        level: "beginner",
-        accent: "brown",
-        actionLabel: "Submit Assignment",
-        actionUrl: "course-player.html?courseId=video-course-javascript-foundations&sectionId=js-foundations-section-1&contentId=assignment-js-variables-practice"
-    }
-];
+export const DEFAULT_OVERVIEW_TASKS = [];
 
 export const DEFAULT_RESOURCES = [
     {
@@ -505,7 +495,7 @@ export const DEFAULT_PROJECTS = [
 ];
 
 export const DEFAULT_STUDENT_PROFILE = {
-    displayName: "HackLab Student",
+    displayName: "Student",
     role: "student",
     email: "",
     headline: "",
