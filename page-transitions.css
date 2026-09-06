@@ -1,0 +1,54 @@
+/**
+ * DAV HackLab — Ultra-Smooth Lag-Free Page Transitions
+ * Uses native Cross-Document View Transitions API with graceful CSS fallbacks.
+ */
+
+@view-transition {
+    navigation: auto;
+}
+
+/* Snappy, fluid cross-fade and micro-elevation */
+::view-transition-old(root) {
+    animation: 130ms cubic-bezier(0.2, 0, 0, 1) both pt-fade-out;
+}
+
+::view-transition-new(root) {
+    animation: 170ms cubic-bezier(0, 0, 0.2, 1) both pt-fade-in;
+}
+
+@keyframes pt-fade-out {
+    from {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-4px) scale(0.998);
+    }
+}
+
+@keyframes pt-fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(4px) scale(1.002);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Accessibility: respect user preferences for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+        animation: none !important;
+    }
+}
+
+/* Graceful fallback for browsers without native View Transitions */
+body.page-transitioning-out {
+    opacity: 0.2;
+    transition: opacity 110ms cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+}

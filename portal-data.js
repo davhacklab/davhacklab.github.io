@@ -294,9 +294,74 @@ function normalizeRecordMap(value) {
     return value && typeof value === "object" ? value : {};
 }
 
+const FB_CACHE_PREFIX = "hacklab.fbcache.v2:";
+const FB_CACHE_TTL_MS = 60000;
+const FB_CACHE_STALE_MS = 15000;
+const memoryFirebaseCache = new Map();
+
+function getCachedFirebaseValue(path) {
+    const mem = memoryFirebaseCache.get(path);
+    if (mem && (Date.now() - mem.savedAt < FB_CACHE_TTL_MS)) {
+        return { hit: true, value: cloneData(mem.value), savedAt: mem.savedAt };
+    }
+    if (typeof window !== "undefined") {
+        try {
+            const raw = window.sessionStorage.getItem(FB_CACHE_PREFIX + path);
+            if (raw) {
+                const parsed = JSON.parse(raw);
+                if (parsed && (Date.now() - parsed.savedAt < FB_CACHE_TTL_MS)) {
+                    memoryFirebaseCache.set(path, parsed);
+                    return { hit: true, value: cloneData(parsed.value), savedAt: parsed.savedAt };
+                }
+            }
+        } catch (_) {}
+    }
+    return { hit: false };
+}
+
+function setCachedFirebaseValue(path, value) {
+    const entry = { savedAt: Date.now(), value: cloneData(value) };
+    memoryFirebaseCache.set(path, entry);
+    if (typeof window !== "undefined") {
+        try {
+            window.sessionStorage.setItem(FB_CACHE_PREFIX + path, JSON.stringify(entry));
+        } catch (_) {}
+    }
+}
+
+function invalidateCachedFirebaseValue(path) {
+    memoryFirebaseCache.delete(path);
+    if (typeof window !== "undefined") {
+        try {
+            window.sessionStorage.removeItem(FB_CACHE_PREFIX + path);
+            const prefix = FB_CACHE_PREFIX + path;
+            for (let i = window.sessionStorage.length - 1; i >= 0; i--) {
+                const k = window.sessionStorage.key(i);
+                if (k && k.startsWith(prefix)) {
+                    window.sessionStorage.removeItem(k);
+                }
+            }
+        } catch (_) {}
+    }
+}
+
 async function readFirebaseValue(path) {
+    const cached = getCachedFirebaseValue(path);
+    if (cached.hit) {
+        if (Date.now() - cached.savedAt > FB_CACHE_STALE_MS) {
+            get(ref(db, path)).then((snapshot) => {
+                if (snapshot.exists()) {
+                    setCachedFirebaseValue(path, snapshot.val());
+                }
+            }).catch(() => {});
+        }
+        return cached.value;
+    }
+
     const snapshot = await get(ref(db, path));
-    return snapshot.exists() ? snapshot.val() : undefined;
+    const value = snapshot.exists() ? snapshot.val() : undefined;
+    setCachedFirebaseValue(path, value);
+    return value;
 }
 
 async function writeFirebaseValue(path, value) {
@@ -307,21 +372,40 @@ async function writeFirebaseValue(path, value) {
     }
 
     const nextValue = cloneData(value);
+    setCachedFirebaseValue(path, nextValue);
+    const lastSlash = path.lastIndexOf("/");
+    if (lastSlash > 0) {
+        invalidateCachedFirebaseValue(path.slice(0, lastSlash));
+    }
+
     await set(ref(db, path), nextValue);
     return nextValue;
 }
 
 async function removeFirebaseValue(path) {
+    invalidateCachedFirebaseValue(path);
+    const lastSlash = path.lastIndexOf("/");
+    if (lastSlash > 0) {
+        invalidateCachedFirebaseValue(path.slice(0, lastSlash));
+    }
     await remove(ref(db, path));
 }
 
 function watchFirebaseValue(path, fallbackValue, callback) {
+    const cached = getCachedFirebaseValue(path);
+    if (cached.hit && typeof cached.value !== "undefined") {
+        try {
+            callback(cloneData(cached.value));
+        } catch (_) {}
+    }
+
     const unsubscribe = onValue(
         ref(db, path),
         (snapshot) => {
             const nextValue = snapshot.exists()
                 ? snapshot.val()
                 : cloneData(fallbackValue);
+            setCachedFirebaseValue(path, nextValue);
             callback(cloneData(nextValue));
         },
         (error) => {
@@ -334,6 +418,7 @@ function watchFirebaseValue(path, fallbackValue, callback) {
         unsubscribe();
     };
 }
+
 
 export function getDisplayName(user, fallback = "HackLab Member") {
     if (!user) {
@@ -488,6 +573,9 @@ function writeBootstrapToSession(userId = "", data) {
 
 export function invalidateClientBootstrap() {
     memoryBootstrap = null;
+    if (typeof invalidateCachedApiValues === "function") {
+        invalidateCachedApiValues();
+    }
     if (typeof window !== "undefined") {
         try {
             Object.keys(window.sessionStorage)
@@ -569,6 +657,10 @@ export async function loadBootstrap(userId = "", { force = false } = {}) {
         const sessionCached = readBootstrapFromSession(userId);
         if (sessionCached) {
             setMemoryBootstrap(sessionCached);
+            // SWR: revalidate in background without blocking UI
+            setTimeout(() => {
+                loadBootstrap(userId, { force: true }).catch(() => {});
+            }, 60);
             return cloneData(sessionCached);
         }
     }
@@ -638,6 +730,55 @@ export function stopBootstrapPolling() {
     }
 }
 
+const API_CACHE_PREFIX = "hacklab.apicache.v1:";
+const API_CACHE_TTL_MS = 60000;
+const API_CACHE_STALE_MS = 15000;
+const memoryApiCache = new Map();
+
+function getCachedApiValue(path) {
+    const mem = memoryApiCache.get(path);
+    if (mem && (Date.now() - mem.savedAt < API_CACHE_TTL_MS)) {
+        return { hit: true, value: cloneData(mem.value), savedAt: mem.savedAt };
+    }
+    if (typeof window !== "undefined") {
+        try {
+            const raw = window.sessionStorage.getItem(API_CACHE_PREFIX + path);
+            if (raw) {
+                const parsed = JSON.parse(raw);
+                if (parsed && (Date.now() - parsed.savedAt < API_CACHE_TTL_MS)) {
+                    memoryApiCache.set(path, parsed);
+                    return { hit: true, value: cloneData(parsed.value), savedAt: parsed.savedAt };
+                }
+            }
+        } catch (_) {}
+    }
+    return { hit: false };
+}
+
+function setCachedApiValue(path, value) {
+    const entry = { savedAt: Date.now(), value: cloneData(value) };
+    memoryApiCache.set(path, entry);
+    if (typeof window !== "undefined") {
+        try {
+            window.sessionStorage.setItem(API_CACHE_PREFIX + path, JSON.stringify(entry));
+        } catch (_) {}
+    }
+}
+
+function invalidateCachedApiValues() {
+    memoryApiCache.clear();
+    if (typeof window !== "undefined") {
+        try {
+            for (let i = window.sessionStorage.length - 1; i >= 0; i--) {
+                const k = window.sessionStorage.key(i);
+                if (k && k.startsWith(API_CACHE_PREFIX)) {
+                    window.sessionStorage.removeItem(k);
+                }
+            }
+        } catch (_) {}
+    }
+}
+
 async function requestJson(path, options = {}) {
     if (!API_ROOT) {
         throw new Error(FILE_MODE_API_MESSAGE);
@@ -645,6 +786,21 @@ async function requestJson(path, options = {}) {
 
     const method = (options.method || "GET").toUpperCase();
     const dedupeKey = method === "GET" ? `GET:${path}` : "";
+
+    if (method !== "GET") {
+        invalidateCachedApiValues();
+    } else if (!options.cache || options.cache === "default") {
+        const cached = getCachedApiValue(path);
+        if (cached.hit) {
+            if (Date.now() - cached.savedAt > API_CACHE_STALE_MS) {
+                // Background revalidate
+                setTimeout(() => {
+                    requestJson(path, { ...options, cache: "reload" }).catch(() => {});
+                }, 50);
+            }
+            return cached.value;
+        }
+    }
 
     if (dedupeKey && inflightGetRequests.has(dedupeKey)) {
         return inflightGetRequests.get(dedupeKey);
@@ -699,7 +855,11 @@ async function requestJson(path, options = {}) {
             throw new Error(message);
         }
 
-        return response.json();
+        const result = await response.json();
+        if (method === "GET") {
+            setCachedApiValue(path, result);
+        }
+        return result;
     };
 
     const requestPromise = executeRequest();
